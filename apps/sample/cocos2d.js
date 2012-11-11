@@ -36,8 +36,10 @@
         engineDir:'../../external/cocos2d-html5/cocos2d/',
         //SingleEngineFile:'',
         appFiles:[//'src/AppDelegate.js',
-            'src/testbasic.js',
-            'src/testResource.js'
+            'src/resources.js',
+            'src/scenes/BaseScene.js',
+            'src/scenes/TitleScene.js',
+            'src/scenes/MapScene.js'
         ]
     };
     window.addEventListener('DOMContentLoaded', function () {
