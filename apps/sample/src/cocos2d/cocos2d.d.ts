@@ -10,7 +10,7 @@ module cc {
     }
     export class Layer {
         constructor();
-        addChild(obj:any): void;
+        addChild(obj:any, depth?:number, tag?:number): void;
         onEnter():void;
         onExit():void;
     }
@@ -23,7 +23,13 @@ module cc {
     export class MenuItemLabel {
     	static create(label:string, parent:any, callback:any);
     }
+    export class TMXTiledMap {
+        static create(tmxPath:string) : TMXTiledMap;
+        getContentSize() : any;
+    }
     export class Director {
-    	static getInstance() : any;
+    	static getInstance() : Director;
+        replaceScene(scene:Scene);
+        getWinSize() : any;
     }
 }

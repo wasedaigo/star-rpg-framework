@@ -29,3 +29,4 @@ var Scene;
     Scene.BaseScene = BaseScene;    
 })(Scene || (Scene = {}));
 
+//@ sourceMappingURL=BaseScene.js.map

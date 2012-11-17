@@ -18,6 +18,9 @@ module Scene {
             menuItem.setPosition(cc.p(s.width / 2, s.height / 2));
 
             this.addChild(menu);
+
+            var map = cc.TMXTiledMap.create("res/tmx/ortho-objects.tmx");
+            this.addChild(map, -1, 1);
         }
 
         private gotoTitleClicked() {
