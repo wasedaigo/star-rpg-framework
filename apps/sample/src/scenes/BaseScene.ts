@@ -1,11 +1,6 @@
 ///<reference path='../cocos2d/cocos2d.d.ts'/>
 module Scene {
     export class BaseScene extends cc.Scene {
-        constructor () {
-            super();
-            this.init();
-        }
-
         public onEnter() {
             super.onEnter();
             var label = cc.LabelTTF.create("Quit", "Arial", 20);

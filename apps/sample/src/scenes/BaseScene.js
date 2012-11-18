@@ -8,8 +8,8 @@ var Scene;
     var BaseScene = (function (_super) {
         __extends(BaseScene, _super);
         function BaseScene() {
-                _super.call(this);
-            this.init();
+            _super.apply(this, arguments);
+
         }
         BaseScene.prototype.onEnter = function () {
             _super.prototype.onEnter.call(this);
