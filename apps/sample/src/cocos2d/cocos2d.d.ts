@@ -1,6 +1,14 @@
 module cc {
-	export function p(x:number, y:number):any;
-	export function PointZero():any;
+    export class Point {
+        x:number;
+        y:number;
+    }
+    export class Size {
+        width:number;
+        height:number;
+    }
+	export function p(x:number, y:number):Point;
+	export function PointZero():Point;
     export class Scene {
         constructor();
     	addChild(obj:any): void;
@@ -8,28 +16,30 @@ module cc {
     	onEnter():void;
     	onExit():void;
     }
-    export class Layer {
-        constructor();
-        addChild(obj:any, depth?:number, tag?:number): void;
+    export class Node {
+        addChild(child:Node, zOrder?:number, tag?:number): void;
+        setPosition(pos:Point): void;
+    }
+    export class Layer extends Node {
         onEnter():void;
         onExit():void;
     }
-    export class LabelTTF {
-    	static create(label:string, fontfamiliy:string, fontsize:number);
+    export class LabelTTF extends Node {
+    	static create(label:string, fontfamiliy:string, fontsize:number): LabelTTF;
     }
-    export class Menu {
-    	static create(menuItem:any, option?:any);
+    export class Menu extends Node {
+    	static create(menuItem:any, option?:any): Menu;
     }
-    export class MenuItemLabel {
-    	static create(label:string, parent:any, callback:any);
+    export class MenuItemLabel extends Node {
+    	static create(label:LabelTTF, parent:any, callback:any):MenuItemLabel;
     }
-    export class TMXTiledMap {
+    export class TMXTiledMap extends Node {
         static create(tmxPath:string) : TMXTiledMap;
-        getContentSize() : any;
+        getContentSize() : Size;
     }
     export class Director {
     	static getInstance() : Director;
         replaceScene(scene:Scene);
-        getWinSize() : any;
+        getWinSize() : Size;
     }
 }
