@@ -1,7 +1,7 @@
 ///<reference path='./BaseScene.ts'/>
 ///<reference path='./MapScene.ts'/>
 
-module Scene {
+module Scenes {
     class TitleLayer extends cc.Layer {
         public onEnter() {
             super.onEnter();

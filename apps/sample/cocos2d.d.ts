@@ -1,5 +1,6 @@
 module cc {
     export class Point {
+        constructor(x:number, y:number);
         x:number;
         y:number;
     }
@@ -15,6 +16,7 @@ module cc {
     	init():void;
     	onEnter():void;
     	onExit():void;
+        scheduleUpdate():void;
     }
     export class Node {
         addChild(child:Node, zOrder?:number, tag?:number): void;
@@ -39,7 +41,10 @@ module cc {
     }
     export class Director {
     	static getInstance() : Director;
+        runWithScene(scene:Scene);
         replaceScene(scene:Scene);
+        setDisplayStats(fps:string);
+        setAnimationInterval(interval:number);
         getWinSize() : Size;
     }
 }

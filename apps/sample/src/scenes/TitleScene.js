@@ -3,8 +3,8 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 }
-var Scene;
-(function (Scene) {
+var Scenes;
+(function (Scenes) {
     var TitleLayer = (function (_super) {
         __extends(TitleLayer, _super);
         function TitleLayer() {
@@ -25,7 +25,7 @@ var Scene;
             this.addChild(menu);
         };
         TitleLayer.prototype.gotoTitleClicked = function () {
-            cc.Director.getInstance().replaceScene(new Scene.MapScene());
+            cc.Director.getInstance().replaceScene(new Scenes.MapScene());
         };
         return TitleLayer;
     })(cc.Layer);    
@@ -41,8 +41,8 @@ var Scene;
             this.addChild(layer);
         };
         return TitleScene;
-    })(Scene.BaseScene);
-    Scene.TitleScene = TitleScene;    
-})(Scene || (Scene = {}));
+    })(Scenes.BaseScene);
+    Scenes.TitleScene = TitleScene;    
+})(Scenes || (Scenes = {}));
 
 //@ sourceMappingURL=TitleScene.js.map

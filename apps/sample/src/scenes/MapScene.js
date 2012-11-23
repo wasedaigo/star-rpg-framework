@@ -3,8 +3,8 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 }
-var Scene;
-(function (Scene) {
+var Scenes;
+(function (Scenes) {
     var MapLayer = (function (_super) {
         __extends(MapLayer, _super);
         function MapLayer() {
@@ -27,7 +27,7 @@ var Scene;
             this.addChild(map, -1, 1);
         };
         MapLayer.prototype.gotoTitleClicked = function () {
-            cc.Director.getInstance().replaceScene(new Scene.TitleScene());
+            cc.Director.getInstance().replaceScene(new Scenes.TitleScene());
         };
         return MapLayer;
     })(cc.Layer);    
@@ -43,8 +43,8 @@ var Scene;
             this.addChild(layer);
         };
         return MapScene;
-    })(Scene.BaseScene);
-    Scene.MapScene = MapScene;    
-})(Scene || (Scene = {}));
+    })(Scenes.BaseScene);
+    Scenes.MapScene = MapScene;    
+})(Scenes || (Scenes = {}));
 
 //@ sourceMappingURL=MapScene.js.map

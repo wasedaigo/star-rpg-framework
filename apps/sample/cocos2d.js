@@ -36,10 +36,15 @@
         engineDir:'../../external/cocos2d-html5/cocos2d/',
         //SingleEngineFile:'',
         appFiles:[//'src/AppDelegate.js',
-            'src/resources.js',
-            'src/scenes/BaseScene.js',
-            'src/scenes/TitleScene.js',
-            'src/scenes/MapScene.js'
+            'resources.js',
+            'rpg/DataManager.js',
+            'rpg/SceneManager.js',
+            'rpg/Game_Character.js',
+            'rpg/Game_Player.js',
+            'rpg/rpg2d.js',
+            'rpg/Scene_Base.js',
+            'rpg/Scene_Title.js',
+            'rpg/Scene_Map.js',
         ]
     };
     window.addEventListener('DOMContentLoaded', function () {

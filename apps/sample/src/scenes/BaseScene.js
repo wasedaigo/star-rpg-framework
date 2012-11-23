@@ -3,8 +3,8 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 }
-var Scene;
-(function (Scene) {
+var Scenes;
+(function (Scenes) {
     var BaseScene = (function (_super) {
         __extends(BaseScene, _super);
         function BaseScene() {
@@ -25,8 +25,8 @@ var Scene;
             history.go(-1);
         };
         return BaseScene;
-    })(cc.Scene);
-    Scene.BaseScene = BaseScene;    
-})(Scene || (Scene = {}));
+    })(Scene);
+    Scenes.BaseScene = BaseScene;    
+})(Scenes || (Scenes = {}));
 
 //@ sourceMappingURL=BaseScene.js.map

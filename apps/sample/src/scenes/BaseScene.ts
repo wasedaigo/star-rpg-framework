@@ -1,4 +1,4 @@
-///<reference path='../cocos2d/cocos2d.d.ts'/>
+///<reference path='../../cocos2d.d.ts'/>
 module Scene {
     export class BaseScene extends cc.Scene {
         public onEnter() {
