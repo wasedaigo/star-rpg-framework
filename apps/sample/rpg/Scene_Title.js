@@ -11,10 +11,9 @@ var Scene_Title = (function (_super) {
     }
     Scene_Title.prototype.onEnter = function () {
         _super.prototype.onEnter.call(this);
-    };
-    Scene_Title.prototype.update = function (dt) {
-        _super.prototype.update.call(this, dt);
-        console.log("title " + dt);
+        var label = rpg2d.Label.create("Title Scene", "Arial", 20);
+        label.setPosition(rpg2d.MakePoint(200, 200));
+        this.addChild(label);
     };
     return Scene_Title;
 })(Scene_Base);

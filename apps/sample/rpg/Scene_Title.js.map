@@ -1,1 +1,1 @@
-{"version":3,"file":"Scene_Title.js","sources":["Scene_Title.ts"],"names":[],"mappings":"AAAA;;;;;AAOA;;IAAA;;;;IACC,gCAAA;QACC,iBAAM;AACN;IAED,+BAAA,UAAc;QACb,iBAAM,kBAAO;QACb,QAAQ,IAAI,WAAW;AACvB;IARF;GAA0B"}
+{"version":3,"file":"Scene_Title.js","sources":["Scene_Title.ts"],"names":[],"mappings":"AAAA;;;;;AAOA;;IAAA;;;;IACC,gCAAA;QACC,iBAAM;QACN,IAAI,QAAQ,MAAM,MAAM,OAAO,eAAe,SAAS;QACvD,MAAM,YAAY,MAAM,UAAU,KAAK;QACvC,KAAK,SAAS;AACd;IANF;GAA0B"}

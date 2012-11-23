@@ -6,8 +6,10 @@
  *
  */
 class Scene_Title extends Scene_Base {
-	public update(dt:number) {
-		super.update(dt);
-		console.log("title " + dt);
+	public onEnter() {
+		super.onEnter();
+		var label = rpg2d.Label.create("Title Scene", "Arial", 20);
+		label.setPosition(rpg2d.MakePoint(200, 200));
+		this.addChild(label);
 	}
 }

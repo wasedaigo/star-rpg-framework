@@ -1,10 +1,23 @@
 ///<reference path='../cocos2d.d.ts'/>
 module rpg2d {
+    export class Point extends cc.Point {};
+    export class Size extends cc.Size {};
+    export function MakePoint(x:number, y:number):Point {return new Point(x, y);};
+    export function PointZero():Point {return new Point(0, 0);};
+
+    export class Label extends cc.LabelTTF {
+        static create(text:string, fontfamiliy:string, fontsize:number): Label {
+            return <Label>cc.LabelTTF.create(text, fontfamiliy, fontsize);
+        }
+    }
+
     export class Scene extends cc.Scene {
-        public onEnter() {
+        public onEnter(): void {
             super.onEnter();
             this.scheduleUpdate();
         }
+
+        public update(dt:number): void {}
     }
 
     export module SceneDirector {

@@ -9,9 +9,6 @@ var Scene_Base = (function (_super) {
         _super.apply(this, arguments);
 
     }
-    Scene_Base.prototype.update = function (dt) {
-        console.log("main " + dt);
-    };
     return Scene_Base;
 })(rpg2d.Scene);
 //@ sourceMappingURL=Scene_Base.js.map
