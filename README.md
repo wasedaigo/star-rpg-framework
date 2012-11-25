@@ -9,6 +9,8 @@ cd star-rpg-framework
 
 git submodule init
 
+git submodule update
+
 python -m SimpleHTTPServer
 
 http://localhost:8000/apps/sample/
