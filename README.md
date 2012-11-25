@@ -25,3 +25,7 @@ All submodules are placed here
 
 framework:
 rpg-framework itself
+
+project management
+==================
+https://www.pivotaltracker.com/projects/686011
