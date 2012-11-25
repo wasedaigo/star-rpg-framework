@@ -47,19 +47,15 @@ module rpg2d {
 
     export module SceneDirector {
         export function runWithScene(scene:Scene, config:any) {
-            var director:cc.Director = cc.Director.getInstance();
+            cc.Director.getInstance().runWithScene(scene);
+        }
 
-        // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
-//     director->enableRetinaDisplay(true);
+        export function setDisplayStats(showFPS:any) {
+            cc.Director.getInstance().setDisplayStats(showFPS);
+        }
 
-            // turn on display FPS
-            director.setDisplayStats(config['showFPS']);
-
-            // set FPS. the default value is 1.0/60 if you don't call this
-            director.setAnimationInterval(1.0 / config['frameRate']);
-
-            director.runWithScene(scene);
-            console.log("runWithScene");
+        export function setAnimationInterval(interval:number) {
+            cc.Director.getInstance().setAnimationInterval(interval);
         }
 
         export function replaceScene(scene:cc.Scene) {
