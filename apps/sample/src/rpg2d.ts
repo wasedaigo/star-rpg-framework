@@ -1,4 +1,5 @@
-///<reference path='../cocos2d.d.ts'/>
+/// <reference path='../cocos2d.d.ts' />
+/// <reference path='ebi.ts' />
 module rpg2d {
     export class Point extends cc.Point {};
     export class Size extends cc.Size {};
