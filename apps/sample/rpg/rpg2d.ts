@@ -11,10 +11,35 @@ module rpg2d {
         }
     }
 
+    export class Menu extends cc.Menu {
+        static create(menuItem:any, option?:any): Menu {
+            return <Menu>cc.Menu.create(menuItem, option);
+        }
+    }
+
+    export class MenuItemLabel extends cc.MenuItemLabel {
+        static create(label:cc.LabelTTF, parent:any, callback:any):MenuItemLabel {
+            return <MenuItemLabel>cc.MenuItemLabel.create(label, parent, callback);
+        }
+    }
+
+    export class TileMap extends cc.TMXTiledMap {
+        static create(tmxPath:string) : TileMap {
+            return <TileMap>cc.TMXTiledMap.create(tmxPath);
+        }
+        public getContentSize() : Size {
+            return <Size>this.getContentSize();
+        }
+    }
+
     export class Scene extends cc.Scene {
         public onEnter(): void {
             super.onEnter();
             this.scheduleUpdate();
+        }
+
+        public addChild(child:cc.Node, zOrder?:number, tag?:number): void {
+            super.addChild(child, zOrder, tag);
         }
 
         public update(dt:number): void {}
@@ -39,6 +64,10 @@ module rpg2d {
 
         export function replaceScene(scene:cc.Scene) {
             cc.Director.getInstance().replaceScene(scene);
+        }
+
+        export function getWinSize() : Size {
+            return <Size>cc.Director.getInstance().getWinSize();
         }
     }
 }

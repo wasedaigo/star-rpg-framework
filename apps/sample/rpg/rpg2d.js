@@ -47,6 +47,45 @@ var rpg2d;
         return Label;
     })(cc.LabelTTF);
     rpg2d.Label = Label;    
+    var Menu = (function (_super) {
+        __extends(Menu, _super);
+        function Menu() {
+            _super.apply(this, arguments);
+
+        }
+        Menu.create = function create(menuItem, option) {
+            return cc.Menu.create(menuItem, option);
+        }
+        return Menu;
+    })(cc.Menu);
+    rpg2d.Menu = Menu;    
+    var MenuItemLabel = (function (_super) {
+        __extends(MenuItemLabel, _super);
+        function MenuItemLabel() {
+            _super.apply(this, arguments);
+
+        }
+        MenuItemLabel.create = function create(label, parent, callback) {
+            return cc.MenuItemLabel.create(label, parent, callback);
+        }
+        return MenuItemLabel;
+    })(cc.MenuItemLabel);
+    rpg2d.MenuItemLabel = MenuItemLabel;    
+    var TileMap = (function (_super) {
+        __extends(TileMap, _super);
+        function TileMap() {
+            _super.apply(this, arguments);
+
+        }
+        TileMap.create = function create(tmxPath) {
+            return cc.TMXTiledMap.create(tmxPath);
+        }
+        TileMap.prototype.getContentSize = function () {
+            return this.getContentSize();
+        };
+        return TileMap;
+    })(cc.TMXTiledMap);
+    rpg2d.TileMap = TileMap;    
     var Scene = (function (_super) {
         __extends(Scene, _super);
         function Scene() {
@@ -56,6 +95,9 @@ var rpg2d;
         Scene.prototype.onEnter = function () {
             _super.prototype.onEnter.call(this);
             this.scheduleUpdate();
+        };
+        Scene.prototype.addChild = function (child, zOrder, tag) {
+            _super.prototype.addChild.call(this, child, zOrder, tag);
         };
         Scene.prototype.update = function (dt) {
         };
@@ -75,6 +117,10 @@ var rpg2d;
             cc.Director.getInstance().replaceScene(scene);
         }
         SceneDirector.replaceScene = replaceScene;
+        function getWinSize() {
+            return cc.Director.getInstance().getWinSize();
+        }
+        SceneDirector.getWinSize = getWinSize;
     })(rpg2d.SceneDirector || (rpg2d.SceneDirector = {}));
     var SceneDirector = rpg2d.SceneDirector;
 

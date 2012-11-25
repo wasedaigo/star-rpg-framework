@@ -10,7 +10,7 @@ module Scenes {
             label.setPosition(cc.p(160, 460));
             this.addChild(label);
 
-            var label: cc.LabelTTF = cc.LabelTTF.create("Go to Map", "Arial", 20);
+            var label: cc.LabelTTF = cc.LabelTTF.create("Go to Title", "Arial", 20);
             var menuItem: cc.MenuItemLabel = cc.MenuItemLabel.create(label, this, this.gotoTitleClicked);
             var menu: cc.Menu = cc.Menu.create(menuItem, null);
             var s: cc.Size = cc.Director.getInstance().getWinSize();

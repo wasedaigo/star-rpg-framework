@@ -10,22 +10,25 @@ module cc {
     }
 	export function p(x:number, y:number):Point;
 	export function PointZero():Point;
-    export class Scene {
-        constructor();
-    	addChild(obj:any): void;
-    	init():void;
-    	onEnter():void;
-    	onExit():void;
-        scheduleUpdate():void;
-    }
+
     export class Node {
         addChild(child:Node, zOrder?:number, tag?:number): void;
         setPosition(pos:Point): void;
     }
+
     export class Layer extends Node {
         onEnter():void;
         onExit():void;
     }
+
+    export class Scene extends Node {
+        constructor();
+        init():void;
+        onEnter():void;
+        onExit():void;
+        scheduleUpdate():void;
+    }
+
     export class LabelTTF extends Node {
     	static create(label:string, fontfamiliy:string, fontsize:number): LabelTTF;
     }
