@@ -1,0 +1,87 @@
+module ebi {
+
+    // TODO: Use 'Member Accessor Declarations'
+
+    /*
+     * An immutable image
+     */
+    class Image {
+        isDisposed_: bool;
+        constructor(public width:  number,
+                    public height: number) {
+        }
+        dispose(): void {
+        }
+        isDisposed(): bool {
+            return this.isDisposed_;
+        }
+        rect(): Rect {
+            return null;
+        }
+        // TODO: How to draw a text?
+    }
+
+    /*
+     * Color
+     */
+    class Color {
+        constructor(public red:   number,
+                    public green: number,
+                    public blue:  number,
+                    public alpha: number) {
+        }
+    }
+
+    /*
+     * Font
+     */
+    class Font {
+        constructor(public name:     string,
+                    public size:     number,
+                    public isBold:   bool,
+                    public isItalic: bool,
+                    public color:    Color) {
+        }
+    }
+
+    /*
+     * Layer
+     */
+    class Layer {
+    }
+
+    /*
+     * Sprite
+     */
+    class Sprite {
+        constructor(public layer:   Layer,
+                    public image:   Image,
+                    public x:       number,
+                    public y:       number,
+                    public srcRect: Rect,
+                    public scaleX:  number,
+                    public scaleY:  number,
+                    public angle:   number,
+                    public alpha:   number) { // TODO: tone
+        }
+        dispose(): void {
+        }
+        isDisposed(): bool {
+            return false;
+        }
+        flash() {
+            /* is this needed? */
+        }
+        // TODO: Use Matrix?
+    }
+
+    /*
+     * Rect
+     */
+    class Rect {
+        constructor(public x: number,
+                    public y: number,
+                   ) {
+        }
+    }
+}
