@@ -26,6 +26,15 @@ All submodules are placed here
 framework:
 rpg-framework itself
 
+
+setup typescript environment
+==================
+npm install -g typescript
+
+editor plugin
+==================
+http://blogs.msdn.com/b/interoperability/archive/2012/10/01/sublime-text-vi-emacs-typescript-enabled.aspx
+
 project management
 ==================
 https://www.pivotaltracker.com/projects/686011
