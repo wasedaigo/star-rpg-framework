@@ -37,14 +37,7 @@
         //SingleEngineFile:'',
         appFiles:[//'src/AppDelegate.js',
             'resources.js',
-            'rpg/DataManager.js',
-            'rpg/SceneManager.js',
-            'rpg/Game_Character.js',
-            'rpg/Game_Player.js',
-            'rpg/rpg2d.js',
-            'rpg/Scene_Base.js',
-            'rpg/Scene_Title.js',
-            'rpg/Scene_Map.js',
+            'game.js'
         ]
     };
     window.addEventListener('DOMContentLoaded', function () {

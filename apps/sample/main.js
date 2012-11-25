@@ -41,8 +41,7 @@ var cocos2dApp = cc.Application.extend({
     },
     applicationDidFinishLaunching:function () {
         // initialize director
-        rpg2d.SceneDirector.runWithScene(new Scene_Title(), this.config);
-
+        main(this.config);
         return true;
     }
 });
