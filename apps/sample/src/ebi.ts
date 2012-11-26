@@ -19,6 +19,10 @@ module ebi {
             return null;
         }
         // TODO: How to draw a text?
+        static load(path: string): Image {
+            // URL? File?
+            return null;
+        }
     }
 
     /*
@@ -48,6 +52,16 @@ module ebi {
      * Layer
      */
     class Layer {
+        constructor(public x:      number,
+                    public y:      number,
+                    public width:  number,
+                    public height: number,
+                    public scaleX: number,
+                    public scaleY: number,
+                    public angle:  number) {
+            // TODO: tone
+        }
+        // Tiles
     }
 
     /*
@@ -79,9 +93,10 @@ module ebi {
      * Rect
      */
     class Rect {
-        constructor(public x: number,
-                    public y: number,
-                   ) {
+        constructor(public x:      number,
+                    public y:      number,
+                    public width:  number,
+                    public height: number) {
         }
     }
 }
