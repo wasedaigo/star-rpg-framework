@@ -3,7 +3,7 @@ all: bake
 
 # Build JS file from TS files
 bake:
-	tsc --sourcemap apps/sample/src/Main.ts --out apps/sample/game.js
+	tsc --sourcemap apps/sample/src/Main.ts --out apps/sample/game.js --target ES5
 
 # Clean generated files
 clean:
