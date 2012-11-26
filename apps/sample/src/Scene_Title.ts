@@ -7,8 +7,7 @@
  *
  */
 class Scene_Title extends Scene_Base {
-	public onEnter() {
-		super.onEnter();
+	public start() {
 		var label = rpg2d.Label.create("Title Scene", "Arial", 20);
 		label.setPosition(rpg2d.MakePoint(160, 450));
 		this.addChild(label);
@@ -23,6 +22,10 @@ class Scene_Title extends Scene_Base {
 	}
 
 	private onClicked() {
+		rpg2d.SceneDirector.replaceScene(new Scene_Map());
+	}
+	
+	private terminate() {
 		rpg2d.SceneDirector.replaceScene(new Scene_Map());
 	}
 }

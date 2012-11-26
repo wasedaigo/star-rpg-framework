@@ -33,10 +33,22 @@ module rpg2d {
         }
     }
 
+    export class Layer extends cc.Layer {}
+
     export class Scene extends cc.Scene {
+        public start(): void {}
+
+        public terminate(): void {}
+
         public onEnter(): void {
             super.onEnter();
             this.scheduleUpdate();
+            this.start();
+        }
+
+        public onExit(): void {
+            super.onExit();
+            this.terminate();
         }
 
         public addChild(child:cc.Node, zOrder?:number, tag?:number): void {

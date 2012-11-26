@@ -13,6 +13,7 @@ module cc {
 
     export class Node {
         addChild(child:Node, zOrder?:number, tag?:number): void;
+        removeChild(removeChild:Node): void;
         setPosition(pos:Point): void;
     }
 
