@@ -42,6 +42,7 @@ module cc {
     export class TMXTiledMap extends Node {
         static create(tmxPath:string) : TMXTiledMap;
         getContentSize() : Size;
+        getObjectGroup(id:string) : any;
     }
     export class Director {
     	static getInstance() : Director;
