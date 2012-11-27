@@ -13,7 +13,7 @@ class Scene_Title extends Scene_Base {
 		this.addChild(label);
 
         var label: rpg2d.Label = rpg2d.Label.create("Go to Map", "Arial", 20);
-        var menuItem: rpg2d.MenuItemLabel = rpg2d.MenuItemLabel.create(label, this, this.onClicked);
+        var menuItem: rpg2d.MenuItemLabel = rpg2d.MenuItemLabel.create(label, this.onClicked, this);
         var menu: rpg2d.Menu = rpg2d.Menu.create(menuItem, null);
         var s: rpg2d.Size = rpg2d.SceneDirector.getWinSize();
         menu.setPosition(rpg2d.PointZero());

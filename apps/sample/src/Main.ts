@@ -1,5 +1,5 @@
 ///<reference path='rpg2d.ts'/>
-///<reference path='Scene_Title.ts'/>
+///<reference path='Scene_Map.ts'/>
 
 /**
  * Starting point of the application
@@ -14,5 +14,5 @@ function main(config) {
     // set FPS. the default value is 1.0/60 if you don't call this
     rpg2d.SceneDirector.setAnimationInterval(1.0 / config['frameRate']);
 
-	rpg2d.SceneDirector.runWithScene(new Scene_Title(), config);
+	rpg2d.SceneDirector.runWithScene(new Scene_Map(), config);
 }

@@ -1,12 +1,9 @@
-
-var s_pathClose  = "res/images/close.png";
-var s_tmxTest    = "res/tmx/ortho-objects.tmx";
-var s_tmxImage   = "res/tmx/fixed-ortho-test2.png";
-
 var g_ressources = [
-    {type:"image", src:s_pathClose},
-    {type:"image", src:s_tmxImage},
-
+    {type:"image", src:"res/images/close.png"},
+    {type:"image", src:"res/tmx/TileA.png"},
+    {type:"image", src:"res/tmx/TileB.png"},
+    {type:"image", src:"res/tmx/fixed-ortho-test2.png"},
     //tmx ressources
-    {type:"tmx", src:s_tmxTest}
+    {type:"tmx", src:"res/tmx/sample.tmx"},
+    {type:"tmx", src:"res/tmx/ortho-objects.tmx"}
 ];

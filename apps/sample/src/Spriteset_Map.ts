@@ -34,7 +34,8 @@ class Spriteset_Map {
 
   private createTilemap() {
     //Display TileMap
-    this._map = rpg2d.TileMap.create("res/tmx/ortho-objects.tmx");
+    this._map = rpg2d.TileMap.create("res/tmx/sample.tmx");
+    this._map.setPosition(rpg2d.MakePoint(0, 0));
     this._root.addChild(this._map, -1, 1);    
   }
 }
