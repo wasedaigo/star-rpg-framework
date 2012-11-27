@@ -1,4 +1,4 @@
-///<reference path='rpg2d.ts'/>
+///<reference path='../cocos2d.d.ts'/>
 ///<reference path='Scene_Map.ts'/>
 
 /**
@@ -7,12 +7,13 @@
 function main(config) {
 // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
 //     director->enableRetinaDisplay(true);
+	var director:cc.Director = cc.Director.getInstance();
 
     // turn on display FPS
-    rpg2d.SceneDirector.setDisplayStats(config['showFPS']);
+    director.setDisplayStats(config['showFPS']);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    rpg2d.SceneDirector.setAnimationInterval(1.0 / config['frameRate']);
+    director.setAnimationInterval(1.0 / config['frameRate']);
 
-	rpg2d.SceneDirector.runWithScene(new Scene_Map(), config);
+	director.runWithScene(new Scene_Map());
 }

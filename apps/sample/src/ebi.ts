@@ -1,3 +1,4 @@
+///<reference path='../cocos2d.d.ts'/>
 module ebi {
 
     // TODO: Use 'Member Accessor Declarations'
@@ -98,5 +99,26 @@ module ebi {
                     public width:  number,
                     public height: number) {
         }
+    }
+
+    /*
+     * Scene
+     */
+    export class Scene extends cc.Scene {
+        public start(): void {}
+        public terminate(): void {}
+
+        public onEnter(): void {
+            super.onEnter();
+            this.scheduleUpdate();
+            this.start();
+        }
+
+        public onExit(): void {
+            super.onExit();
+            this.terminate();
+        }
+
+        public update(dt:number): void {}
     }
 }

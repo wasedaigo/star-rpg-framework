@@ -8,13 +8,30 @@ module cc {
         width:number;
         height:number;
     }
+    export class Rect {
+        x:number;
+        y:number;
+        width:number;
+        height:number;
+    }
+    export function rect(x:number, y:number, width:number, height:number):Rect;
 	export function p(x:number, y:number):Point;
 	export function PointZero():Point;
 
     export class Node {
         addChild(child:Node, zOrder?:number, tag?:number): void;
+        getChildByTag(tag:string): Node;
         removeChild(removeChild:Node): void;
         setPosition(pos:Point): void;
+    }
+
+    export class Sprite extends Node {
+        static createWithTexture(texture:any, rect:Rect):Sprite;
+    }
+
+    export class SpriteBatchNode extends Node {
+        static create(path:string, max:number):SpriteBatchNode;
+        getTexture():any;
     }
 
     export class Layer extends Node {

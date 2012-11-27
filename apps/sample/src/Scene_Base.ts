@@ -1,9 +1,9 @@
-///<reference path='./rpg2d.ts'/>
+///<reference path='./ebi.ts'/>
 /**
  * Scene_Base
  *
  * シーンのベースとなります
  *
  */
-class Scene_Base extends rpg2d.Scene {
+class Scene_Base extends ebi.Scene {
 }
