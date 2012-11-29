@@ -5,17 +5,14 @@ JS-based RPG framework based on cocos2d familiy
 
 run sample app
 ==================
+```sh
 cd star-rpg-framework
-
 git submodule init
-
 git submodule update
-
 python -m SimpleHTTPServer
-
 cd apps/sample
-
 make bake
+```
 
 http://localhost:8000/apps/sample/
 
