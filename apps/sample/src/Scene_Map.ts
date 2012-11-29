@@ -2,6 +2,7 @@
 ///<reference path='Scene_Base.ts'/>
 ///<reference path='Scene_Title.ts'/>
 ///<reference path='Spriteset_Map.ts'/>
+
 /**
  * Scene_Map
  *
@@ -10,6 +11,7 @@
  */
 class Scene_Map extends Scene_Base {
     private _spriteSetMap;
+
 	public start() {
 		var label = cc.LabelTTF.create("Map Scene", "Arial", 20);
 		label.setPosition(cc.p(160, 450));
@@ -40,5 +42,9 @@ class Scene_Map extends Scene_Base {
 
     private disposeSpriteSet() {
         this._spriteSetMap.dispose();
+    }
+
+    public update(dt:number) {
+        this._spriteSetMap.update(dt);
     }
 }

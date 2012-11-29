@@ -25,7 +25,7 @@ class Sprite_Character {
         this._batch.addChild(sprite);
         sprite.setPosition(cc.p(160, 240));
 
-        this._root.addChild(this._batch, -1, Sprite_Character.TAG_SPRITE_MANAGER); 
+        this._root.addChild(this._batch, -1, Sprite_Character.TAG_SPRITE_MANAGER);
     }
 
     /**
@@ -33,5 +33,8 @@ class Sprite_Character {
     */
     public dispose() {
         this._root.removeChild(this._batch);
+    }
+
+    public update(dt:number) {
     }
 }

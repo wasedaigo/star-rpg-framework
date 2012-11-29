@@ -35,8 +35,17 @@ module cc {
     }
 
     export class Layer extends Node {
+        init():void;
         onEnter():void;
         onExit():void;
+        setMouseEnabled(value:bool):void;
+        setTouchEnabled(value:bool):void;
+        onTouchBegan(touch:any, event:any):void;
+        onTouchMoved(touch:any, event:any):void;
+        onTouchEnded(touch:any, event:any):void;
+        onTouchesBegan(touches:any, event:any):void;
+        onTouchesMoved(touches:any, event:any):void;
+        onTouchesEnded(touches:any, event:any):void;
     }
 
     export class Scene extends Node {

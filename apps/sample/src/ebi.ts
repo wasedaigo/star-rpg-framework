@@ -130,6 +130,35 @@ module ebi {
     }
 
     /*
+     * Internal implementation for catching input-event
+     */
+    class InputLayer extends cc.Layer {
+        private onTouchBegan(touch, event) {
+            console.log("onTouchBegan");
+        }
+
+        private onTouchMoved(touch, event) {
+            console.log("onTouchMoved");
+        }
+
+        private onTouchEnded(touch, event) {
+            console.log("onTouchEnded");
+        }
+
+        private onTouchesBegan(touches, event) {
+            console.log("onTouchesBegan");
+        }
+
+        private onTouchesMoved(touches, event) {
+            console.log("onTouchesMoved" + JSON.stringify(touches[0]));
+        }
+
+        private onTouchesEnded(touches, event) {
+            console.log("onTouchesEnded");
+        }
+    }
+
+    /*
      * Scene
      */
     export class Scene extends cc.Scene {
@@ -140,6 +169,11 @@ module ebi {
             super.onEnter();
             this.scheduleUpdate();
             this.start();
+
+            var layer = new InputLayer();
+            layer.init();
+            layer.setTouchEnabled(true);
+            this.addChild(layer);
         }
 
         public onExit(): void {
