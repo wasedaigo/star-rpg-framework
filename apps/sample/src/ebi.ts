@@ -4,25 +4,16 @@ module ebi {
     // TODO: Use 'Member Accessor Declarations'
 
     /*
-     * An immutable image
+     * Audio
      */
-    class Image {
-        isDisposed_: bool;
-        constructor(public width:  number,
-                    public height: number) {
+    class Audio {
+        static playBgm(): void {
         }
-        dispose(): void {
+        static stopBgm(): void {
         }
-        isDisposed(): bool {
-            return this.isDisposed_;
+        static playSE(): void {
         }
-        rect(): Rect {
-            return null;
-        }
-        // TODO: How to draw a text?
-        static load(path: string): Image {
-            // URL? File?
-            return null;
+        static stopAllSEs(): void {
         }
     }
 
@@ -50,6 +41,42 @@ module ebi {
     }
 
     /*
+     * Graphics
+     */
+    class Graphics {
+    }
+
+    /*
+     * An image.
+     * The Image object is immutable.
+     */
+    class Image {
+        isDisposed_: bool;
+        constructor(public width:  number,
+                    public height: number) {
+        }
+        dispose(): void {
+        }
+        isDisposed(): bool {
+            return this.isDisposed_;
+        }
+        rect(): Rect {
+            return null;
+        }
+        // TODO: How to draw a text?
+        static load(path: string): Image {
+            // URL? File?
+            return null;
+        }
+    }
+
+    /*
+     * Input
+     */
+    class Input {
+    }
+
+    /*
      * Layer
      */
     class Layer {
@@ -59,7 +86,8 @@ module ebi {
                     public height: number,
                     public scaleX: number,
                     public scaleY: number,
-                    public angle:  number) {
+                    public angle:  number,
+                    public alpha:  number) {
             // TODO: tone
         }
         // Tiles
