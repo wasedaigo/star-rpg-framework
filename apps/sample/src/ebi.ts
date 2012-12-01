@@ -135,27 +135,27 @@ module ebi {
      * Internal implementation for catching input-event
      */
     class InputLayer extends cc.Layer {
-        private onTouchBegan(touch, event) {
+        private onTouchBegan(touch, event): void {
             console.log("onTouchBegan");
         }
 
-        private onTouchMoved(touch, event) {
+        private onTouchMoved(touch, event): void {
             console.log("onTouchMoved");
         }
 
-        private onTouchEnded(touch, event) {
+        private onTouchEnded(touch, event): void {
             console.log("onTouchEnded");
         }
 
-        private onTouchesBegan(touches, event) {
+        private onTouchesBegan(touches, event): void {
             console.log("onTouchesBegan");
         }
 
-        private onTouchesMoved(touches, event) {
+        private onTouchesMoved(touches, event): void {
             console.log("onTouchesMoved" + JSON.stringify(touches[0]));
         }
 
-        private onTouchesEnded(touches, event) {
+        private onTouchesEnded(touches, event): void {
             console.log("onTouchesEnded");
         }
     }
