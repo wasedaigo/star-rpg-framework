@@ -1,40 +1,40 @@
 module cc {
-    export class Point {
+    class Point {
         constructor(x:number, y:number);
         x:number;
         y:number;
     }
-    export class Size {
+    class Size {
         width:number;
         height:number;
     }
-    export class Rect {
+    class Rect {
         x:number;
         y:number;
         width:number;
         height:number;
     }
-    export function rect(x:number, y:number, width:number, height:number):Rect;
-	export function p(x:number, y:number):Point;
-	export function PointZero():Point;
+    function rect(x:number, y:number, width:number, height:number):Rect;
+    function p(x:number, y:number):Point;
+    function PointZero():Point;
 
-    export class Node {
+    class Node {
         addChild(child:Node, zOrder?:number, tag?:number): void;
         getChildByTag(tag:string): Node;
         removeChild(removeChild:Node): void;
         setPosition(pos:Point): void;
     }
 
-    export class Sprite extends Node {
+    class Sprite extends Node {
         static createWithTexture(texture:any, rect:Rect):Sprite;
     }
 
-    export class SpriteBatchNode extends Node {
+    class SpriteBatchNode extends Node {
         static create(path:string, max:number):SpriteBatchNode;
         getTexture():any;
     }
 
-    export class Layer extends Node {
+    class Layer extends Node {
         init():void;
         onEnter():void;
         onExit():void;
@@ -56,21 +56,21 @@ module cc {
         scheduleUpdate():void;
     }
 
-    export class LabelTTF extends Node {
+    class LabelTTF extends Node {
     	static create(label:string, fontfamiliy:string, fontsize:number): LabelTTF;
     }
-    export class Menu extends Node {
+    class Menu extends Node {
     	static create(menuItem:any, option?:any): Menu;
     }
-    export class MenuItemLabel extends Node {
+    class MenuItemLabel extends Node {
     	static create(label:LabelTTF, parent:any, callback:any):MenuItemLabel;
     }
-    export class TMXTiledMap extends Node {
+    class TMXTiledMap extends Node {
         static create(tmxPath:string) : TMXTiledMap;
         getContentSize() : Size;
         getObjectGroup(id:string) : any;
     }
-    export class Director {
+    class Director {
     	static getInstance() : Director;
         runWithScene(scene:Scene);
         replaceScene(scene:Scene);
