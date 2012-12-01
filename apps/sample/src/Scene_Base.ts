@@ -1,4 +1,4 @@
-///<reference path='./ebi.ts'/>
+///<reference path='../../../ebi/ebi.ts'/>
 /**
  * Scene_Base
  *
