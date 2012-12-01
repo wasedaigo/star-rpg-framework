@@ -1,4 +1,4 @@
-/// <reference path='../cocos2d.d.ts' />
+/// <reference path='./cocos2d.d.ts' />
 /// <reference path='./Input.ts' />
 
 module ebi {
