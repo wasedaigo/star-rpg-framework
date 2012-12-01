@@ -44,6 +44,8 @@ module ebi {
      * Graphics
      */
     class Graphics {
+        static update(): void {
+        }
     }
 
     /*
