@@ -27,6 +27,8 @@ module cc {
 
     class Sprite extends Node {
         static createWithTexture(texture:any, rect:Rect):Sprite;
+        setTextureRect(rect:any):any;
+        setTexture(path:string):any;
     }
 
     class SpriteBatchNode extends Node {
@@ -48,7 +50,7 @@ module cc {
         onTouchesEnded(touches:any, event:any):void;
     }
 
-    export class Scene extends Node {
+    class Scene extends Node {
         constructor();
         init():void;
         onEnter():void;
@@ -77,5 +79,10 @@ module cc {
         setDisplayStats(fps:string);
         setAnimationInterval(interval:number);
         getWinSize() : Size;
+    }
+    class TextureCache {
+        static getInstance(): TextureCache;
+        addImage(path:string): void;
+        textureForKey(path:string): any;
     }
 }

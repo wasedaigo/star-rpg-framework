@@ -87,16 +87,19 @@ module ebi {
         }
 
         private onTouchesBegan(touches, event): void {
+            if (!touches[0]){ return; }
             var location:Point = <Point>(touches[0].getLocation());
             Input.instance.beginTouch(location);
         }
 
         private onTouchesMoved(touches, event): void {
+            if (!touches[0]){ return; }
             var location:Point = <Point>(touches[0].getLocation());
             Input.instance.moveTouch(location);
         }
 
         private onTouchesEnded(touches, event): void {
+            if (!touches[0]){ return; }
             var location:Point = <Point>(touches[0].getLocation());
             Input.instance.endTouch(location);
         }
