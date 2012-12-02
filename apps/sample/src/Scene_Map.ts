@@ -1,4 +1,5 @@
 ///<reference path='../cocos2d.d.ts'/>
+/// <reference path='../../../ebi/Input.ts' />
 ///<reference path='Scene_Base.ts'/>
 ///<reference path='Scene_Title.ts'/>
 ///<reference path='Spriteset_Map.ts'/>
@@ -45,6 +46,11 @@ class Scene_Map extends Scene_Base {
     }
 
     public update(dt:number) {
+        super.update(dt);
+
+        if (ebi.Input.instance.isNewlyTouched) {
+            console.log("Newly Touched = " + ebi.Input.instance.location.x);
+        }
         this._spriteSetMap.update(dt);
     }
 }

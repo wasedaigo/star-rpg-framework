@@ -1,3 +1,4 @@
+/// <reference path='../../../ebi/Input.ts' />
 /// <reference path='../../../ebi/Scene.ts' />
 /**
  * Scene_Base
@@ -6,4 +7,8 @@
  *
  */
 class Scene_Base extends ebi.Scene {
+
+	public update(dt:number): void {
+		ebi.Input.instance.update();
+	}
 }

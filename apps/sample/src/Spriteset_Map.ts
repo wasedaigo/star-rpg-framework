@@ -40,7 +40,7 @@ class Spriteset_Map {
      */
     public dispose() {
         this._root.removeChild(this._map);
-        this._character.dispose();
+        //this._character.dispose();
     }
 
     private createTilemap() {

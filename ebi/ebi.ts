@@ -116,9 +116,18 @@ module ebi {
     }
 
     /*
+     * Point
+     */
+    export class Point {
+        constructor(public x:      number,
+                    public y:      number) {
+        }
+    }
+
+    /*
      * Rect
      */
-    class Rect {
+    export class Rect {
         constructor(public x:      number,
                     public y:      number,
                     public width:  number,
