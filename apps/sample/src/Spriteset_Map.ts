@@ -58,6 +58,10 @@ class Spriteset_Map {
         this._gamePlayer = new Game_Player(this._root);
     }
 
+    public getGamePlayer(): Game_Player {
+        return this._gamePlayer;
+    }
+
     public disposeGamePlayer() {
         this._gamePlayer.dispose();
         this._gamePlayer = null;

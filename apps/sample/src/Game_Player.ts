@@ -15,7 +15,11 @@ class Game_Player extends Sprite_Character {
         super(root);
     }
 
-    public update(dt:number) {
+    public moveTo(x:number, y:number) {
+        this.addCommand("moveTo", {x:x, y:y});
+    }
+
+    public update(dt: number) {
         super.update(dt);
     }
 }

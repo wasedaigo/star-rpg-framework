@@ -49,7 +49,8 @@ class Scene_Map extends Scene_Base {
         super.update(dt);
 
         if (ebi.Input.instance.isNewlyTouched) {
-            console.log("Newly Touched = " + ebi.Input.instance.location.x);
+            var location: ebi.Point = ebi.Input.instance.location;
+            this._spriteSetMap.getGamePlayer().moveTo(location.x, location.y);
         }
         this._spriteSetMap.update(dt);
     }

@@ -23,6 +23,7 @@ module cc {
         getChildByTag(tag:string): Node;
         removeChild(removeChild:Node): void;
         setPosition(pos:Point): void;
+        getPosition(): Point;
     }
 
     class Sprite extends Node {
