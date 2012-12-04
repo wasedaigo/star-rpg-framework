@@ -2,6 +2,7 @@
 ///<reference path='Game_Player.ts'/>
 ///<reference path='Sprite_Character.ts'/>
 ///<reference path='Scene_Base.ts'/>
+///<reference path='../../../ebi/TextureCache.ts' />
 
 /**
  * Spriteset_Map
@@ -13,6 +14,7 @@ class Spriteset_Map {
     private _gamePlayer: Game_Player;
     private _root: Scene_Base = null;
     private _map: cc.TMXTiledMap = null;
+    private _background: cc.Sprite = null;
     private _character: Sprite_Character = null;
 
     /**
@@ -51,6 +53,14 @@ class Spriteset_Map {
     }
 
     private createPictures() {   
+        // setup title image
+        ebi.TextureCache.instance.addImage("res/images/game/panorama/room.png");
+        this._background = cc.Sprite.createWithTexture(
+            ebi.TextureCache.instance.getTexture("res/images/game/panorama/room.png"), 
+            cc.rect(0, 0, 240, 240)
+        );
+        this._background.setAnchorPoint(cc.p(0, 0));
+        this._root.addChild(this._background, -2);
     }
 
     private createCharacters() {

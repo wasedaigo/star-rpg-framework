@@ -6,9 +6,12 @@
  <tileset firstgid="193" name="TileB" tilewidth="32" tileheight="32">
   <image source="TileB.png" width="512" height="512"/>
  </tileset>
+ <tileset firstgid="449" name="room" tilewidth="240" tileheight="240">
+  <image source="../images/game/panorama/room.png" width="240" height="240"/>
+ </tileset>
  <layer name="bottom" width="10" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA22PwQkAMAgDXcFHu4HZf8T2oSBHHkdRY0wrIvS5i4M3P9VMT10Luuy6zD51Bd+ZO63TM+O+77wu5rw9/xE8ZHyZSei5XA7uPj+f1OCQAQAA
+   H4sIAAAAAAAAA1NlYGBQA2IxJCyKRgsCsSoUw8TUoHw1NHWCUD5MLQyoYlGHDYihqcUF0N2ICyCbRcg8mH/U8KiDuRGXH2BhRcivgkhq1ZD4ACfhcDeQAQAA
   </data>
  </layer>
  <layer name="middle" width="10" height="10">
