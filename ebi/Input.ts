@@ -7,7 +7,7 @@ module ebi {
      * Input: Singleton class
      */
     export class Input {
-        private static _input: Input = null;
+        private static _instance: Input = null;
         private _isTouched: bool;
         private _isNewlyTouched: bool;
         private _location: Point;
@@ -21,10 +21,10 @@ module ebi {
         }
 
         public static get instance():Input {
-            if (!Input._input) {
-                Input._input = new Input();
+            if (!Input._instance) {
+                Input._instance = new Input();
             }
-            return Input._input;
+            return Input._instance;
         }
 
         public get isTouched(): bool {

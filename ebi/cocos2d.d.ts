@@ -30,6 +30,7 @@ module cc {
         static createWithTexture(texture:any, rect:Rect):Sprite;
         setTextureRect(rect:any):any;
         setTexture(path:string):any;
+        setAnchorPoint(point:Point):void;
     }
 
     class SpriteBatchNode extends Node {
@@ -85,5 +86,13 @@ module cc {
         static getInstance(): TextureCache;
         addImage(path:string): void;
         textureForKey(path:string): any;
+    }
+    class AudioEngine {
+        static getInstance(): AudioEngine;
+        playMusic(path:string, repeat:bool): string;
+        stopMusic(): void;
+        playEffect(path:string, repeat:bool): string;
+        stopEffect(id:string): void;
+        unloadEffect(path:string): void;
     }
 }

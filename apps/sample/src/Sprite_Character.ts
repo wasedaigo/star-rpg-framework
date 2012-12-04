@@ -73,19 +73,20 @@ class Sprite_Character {
 
     private updateCommand(dt: number) {
         if (this._movingTarget) {
-            var moveDistance: number = Sprite_Character.MoveSpeed.Normal * dt * Sprite_Character.UNIT_DISTANCE_PER_SECOND;
+            var moveDistance: number = Sprite_Character.MoveSpeed.Normal * Sprite_Character.UNIT_DISTANCE_PER_SECOND * dt;
             var currentPosition: cc.Point = this._sprite.getPosition();
             var dx: number = this._movingTarget.x - currentPosition.x;
             var dy: number = this._movingTarget.y - currentPosition.y;
 
-            var dir:number = (Math.floor(4 * Math.atan2(dy, dx) / Math.PI) + 8) % 8;
-            this._setDir(Math.floor(dir / 2));
+            this._setDir(this._calcDir(dx, dy));
 
             var distance2: number = dx * dx + dy * dy;
             if (moveDistance * moveDistance > distance2) {
+                // If the character is close enought to the destination, snap to the position and stop the movement
                 this._sprite.setPosition(new cc.Point(this._movingTarget.x, this._movingTarget.y));
                 this._movingTarget = null;
             } else {
+                // Move towards specific direction
                 var tx: number = dx / (Math.abs(dx) + Math.abs(dy));
                 var ty: number = dy / (Math.abs(dx) + Math.abs(dy));
                 var newX: number = currentPosition.x + moveDistance * tx;
@@ -93,6 +94,12 @@ class Sprite_Character {
                 this._sprite.setPosition(new cc.Point(newX, newY));
             }
         }
+    }
+
+    private _calcDir(dx: number, dy: number) {
+        var dir:number = (Math.floor(4 * Math.atan2(dy, dx) / Math.PI) + 8) % 8;
+        return Math.floor(dir / 2);
+        
     }
 
     // Update walk-cycle of the character

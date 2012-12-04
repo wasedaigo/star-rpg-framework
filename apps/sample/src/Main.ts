@@ -1,5 +1,6 @@
 ///<reference path='../cocos2d.d.ts'/>
 ///<reference path='Scene_Map.ts'/>
+///<reference path='Scene_Title.ts'/>
 
 /**
  * Starting point of the application
@@ -15,5 +16,5 @@ function main(config) {
     // set FPS. the default value is 1.0/60 if you don't call this
     director.setAnimationInterval(1.0 / config['frameRate']);
 
-	director.runWithScene(new Scene_Map());
+	director.runWithScene(new Scene_Title());
 }

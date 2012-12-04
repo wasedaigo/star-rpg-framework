@@ -14,10 +14,12 @@ class Scene_Map extends Scene_Base {
     private _spriteSetMap;
 
 	public start() {
+        // Add Title
 		var label = cc.LabelTTF.create("Map Scene", "Arial", 20);
 		label.setPosition(cc.p(160, 450));
 		this.addChild(label);
 
+        // Added clickable menu item
         var label: cc.LabelTTF = cc.LabelTTF.create("Go to Title", "Arial", 20);
         var menuItem: cc.MenuItemLabel = cc.MenuItemLabel.create(label, this.onClicked, this);
         var menu: cc.Menu = cc.Menu.create(menuItem, null);
@@ -26,6 +28,7 @@ class Scene_Map extends Scene_Base {
         menuItem.setPosition(cc.p(s.width / 2, s.height / 2));
         this.addChild(menu);
 
+        // Create sprites
         this.createSpriteSet();
 	}
 

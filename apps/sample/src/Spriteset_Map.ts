@@ -23,7 +23,7 @@ class Spriteset_Map {
         this.createTilemap();
         //this.createCharacters();
         this.createGamePlayer();
-
+        this.createPictures();
         /*
         create_parallax
         create_characters
@@ -48,6 +48,9 @@ class Spriteset_Map {
         this._map = cc.TMXTiledMap.create("res/tmx/sample.tmx");
         this._map.setPosition(cc.p(0, 0));
         this._root.addChild(this._map, -1, 1);    
+    }
+
+    private createPictures() {   
     }
 
     private createCharacters() {
