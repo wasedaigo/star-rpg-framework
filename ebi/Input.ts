@@ -7,63 +7,47 @@ module ebi {
      * Input: Singleton class
      */
     export class Input {
-        private static _instance: Input = null;
-        private _isTouched: bool;
-        private _isNewlyTouched: bool;
-        private _location: Point;
-        private _lastAction: string;
+        private static _isTouched: bool      = false;
+        private static _isNewlyTouched: bool = false;
+        private static _location: Point      = new Point(0, 0);
+        private static _lastAction: string   = "";
 
-        constructor() {
-            this._isTouched = false;
-            this._isNewlyTouched = false;
-            this._location = new Point(0, 0);
-            this._lastAction = "";
+        public static get isTouched(): bool {
+            return _isTouched;
         }
 
-        public static get instance():Input {
-            if (!Input._instance) {
-                Input._instance = new Input();
-            }
-            return Input._instance;
+        public static get isNewlyTouched(): bool {
+            return _isNewlyTouched;
         }
 
-        public get isTouched(): bool {
-            return this._isTouched;
+        public static get location(): Point {
+            return _location;
         }
 
-        public get isNewlyTouched(): bool {
-            return this._isNewlyTouched;
+        public static beginTouch(location: Point) {
+            _location   = location;
+            _isTouched  = true;
+            _lastAction = "touchBegan";
         }
 
-        public get location(): Point {
-            return this._location;
+        public static moveTouch(location: Point) {
+            _location   = location;
+            _lastAction = "touchMoved";
         }
 
-        public beginTouch(location: Point) {
-            this._location = location;
-            this._isTouched = true;
-            this._lastAction = "touchBegan";
+        public static endTouch(location: Point) {
+            _location   = location;
+            _lastAction = "touchEnded";
+            _isTouched  = false;
         }
 
-        public moveTouch(location: Point) {
-            this._location = location;
-            this._lastAction = "touchMoved";
-        }
-
-        public endTouch(location: Point) {
-            this._location = location;
-            this._lastAction = "touchEnded";
-            this._isTouched = false;
-        }
-
-        public update(): void {
+        public static update(): void {
             // Set the flag if the screen was taped at this frame
-            this._isNewlyTouched = false;
-            if (this._lastAction === "touchBegan") {
-                this._isNewlyTouched = true;
+            _isNewlyTouched = false;
+            if (_lastAction === "touchBegan") {
+                _isNewlyTouched = true;
             }
-
-            this._lastAction = "";
+            _lastAction = "";
         }
     }
 
@@ -89,19 +73,19 @@ module ebi {
         private onTouchesBegan(touches, event): void {
             if (!touches[0]){ return; }
             var location:Point = <Point>(touches[0].getLocation());
-            Input.instance.beginTouch(location);
+            Input.beginTouch(location);
         }
 
         private onTouchesMoved(touches, event): void {
             if (!touches[0]){ return; }
             var location:Point = <Point>(touches[0].getLocation());
-            Input.instance.moveTouch(location);
+            Input.moveTouch(location);
         }
 
         private onTouchesEnded(touches, event): void {
             if (!touches[0]){ return; }
             var location:Point = <Point>(touches[0].getLocation());
-            Input.instance.endTouch(location);
+            Input.endTouch(location);
         }
     }
 

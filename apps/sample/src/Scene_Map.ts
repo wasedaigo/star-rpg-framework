@@ -51,8 +51,8 @@ class Scene_Map extends Scene_Base {
     public update(dt:number) {
         super.update(dt);
 
-        if (ebi.Input.instance.isNewlyTouched) {
-            var location: ebi.Point = ebi.Input.instance.location;
+        if (ebi.Input.isNewlyTouched) {
+            var location: ebi.Point = ebi.Input.location;
             this._spriteSetMap.getGamePlayer().moveTo(location.x, location.y);
         }
         this._spriteSetMap.update(dt);

@@ -9,6 +9,6 @@
 class Scene_Base extends ebi.Scene {
 
 	public update(dt:number): void {
-		ebi.Input.instance.update();
+		ebi.Input.update();
 	}
 }
