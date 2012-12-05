@@ -4,7 +4,7 @@
 module ebi {
 
     /*
-     * Input: Singleton class
+     * Input
      */
     export class Input {
         private static _isTouched: bool      = false;
