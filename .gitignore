@@ -1,5 +1,6 @@
 .DS_Store
 *~
 
-*game.js
-*game.js.map
+game.js
+game.js.map
+app/sample/resources.js
