@@ -1,27 +1,27 @@
-require "rubygems"
+require 'rubygems'
 require 'json'
 
-result = []
-input_dir = ARGV[0]
-output_dir = ARGV[1]
+input_dir, output_dir = *ARGV
 
 list = [
 	{"ext" => "png", "type" => "image"},
 	{"ext" => "tmx", "type" => "tmx"},
-	{"ext" => "wav", "type" => "effect"}
+	{"ext" => "wav", "type" => "effect"},
        ]
 
-list.each do |desc|
+result = list.inject([]) do |result, desc|
   pathes = Dir["#{input_dir}/**/*.#{desc['ext']}"]
-  pathes.each do |path|
-    str = path.gsub(input_dir + "/", "res/")
-    result << {"type" => desc['type'] ,"src" => str}
-  end
+  result + pathes.map do |path|
+    {
+      "type" => desc['type'],
+      "src"  => path.gsub(input_dir + "/", "res/"),
+    }
+  end.to_a
 end
 
-content = "var g_ressources = "+ result.to_json + ";"
-path = "#{output_dir}/resources.js"
-File.open(path, 'w') do |f| 
+content     = "var g_ressources = #{result.to_json};"
+output_path = "#{output_dir}/resources.js"
+File.open(output_path, 'w') do |f| 
   f.write(content)
-  p "Resource Packed at #{path}"
 end
+puts "Resource Packed at #{output_path}"

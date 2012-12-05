@@ -8,6 +8,7 @@ bake:
 
 # Clean generated files
 clean:
+	rm apps/sample/resources.js
 	rm apps/sample/src/game.js
 	rm apps/sample/src/game.js.map
 
