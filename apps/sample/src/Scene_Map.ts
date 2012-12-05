@@ -1,8 +1,8 @@
-///<reference path='../cocos2d.d.ts'/>
+/// <reference path='../cocos2d.d.ts' />
 /// <reference path='../../../ebi/Input.ts' />
-///<reference path='Scene_Base.ts'/>
-///<reference path='Scene_Title.ts'/>
-///<reference path='Spriteset_Map.ts'/>
+/// <reference path='Scene_Base.ts' />
+/// <reference path='Scene_Title.ts' />
+/// <reference path='Spriteset_Map.ts' />
 
 /**
  * Scene_Map
