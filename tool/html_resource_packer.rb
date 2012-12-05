@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'json'
 
-input_dir, output_dir = *ARGV
+input_dir = ARGV[0]
 
 list = [
 	{'ext' => 'png', 'type' => 'image'},
