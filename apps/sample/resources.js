@@ -1,17 +1,1 @@
-var g_ressources = [
-    {type:"image", src:"res/images/close.png"},
-    {type:"image", src:"res/images/characters/chara01.png"},
-    {type:"image", src:"res/images/game/title.png"},
-    {type:"image", src:"res/images/game/panorama/room.png"},
-    {type:"image", src:"res/images/game/panorama/main_street.png"},
-    {type:"image", src:"res/tmx/TileA.png"},
-    {type:"image", src:"res/tmx/TileB.png"},
-    {type:"image", src:"res/tmx/fixed-ortho-test2.png"},
-
-    //sound
-    {type:"effect", src:"res/sounds/bgm/tick.wav"},
-
-    //tmx ressources
-    {type:"tmx", src:"res/tmx/sample.tmx"},
-    {type:"tmx", src:"res/tmx/ortho-objects.tmx"}
-];
+var g_ressources = [{"src":"res/images/characters/chara01.png","type":"image"},{"src":"res/images/close.png","type":"image"},{"src":"res/images/game/author.png","type":"image"},{"src":"res/images/game/character/chara01.png","type":"image"},{"src":"res/images/game/character/chara02.png","type":"image"},{"src":"res/images/game/character/chara03.png","type":"image"},{"src":"res/images/game/character/dead.png","type":"image"},{"src":"res/images/game/character/door.png","type":"image"},{"src":"res/images/game/character/ghost.png","type":"image"},{"src":"res/images/game/character/mirror.png","type":"image"},{"src":"res/images/game/character/tsugunai_map.png","type":"image"},{"src":"res/images/game/character/tv.png","type":"image"},{"src":"res/images/game/character/window.png","type":"image"},{"src":"res/images/game/panorama/main_street.png","type":"image"},{"src":"res/images/game/panorama/room.png","type":"image"},{"src":"res/images/game/push_start.png","type":"image"},{"src":"res/images/game/the_end.png","type":"image"},{"src":"res/images/game/title.png","type":"image"},{"src":"res/images/system/clock/cancel.png","type":"image"},{"src":"res/images/system/clock/left.png","type":"image"},{"src":"res/images/system/clock/left_down.png","type":"image"},{"src":"res/images/system/clock/left_stop.png","type":"image"},{"src":"res/images/system/clock/right.png","type":"image"},{"src":"res/images/system/clock/right_down.png","type":"image"},{"src":"res/images/system/clock/right_stop.png","type":"image"},{"src":"res/images/system/clock/stop.png","type":"image"},{"src":"res/images/system/clock/stop_down.png","type":"image"},{"src":"res/images/system/clock/use_clock.png","type":"image"},{"src":"res/images/system/normal_baloon_frame.png","type":"image"},{"src":"res/images/system/shout_baloon_frame.png","type":"image"},{"src":"res/images/system/think_baloon_frame.png","type":"image"},{"src":"res/tmx/TileA.png","type":"image"},{"src":"res/tmx/TileB.png","type":"image"},{"src":"res/tmx/sample.tmx","type":"tmx"},{"src":"res/sounds/bgm/rewind.wav","type":"effect"},{"src":"res/sounds/bgm/tick.wav","type":"effect"},{"src":"res/sounds/se/close.wav","type":"effect"},{"src":"res/sounds/se/cloth.wav","type":"effect"},{"src":"res/sounds/se/crash.wav","type":"effect"},{"src":"res/sounds/se/glass.wav","type":"effect"},{"src":"res/sounds/se/hit.wav","type":"effect"},{"src":"res/sounds/se/key.wav","type":"effect"},{"src":"res/sounds/se/kin.wav","type":"effect"},{"src":"res/sounds/se/mystery.wav","type":"effect"},{"src":"res/sounds/se/open.wav","type":"effect"},{"src":"res/sounds/se/pocha.wav","type":"effect"},{"src":"res/sounds/se/shun.wav","type":"effect"},{"src":"res/sounds/se/switch.wav","type":"effect"},{"src":"res/sounds/se/tension.wav","type":"effect"},{"src":"res/sounds/se/tv.wav","type":"effect"},{"src":"res/sounds/se/zan.wav","type":"effect"}];

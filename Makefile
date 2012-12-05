@@ -3,6 +3,7 @@ all: bake
 
 # Build JS file from TS files
 bake:
+	ruby tool/html_resource_packer.rb apps/sample/res apps/sample
 	tsc --sourcemap apps/sample/src/Main.ts --out apps/sample/src/game.js --target ES5
 
 # Clean generated files
