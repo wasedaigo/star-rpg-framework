@@ -9,47 +9,47 @@ module ebi {
          * Input
          */
         export class Input {
-            private static _isTouched: bool      = false;
-            private static _isNewlyTouched: bool = false;
-            private static _location: Point      = new Point(0, 0);
-            private static _lastAction: string   = "";
+            private static isTouched_: bool      = false;
+            private static isNewlyTouched_: bool = false;
+            private static location_: Point      = new Point(0, 0);
+            private static lastAction_: string   = ""; // TODO: This should be an enum
 
             public static get isTouched(): bool {
-                return _isTouched;
+                return isTouched_;
             }
 
             public static get isNewlyTouched(): bool {
-                return _isNewlyTouched;
+                return isNewlyTouched_;
             }
 
             public static get location(): Point {
-                return _location;
+                return location_;
             }
 
             public static beginTouch(location: Point) {
-                _location   = location;
-                _isTouched  = true;
-                _lastAction = "touchBegan";
+                location_   = location;
+                isTouched_  = true;
+                lastAction_ = "touchBegan";
             }
 
             public static moveTouch(location: Point) {
-                _location   = location;
-                _lastAction = "touchMoved";
+                location_   = location;
+                lastAction_ = "touchMoved";
             }
 
             public static endTouch(location: Point) {
-                _location   = location;
-                _lastAction = "touchEnded";
-                _isTouched  = false;
+                location_   = location;
+                lastAction_ = "touchEnded";
+                isTouched_  = false;
             }
 
             public static update(): void {
                 // Set the flag if the screen was taped at this frame
-                _isNewlyTouched = false;
-                if (_lastAction === "touchBegan") {
-                    _isNewlyTouched = true;
+                isNewlyTouched_ = false;
+                if (lastAction_ === "touchBegan") {
+                    isNewlyTouched_ = true;
                 }
-                _lastAction = "";
+                lastAction_ = "";
             }
         }
 
