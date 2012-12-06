@@ -38,7 +38,7 @@
         //SingleEngineFile:'',
         appFiles:[//'src/AppDelegate.js',
             'resources.js',
-            'src/game.js'
+            'game.js'
         ]
     };
     window.addEventListener('DOMContentLoaded', function () {

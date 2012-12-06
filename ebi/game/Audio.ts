@@ -3,7 +3,7 @@
 
 module ebi {
 
-    module game {
+    export module game {
 
         /*
          * Audio: Singleton class

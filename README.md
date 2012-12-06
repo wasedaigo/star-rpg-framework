@@ -14,7 +14,7 @@ cd apps/sample
 make bake
 ```
 
-http://localhost:8000/apps/sample/
+http://localhost:8000/
 
 directories
 ==================

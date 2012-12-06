@@ -3,14 +3,14 @@ all: bake
 
 # Build JS file from TS files
 bake:
-	ruby tool/html_resource_packer.rb apps/sample/res > apps/sample/resources.js
-	tsc --sourcemap apps/sample/src/Main.ts --out apps/sample/src/game.js --target ES5
+	ruby tool/html_resource_packer.rb ./res > ./resources.js
+	tsc --sourcemap ebi/rpg/Main.ts --out ./game.js --target ES5
 
 # Clean generated files
 clean:
-	rm apps/sample/resources.js
-	rm apps/sample/src/game.js
-	rm apps/sample/src/game.js.map
+	rm ./resources.js
+	rm ./game.js
+	rm ./game.js.map
 
 # Declare 'bake' is a command in case of existence of a file named 'bake'
 .PHONY: all bake clean
