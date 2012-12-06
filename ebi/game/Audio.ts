@@ -6,37 +6,25 @@ module ebi {
     export module game {
 
         /*
-         * Audio: Singleton class
+         * Audio
          */
         export class Audio {
-            private static _instance: Audio = null;
-            private audioEngine_;
+            private static audioEngine_ = cc.AudioEngine.getInstance();;
 
-            constructor() {
-                this.audioEngine_ = cc.AudioEngine.getInstance();
+            public static playMusic(path: string, repeat: bool): void {
+                audioEngine_.playMusic(path, repeat);
             }
 
-            public static get instance():Audio {
-                if (!Audio._instance) {
-                    Audio._instance = new Audio();
-                }
-                return Audio._instance;
+            public static stopMusic(): void {
+                audioEngine_.stopMusic();
             }
 
-            public playMusic(path: string, repeat: bool): void {
-                this.audioEngine_.playMusic(path, repeat);
+            public static playEffect(path: string, repeat: bool): string {
+                return audioEngine_.playEffect(path, repeat);
             }
 
-            public stopMusic(): void {
-                this.audioEngine_.stopMusic();
-            }
-
-            public playEffect(path: string, repeat: bool): string {
-                return this.audioEngine_.playEffect(path, repeat);
-            }
-
-            public stopEffect(id: string): void {
-                this.audioEngine_.stopEffect(id);
+            public static stopEffect(id: string): void {
+                audioEngine_.stopEffect(id);
             }   
         }
 

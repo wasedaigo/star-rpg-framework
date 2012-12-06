@@ -42,11 +42,11 @@ module ebi {
                 this.addChild(menu);
 
                 // Play music
-                this.bgmId_ = ebi.game.Audio.instance.playEffect(Scene_Title.BGM, true);
+                this.bgmId_ = ebi.game.Audio.playEffect(Scene_Title.BGM, true);
             }
 
             private onClicked() {
-                ebi.game.Audio.instance.stopEffect(this.bgmId_);
+                ebi.game.Audio.stopEffect(this.bgmId_);
                 cc.Director.getInstance().replaceScene(new Scene_Map());
             }
             
