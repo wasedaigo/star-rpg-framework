@@ -1,8 +1,8 @@
 ///<reference path='../cocos2d.d.ts'/>
 ///<reference path='Scene_Base.ts'/>
 ///<reference path='Scene_Map.ts'/>
-///<reference path='../../../ebi/Audio.ts' />
-///<reference path='../../../ebi/TextureCache.ts' />
+///<reference path='../../../ebi/game/Audio.ts' />
+///<reference path='../../../ebi/game/TextureCache.ts' />
 
 /**
  * Scene_Title
@@ -20,9 +20,9 @@ class Scene_Title extends Scene_Base {
         this.addChild(label);
 
         // setup title image
-        ebi.TextureCache.instance.addImage("res/images/game/title.png");
+        ebi.game.TextureCache.instance.addImage("res/images/game/title.png");
         var sprite = cc.Sprite.createWithTexture(
-            ebi.TextureCache.instance.getTexture("res/images/game/title.png"), 
+            ebi.game.TextureCache.instance.getTexture("res/images/game/title.png"), 
             cc.rect(0, 0, 240, 240)
         );
         sprite.setAnchorPoint(cc.p(0, 0));
@@ -38,11 +38,11 @@ class Scene_Title extends Scene_Base {
         this.addChild(menu);
 
         // Play music
-        this.bgmId_ = ebi.Audio.instance.playEffect(Scene_Title.BGM, true);
+        this.bgmId_ = ebi.game.Audio.instance.playEffect(Scene_Title.BGM, true);
     }
 
     private onClicked() {
-        ebi.Audio.instance.stopEffect(this.bgmId_);
+        ebi.game.Audio.instance.stopEffect(this.bgmId_);
         cc.Director.getInstance().replaceScene(new Scene_Map());
     }
     

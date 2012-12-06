@@ -54,9 +54,9 @@ class Spriteset_Map {
 
     private createPictures() {   
         // setup title image
-        ebi.TextureCache.instance.addImage("res/images/game/panorama/room.png");
+        ebi.game.TextureCache.instance.addImage("res/images/game/panorama/room.png");
         this._background = cc.Sprite.createWithTexture(
-            ebi.TextureCache.instance.getTexture("res/images/game/panorama/room.png"), 
+            ebi.game.TextureCache.instance.getTexture("res/images/game/panorama/room.png"), 
             cc.rect(0, 0, 240, 240)
         );
         this._background.setAnchorPoint(cc.p(0, 0));

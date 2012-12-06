@@ -1,5 +1,5 @@
 ///<reference path='../cocos2d.d.ts'/>
-/// <reference path='../../../ebi/TextureCache.ts' />
+/// <reference path='../../../ebi/game/TextureCache.ts' />
 /**
  * Spriteset_Character
  *
@@ -25,7 +25,7 @@ class Sprite_Character {
     private _dir: number;
     private _cycleDir: number;
     private _cycleTimer: number;
-    private _movingTarget: ebi.Point;
+    private _movingTarget: ebi.game.Point;
     /**
     * Initialize all layers
     */
@@ -35,9 +35,9 @@ class Sprite_Character {
         this._dir = 2;
         this._cycleDir = 1;
 
-        ebi.TextureCache.instance.addImage("res/images/characters/chara01.png");
+        ebi.game.TextureCache.instance.addImage("res/images/characters/chara01.png");
         this._sprite = cc.Sprite.createWithTexture(
-            ebi.TextureCache.instance.getTexture( "res/images/characters/chara01.png"), 
+            ebi.game.TextureCache.instance.getTexture( "res/images/characters/chara01.png"), 
             cc.rect(32 * this._anim, 48 * this._dir, 32, 48)
         );
         this._sprite.setPosition(cc.p(160, 240));
@@ -66,7 +66,7 @@ class Sprite_Character {
     public addCommand(commandType: string, data: any) {
         switch (commandType) {
             case "moveTo":
-                this._movingTarget = new ebi.Point(data.x, data.y);
+                this._movingTarget = new ebi.game.Point(data.x, data.y);
             break;
         }
     }

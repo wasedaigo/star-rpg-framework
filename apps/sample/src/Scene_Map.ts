@@ -1,8 +1,8 @@
 /// <reference path='../cocos2d.d.ts' />
-/// <reference path='../../../ebi/Input.ts' />
-/// <reference path='Scene_Base.ts' />
-/// <reference path='Scene_Title.ts' />
-/// <reference path='Spriteset_Map.ts' />
+/// <reference path='../../../ebi/game/Input.ts' />
+/// <reference path='./Scene_Base.ts' />
+/// <reference path='./Scene_Title.ts' />
+/// <reference path='./Spriteset_Map.ts' />
 
 /**
  * Scene_Map
@@ -51,8 +51,8 @@ class Scene_Map extends Scene_Base {
     public update(dt:number) {
         super.update(dt);
 
-        if (ebi.Input.isNewlyTouched) {
-            var location: ebi.Point = ebi.Input.location;
+        if (ebi.game.Input.isNewlyTouched) {
+            var location: ebi.game.Point = ebi.game.Input.location;
             this._spriteSetMap.getGamePlayer().moveTo(location.x, location.y);
         }
         this._spriteSetMap.update(dt);
