@@ -24,9 +24,9 @@ module ebi {
                 this.addChild(label);
 
                 // setup title image
-                ebi.game.TextureCache.instance.addImage("res/images/game/title.png");
+                ebi.game.TextureCache.addImage("res/images/game/title.png");
                 var sprite = cc.Sprite.createWithTexture(
-                    ebi.game.TextureCache.instance.getTexture("res/images/game/title.png"), 
+                    ebi.game.TextureCache.getTexture("res/images/game/title.png"), 
                     cc.rect(0, 0, 240, 240)
                 );
                 sprite.setAnchorPoint(cc.p(0, 0));

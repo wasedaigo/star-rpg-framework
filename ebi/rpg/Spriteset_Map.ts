@@ -58,9 +58,9 @@ module ebi {
 
             private createPictures() {   
                 // setup title image
-                ebi.game.TextureCache.instance.addImage("res/images/game/panorama/room.png");
+                ebi.game.TextureCache.addImage("res/images/game/panorama/room.png");
                 this._background = cc.Sprite.createWithTexture(
-                    ebi.game.TextureCache.instance.getTexture("res/images/game/panorama/room.png"), 
+                    ebi.game.TextureCache.getTexture("res/images/game/panorama/room.png"), 
                     cc.rect(0, 0, 240, 240)
                 );
                 this._background.setAnchorPoint(cc.p(0, 0));
