@@ -5,10 +5,10 @@
 // ラフィックなどの基本的な情報を保持します。
 //==============================================================================
 
-class Game_CharacterBase
-  //--------------------------------------------------------------------------
-  // ● Private変数
-  //--------------------------------------------------------------------------
+class Game_CharacterBase {
+    //--------------------------------------------------------------------------
+    // ● Private変数
+    //--------------------------------------------------------------------------
 
     // Priate
     private originalDirection_: number;      // 元の向き
@@ -212,11 +212,21 @@ class Game_CharacterBase
         // TODO: get global variable somehow
         var x2: number = $gameMap.roundXWithDirection(x, d)
         var y2: number = $gameMap.roundYWithDirection(y, d)
-        if (!$gameMap.valid?(x2, y2)) {return false;}
-        if (this.through_ || this.isDebugThrough()) {return true};
-        if (!this.isMapPassable(x, y, d)) {return false;}
-        if (!this.isMapPassable(x2, y2, this.reverseDir(d)) {return false;}
-        if collideWithCharacters(x2, y2) {return false;}
+        if (!$gameMap.valid?(x2, y2)) {
+            return false;
+        }
+        if (this.through_ || this.isDebugThrough()) {
+            return true;
+        }
+        if (!this.isMapPassable(x, y, d)) {
+            return false;
+        }
+        if (!this.isMapPassable(x2, y2, this.reverseDir(d))) {
+            return false;
+        }
+        if (collideWithCharacters(x2, y2)) {
+            return false;
+        }
         return true
     }
     //--------------------------------------------------------------------------
@@ -228,7 +238,7 @@ class Game_CharacterBase
         var x2: number = $gameMap.roundXWithDirection(x, horz);
         var y2: number = $gameMap.roundYWithDirection(y, vert);
         return (this.isPassable(x, y, vert) && this.isPassable(x, y2, horz)) ||
-        (this.isPassable(x, y, horz) && this.isPassable(x2, y, vert));
+            (this.isPassable(x, y, horz) && this.isPassable(x2, y, vert));
     }
     //--------------------------------------------------------------------------
     // ● マップ通行可能判定
@@ -248,9 +258,9 @@ class Game_CharacterBase
     //--------------------------------------------------------------------------
     public collideWithEvents(x: number, y: number): bool {
         /*
-        $gameMap.events_xy_nt(x, y).any? do |event|
+          $gameMap.events_xy_nt(x, y).any? do |event|
           event.normal_priority? || self.is_a?(Game_Event)
-        end
+          end
         */
         return false;
     }
@@ -271,7 +281,7 @@ class Game_CharacterBase
     //     d : 方向（2,4,6,8）
     //--------------------------------------------------------------------------
     public setDirection(d: number) {
-        if (!directionFix_ && d != 0 {
+        if (!directionFix_ && d != 0) {
             this.direction_ = d;
         }
         this.stopCount_ = 0;
@@ -337,11 +347,11 @@ class Game_CharacterBase
     //--------------------------------------------------------------------------
     // ● 移動時の更新
     //--------------------------------------------------------------------------
-    private updateMove
-        this.realX_ = [this.realX_ - this.distancePerFrame(), this.x_].max if this.x_ < this.realX_
-        this.realX_ = [this.realX_ + this.distancePerFrame(), this.x_].min if this.x_ > this.realX_
-        this.realY_ = [this.realY_ - this.distancePerFrame(), this.y_].max if this.y_ < this.realY_
-        this.realY_ = [this.realY_ + this.distancePerFrame(), this.y_].min if this.y_ > this.realY_
+    private updateMove(): void {
+        this.realX_ = [this.realX_ - this.distancePerFrame(), this.x_].max if this.x_ < this.realX_;
+        this.realX_ = [this.realX_ + this.distancePerFrame(), this.x_].min if this.x_ > this.realX_;
+        this.realY_ = [this.realY_ - this.distancePerFrame(), this.y_].max if this.y_ < this.realY_;
+        this.realY_ = [this.realY_ + this.distancePerFrame(), this.y_].min if this.y_ > this.realY_;
         
         if (!this.isMoving()) {
             this.updateBushDepth();
@@ -370,7 +380,7 @@ class Game_CharacterBase
     //--------------------------------------------------------------------------
     private updateAnimeCount(): void {
         if (this.isMoving() && this.walkAnime_) {
-          this.animeCount_ += 1.5;
+            this.animeCount_ += 1.5;
         } else { 
             if(this.stepAnime_ || this.pattern_ != this.originalPattern_) {
                 this.animeCount_ += 1;
@@ -466,12 +476,12 @@ class Game_CharacterBase
     public moveStraight(d: number, turnOk: bool = true): void {
         this.moveSucceed_ = this.isPassable(this.x_, this.y_, d);
         if (this.moveSucceed_) {
-          this.setDirection(d);
-          this.x_ = $gameMap.roundXWithDirection(this.x_, d);
-          this.y_ = $gameMap.roundYWithDirection(this.y_, d);
-          this.realX_ = $gameMap.XWithDirection(this.x_, reverse_dir(d));
-          this.realY_ = $gameMap.YWithDirection(this.y_, reverse_dir(d));
-          this.increaseSteps();
+            this.setDirection(d);
+            this.x_ = $gameMap.roundXWithDirection(this.x_, d);
+            this.y_ = $gameMap.roundYWithDirection(this.y_, d);
+            this.realX_ = $gameMap.XWithDirection(this.x_, reverse_dir(d));
+            this.realY_ = $gameMap.YWithDirection(this.y_, reverse_dir(d));
+            this.increaseSteps();
         } else {
             if (turnOk) {
                 this.setDirection(d);
@@ -487,11 +497,11 @@ class Game_CharacterBase
     public moveDiagonal(horz: number, vert: number): void {
         this.moveSucceed_ = isDiagonalPassable(x, y, horz, vert);
         if (this.moveSucceed_) {
-          this.x_ = $gameMap.roundXWithDirection(this.x_, horz);
-          this.y_ = $gameMap.roundYWithDirection(this.y_, vert);
-          this.realX_ = $gameMap.XWithDirection(this.x_, this.reverseDir(horz));
-          this.realY_ = $gameMap.YWithDirection(this.y_, this.reverseDir(vert));
-          this.increaseSteps();
+            this.x_ = $gameMap.roundXWithDirection(this.x_, horz);
+            this.y_ = $gameMap.roundYWithDirection(this.y_, vert);
+            this.realX_ = $gameMap.XWithDirection(this.x_, this.reverseDir(horz));
+            this.realY_ = $gameMap.YWithDirection(this.y_, this.reverseDir(vert));
+            this.increaseSteps();
         }
 
         if (this.direction_ == this.reverseDir(horz)) {
