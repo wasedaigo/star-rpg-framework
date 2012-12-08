@@ -46,8 +46,16 @@ module ebi {
         /*
          * Graphics
          */
-        class Graphics {
-            static update(): void {
+        export class Graphics {
+            public static update(): void {}
+            public static freeze(): void {}
+            public static transition(duration:number): void {}
+            public static get width(): number {
+                return 0; // TODO
+            }
+
+            public static get height(): number {
+                return 0; // TODO
             }
         }
 

@@ -1,17 +1,6 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
 /// <reference path='../game/Input.ts' />
 
-// 仮
-module ebi {
-    export module game {
-        export class Graphics {
-            public static update(): void {}
-            public static freeze(): void {}
-            public static transition(duration:number): void {}
-        }
-    }
-}
-
 module ebi {
     export module rpg {
         export class SceneManager {

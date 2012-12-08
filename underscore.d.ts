@@ -88,6 +88,7 @@ interface underscore {
   flatten(obj:any[], shallow:number): any[];
 
   without(obj:any[]): any[];
+  union(...obj:any[]): any[];
   intersection(...obj:any[]): any[];
   difference(...obj:any[]): any[];
 
@@ -162,3 +163,4 @@ interface underscore {
   chain(obj:any):any;
   //value is useless
 }
+declare var _ :underscore;
