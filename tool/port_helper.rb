@@ -22,7 +22,7 @@ end
 str.gsub!('#', '//')
 str.gsub!('  ', '    ')
 str.gsub!(/def (.*)$/, 'public \1(): any {')
-str.gsub!(/class (.*)$/, 'class \1 {')
+str.gsub!(/class (.*)$/, 'export class \1 {')
 str.gsub!(/if (.*)$/, 'if (\1) {')
 str.gsub!('else', '} else {')
 str.gsub!(/(\W)end\b/, '\1}' + "\n")
@@ -35,4 +35,7 @@ str.gsub!(/([\w\]\)])$/, '\1;')
 end
 str.gsub!(/\@(\w*)\b/, 'this.\1_')
 str.gsub!("public initialize(): any {", "constructor() {")
+
+str.gsub!(/attrReader.*\:(\w*)\b/, 'public get \1(): any {return this.\1_;}');
+
 puts str
