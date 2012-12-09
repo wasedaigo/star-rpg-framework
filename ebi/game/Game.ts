@@ -1,5 +1,6 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
 
+// TODO: Refactoring
 declare var g_resources: any;
 
 module ebi {
@@ -40,6 +41,7 @@ module ebi {
         }
 
         var cocos2dApp = cc.Application.extend({
+            // 'document' is a kind of a global variable.
             config:document['ccConfig'],
             ctor:function (scene) {
                 this._super();
