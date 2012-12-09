@@ -8,7 +8,7 @@
 
 module ebi {
     export module rpg {
-        class Game_SelfSwitches {
+        export class Game_SelfSwitches {
             //--------------------------------------------------------------------------
             // # Private
             //--------------------------------------------------------------------------

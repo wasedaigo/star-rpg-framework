@@ -41,6 +41,10 @@ module ebi {
             public static get gamePlayer(): any {
                 return null; // TODO
             }
+
+            public static get dataSystem(): any {
+                return null; // TODO
+            }
             
             //--------------------------------------------------------------------------
             // ● モジュール初期化
