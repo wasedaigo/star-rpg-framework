@@ -47,8 +47,8 @@ interface underscore {
   some(obj:any, f: Function): bool;
   some(obj:any, f: Function, context:any): bool;
 
-  include(obj:any, f: Function): bool;
-  contains(obj:any, f: Function): bool;
+  include(args: any[], obj: any): bool;
+  contains(args: any[], obj: any): bool;
 
   invoke(obj:any, f: Function): any[];
   invoke(obj:any, f: Function, args:any[]): any[];

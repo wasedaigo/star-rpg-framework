@@ -20,11 +20,23 @@ module ebi {
                 return null; // TODO
             }
 
+            public static get gameVariables(): any {
+                return null; // TODO
+            }
+
+            public static get gameSelfSwitches(): any {
+                return null; // TODO
+            }
+
             public static get dataTilesets(): any {
                 return null; // TODO
             }
 
             public static get gameMap(): any {
+                return null; // TODO
+            }
+
+            public static get gamePlayer(): any {
                 return null; // TODO
             }
             

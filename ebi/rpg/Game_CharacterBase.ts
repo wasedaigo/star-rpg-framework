@@ -11,43 +11,42 @@
 module ebi {
 
     export module rpg {
-        class Game_CharacterBase {
+        export class Game_CharacterBase {
             //--------------------------------------------------------------------------
-            // ● Private変数
+            // # Protected
+            // TypeScript doesn't support protected keyword.
             //--------------------------------------------------------------------------
 
-            // Priate
-            private originalDirection_: number;      // 元の向き
-            private originalPattern_: number;        // 元のパターン
-            private animeCount_: number;             // アニメカウント
-            private stopCount_: number;              // 停止カウント
-            private jumpCount_: number;              // ジャンプカウント
-            private jumpPeak_: number;               // ジャンプの頂点のカウント
-            private locked_: bool;                   // ロックフラグ
-            private prelockDirection_: number;       // ロック前の向き
-            private moveSucceed_: bool;              // 移動成功フラグ
+            public originalDirection_: number;      // 元の向き
+            public originalPattern_: number;        // 元のパターン
+            public animeCount_: number;             // アニメカウント
+            public stopCount_: number;              // 停止カウント
+            public jumpCount_: number;              // ジャンプカウント
+            public jumpPeak_: number;               // ジャンプの頂点のカウント
+            public locked_: bool;                   // ロックフラグ
+            public prelockDirection_: number;       // ロック前の向き
+            public moveSucceed_: bool;              // 移動成功フラグ
 
-            // Readonly
-            private id_: number;                     // ID
-            private x_: number;                      // マップ X 座標（論理座標）
-            private y_: number;                      // マップ Y 座標（論理座標）
-            private realX_: number;                  // マップ X 座標（実座標）
-            private realY_: number;                  // マップ Y 座標（実座標）
-            private tileId_: number;                 // タイル ID（0 なら無効）
-            private characterName_: string;          // 歩行グラフィック ファイル名
-            private characterIndex_: number;         // 歩行グラフィック インデックス
-            private moveSpeed_: number;              // 移動速度
-            private moveFrequency_: number;          // 移動頻度
-            private walkAnime_: bool;                // 歩行アニメ
-            private stepAnime_: bool;                // 足踏みアニメ
-            private directionFix_: bool;             // 向き固定
-            private opacity_: number;                // 不透明度
-            private blendType_: number;              // 合成方法
-            private direction_: number;              // 向き
-            private pattern_: number;                // パターン
-            private priorityType_: number;           // プライオリティタイプ
-            private through_: bool;                  // すり抜け
-            private bushDepth_: number;                // 茂み深さ
+            public id_: number;                     // ID
+            public x_: number;                      // マップ X 座標（論理座標）
+            public y_: number;                      // マップ Y 座標（論理座標）
+            public realX_: number;                  // マップ X 座標（実座標）
+            public realY_: number;                  // マップ Y 座標（実座標）
+            public tileId_: number;                 // タイル ID（0 なら無効）
+            public characterName_: string;          // 歩行グラフィック ファイル名
+            public characterIndex_: number;         // 歩行グラフィック インデックス
+            public moveSpeed_: number;              // 移動速度
+            public moveFrequency_: number;          // 移動頻度
+            public walkAnime_: bool;                // 歩行アニメ
+            public stepAnime_: bool;                // 足踏みアニメ
+            public directionFix_: bool;             // 向き固定
+            public opacity_: number;                // 不透明度
+            public blendType_: number;              // 合成方法
+            public direction_: number;              // 向き
+            public pattern_: number;                // パターン
+            public priorityType_: number;           // プライオリティタイプ
+            public through_: bool;                  // すり抜け
+            public bushDepth_: number;              // 茂み深さ
 
             //--------------------------------------------------------------------------
             // ● 公開インスタンス変数
@@ -91,7 +90,7 @@ module ebi {
             //--------------------------------------------------------------------------
             // ● 公開メンバ変数の初期化
             //--------------------------------------------------------------------------
-            private initPublicMembers() {
+            public initPublicMembers() {
                 this.id_ = 0;
                 this.x_ = 0;
                 this.y_ = 0;
@@ -119,7 +118,7 @@ module ebi {
             //--------------------------------------------------------------------------
             // ● 非公開メンバ変数の初期化
             //--------------------------------------------------------------------------
-            private initPrivateMembers() {
+            public initPrivateMembers() {
                 this.originalDirection_ = 2;
                 this.originalPattern_ = 1;
                 this.animeCount_ = 0;
@@ -217,7 +216,6 @@ module ebi {
             //     d : 方向（2,4,6,8）
             //--------------------------------------------------------------------------
             public isPassable(x: number, y: number, d: number): bool {
-                // TODO: get global variable somehow
                 var x2: number = DataManager.gameMap.roundXWithDirection(x, d)
                 var y2: number = DataManager.gameMap.roundYWithDirection(y, d)
                 if (!DataManager.gameMap.isValid(x2, y2)) {
@@ -353,7 +351,7 @@ module ebi {
             //--------------------------------------------------------------------------
             // ● 移動時の更新
             //--------------------------------------------------------------------------
-            private updateMove(): void {
+            public updateMove(): void {
                 if (this.x_ < this.realX_) {
                     this.realX_ = Math.max(this.realX_ - this.distancePerFrame(), this.x_);
                 }
@@ -373,7 +371,7 @@ module ebi {
             //--------------------------------------------------------------------------
             // ● 停止時の更新
             //--------------------------------------------------------------------------
-            private updateStop(): void {
+            public updateStop(): void {
                 if (this.locked_) {
                     this.stopCount_ += 1;
                 }
@@ -381,7 +379,7 @@ module ebi {
             //--------------------------------------------------------------------------
             // ● 歩行／足踏みアニメの更新
             //--------------------------------------------------------------------------
-            private updateAnimation(): void {
+            public updateAnimation(): void {
                 this.updateAnimeCount();
                 if (this.animeCount_ > 18 - this.realMoveSpeed() * 2) {
                     this.updateAnimePattern();
@@ -391,7 +389,7 @@ module ebi {
             //--------------------------------------------------------------------------
             // ● アニメカウントの更新
             //--------------------------------------------------------------------------
-            private updateAnimeCount(): void {
+            public updateAnimeCount(): void {
                 if (this.isMoving() && this.walkAnime_) {
                     this.animeCount_ += 1.5;
                 } else { 
@@ -403,7 +401,7 @@ module ebi {
             //--------------------------------------------------------------------------
             // ● アニメパターンの更新
             //--------------------------------------------------------------------------
-            private updateAnimePattern(): void {
+            public updateAnimePattern(): void {
                 if (!this.stepAnime_ && this.stopCount_ > 0) {
                     this.pattern_ = this.originalPattern_;
                 } else {
@@ -413,13 +411,13 @@ module ebi {
             //--------------------------------------------------------------------------
             // ● 梯子判定
             //--------------------------------------------------------------------------
-            private get isLadder(): bool {
+            public get isLadder(): bool {
                 return DataManager.gameMap.isLadder(this.x_, this.y_);
             }
             //--------------------------------------------------------------------------
             // ● 茂み深さの更新
             //--------------------------------------------------------------------------
-            private updateBushDepth(): void {
+            public updateBushDepth(): void {
                 if (this.isNormalPriority() && !this.isObjectCharacter() && this.isBush && !this.isJumping()) {
                     if (!this.isMoving()) {
                         this.bushDepth_ = 8;
@@ -470,23 +468,23 @@ module ebi {
             //--------------------------------------------------------------------------
             // ● 正面の接触イベントの起動判定
             //--------------------------------------------------------------------------
-            public checkEventTriggerTouchFront(): bool {
+            public checkEventTriggerTouchFront(): void {
                 var x2: number = DataManager.gameMap.roundXWithDirection(this.x_, this.direction_);
                 var y2: number = DataManager.gameMap.roundYWithDirection(this.y_, this.direction_);
-                return this.checkEventTriggerTouch(x2, y2);
+                this.checkEventTriggerTouch(x2, y2);
             }
             //--------------------------------------------------------------------------
             // ● 接触イベントの起動判定
             //--------------------------------------------------------------------------
-            public checkEventTriggerTouch(x: number, y: number): bool {
-                return false
+            public checkEventTriggerTouch(x: number, y: number): void {
+                return;
             }
             //--------------------------------------------------------------------------
             // ● まっすぐに移動
             //     d      方向（2,4,6,8）
             //     turn_ok : その場での向き変更を許可
             //--------------------------------------------------------------------------
-            public moveStraight(d: number, turnOk: bool = true): bool {
+            public moveStraight(d: number, turnOk: bool = true): void {
                 this.moveSucceed_ = this.isPassable(this.x_, this.y_, d);
                 if (this.moveSucceed_) {
                     this.setDirection(d);
@@ -498,7 +496,7 @@ module ebi {
                 } else {
                     if (turnOk) {
                         this.setDirection(d);
-                        return this.checkEventTriggerTouchFront();
+                        this.checkEventTriggerTouchFront();
                     }
                 }
             }
