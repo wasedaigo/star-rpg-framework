@@ -108,5 +108,16 @@ module cc {
     }
     class Loader {
         static getInstance(): Loader;
+        preload(res:any): void;
+        onloading: () => void;
+        onload: () => void;
+    }
+    class LoaderScene {
+        static getInstance(): LoaderScene;
+        draw(): void;
+    }
+    class AppController {
+        static shareAppController(): AppController;
+        didFinishLaunchingWithOptions(): void;
     }
 }

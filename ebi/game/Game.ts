@@ -1,5 +1,7 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
 
+declare var g_resources: any;
+
 module ebi {
 
     export class Game {
@@ -62,7 +64,7 @@ module ebi {
             cc.Loader.getInstance().onload = function () {
                 cc.AppController.shareAppController().didFinishLaunchingWithOptions();
             };
-            cc.Loader.getInstance().preload(g_ressources);
+            cc.Loader.getInstance().preload(g_resources);
         }
 
         public applicationDidFinishLaunching(): bool {

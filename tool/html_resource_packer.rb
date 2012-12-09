@@ -19,4 +19,4 @@ result = list.inject([]) do |result, desc|
   end.to_a
 end
 
-puts "var g_ressources = #{result.to_json};"
+puts "var g_resources = #{result.to_json};"
