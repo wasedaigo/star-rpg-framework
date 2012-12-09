@@ -1,5 +1,7 @@
-module ebi {
+/// <reference path='./Game_CommonEvent.ts' />
+/// <reference path='./Game_Map.ts' />
 
+module ebi {
     export module rpg {
 
         /**
@@ -12,7 +14,7 @@ module ebi {
             //--------------------------------------------------------------------------
             // Accessor
             //--------------------------------------------------------------------------
-            public static get dataCommonEvents(): any {
+            public static get dataCommonEvents(): Game_CommonEvent[] {
                 return null; // TODO
             }
 
@@ -32,7 +34,7 @@ module ebi {
                 return null; // TODO
             }
 
-            public static get gameMap(): any {
+            public static get gameMap(): Game_Map {
                 return null; // TODO
             }
 

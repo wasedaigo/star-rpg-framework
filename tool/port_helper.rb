@@ -19,15 +19,20 @@ File.open(input_file, "r") do |f|
     str = f.read
 end
 
-str.gsub!(/def (.*_.*)$/, 'public \1(): any {')
+str.gsub!('#', '//')
+str.gsub!('  ', '    ')
+str.gsub!(/def (.*)$/, 'public \1(): any {')
+str.gsub!(/class (.*)$/, 'class \1 {')
 str.gsub!(/if (.*)$/, 'if (\1) {')
 str.gsub!('else', '} else {')
-str.gsub!('end', '}')
+str.gsub!(/(\W)end\b/, '\1}' + "\n")
+str.gsub!(/\Wnil(\b)/, ' null')
+str.gsub!(/\$(.*)\b/, 'DataManager.\1')
+str.gsub!(/([\w\]\)])$/, '\1;')
 
 ("a".."z").each do |v|
 	str.gsub!(/_#{v}/, v.upcase)
 end
-
-str = str.gsub(/\@(\w*)\s/, 'this.\1_ ')
-
+str.gsub!(/\@(\w*)\b/, 'this.\1_')
+str.gsub!("public initialize(): any {", "constructor() {")
 puts str
