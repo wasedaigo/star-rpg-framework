@@ -32,6 +32,22 @@ module ebi {
         }
 
         /*
+         * Tone
+         */
+        export class Tone {
+            constructor(public red:   number = 0,
+                        public green: number = 0,
+                        public blue:  number = 0,
+                        public gray: number = 0) {
+            }
+
+            public clone(): Tone {
+                //TODO
+                return null;
+            }
+        }
+
+        /*
          * Font
          */
         class Font {
