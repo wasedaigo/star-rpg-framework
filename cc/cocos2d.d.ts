@@ -1,4 +1,17 @@
 module cc {
+
+    function initDebugSetting(): void;
+    function rect(x:number, y:number, width:number, height:number):Rect;
+    function p(x:number, y:number):Point;
+    function PointZero():Point;
+    function setup(el: string);
+    function setup(el: string, width: string, height: string);
+
+    class Application {
+        constructor();
+        _super(): void;
+    }
+
     class Point {
         constructor(x:number, y:number);
         x:number;
@@ -14,9 +27,6 @@ module cc {
         width:number;
         height:number;
     }
-    function rect(x:number, y:number, width:number, height:number):Rect;
-    function p(x:number, y:number):Point;
-    function PointZero():Point;
 
     class Node {
         addChild(child:Node, zOrder?:number, tag?:number): void;
@@ -75,7 +85,7 @@ module cc {
         getObjectGroup(id:string) : any;
     }
     class Director {
-    	static getInstance() : Director;
+    	static getInstance(): Director;
         runWithScene(scene:Scene);
         replaceScene(scene:Scene);
         setDisplayStats(fps:string);
@@ -89,10 +99,14 @@ module cc {
     }
     class AudioEngine {
         static getInstance(): AudioEngine;
+        init(): void;
         playMusic(path:string, repeat:bool): string;
         stopMusic(): void;
         playEffect(path:string, repeat:bool): string;
         stopEffect(id:string): void;
         unloadEffect(path:string): void;
+    }
+    class Loader {
+        static getInstance(): Loader;
     }
 }

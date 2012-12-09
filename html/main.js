@@ -42,7 +42,7 @@ var cocos2dApp = cc.Application.extend({
     },
     applicationDidFinishLaunching:function () {
         // initialize director
-        ebi.rpg.main(this.config);
+        //ebi.rpg.main(this.config);
         return true;
     }
 });
