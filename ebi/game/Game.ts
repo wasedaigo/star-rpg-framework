@@ -3,74 +3,79 @@
 declare var g_resources: any;
 
 module ebi {
+    export module game {
 
-    export class Game {
+        export class Game {
 
-        private static instance_: Game = null;
-        private mainLoop_: (Game) => void;
+            private static instance_: Game = null;
+            private mainLoop_: (Game) => void;
 
-        constructor(mainLoop: (Game) => void) {
-            this.mainLoop_ = mainLoop;
-        }
-
-        public static currentGame(): Game {
-            return instance_;
-        }
-
-        public static run(mainLoop: (Game) => void): void {
-            if (Game.instance_ != null) {
-                throw "A game has already run.";
+            constructor(mainLoop: (Game) => void) {
+                // TODO: Use it!
+                this.mainLoop_ = mainLoop;
             }
-            try {
-                var game = Game.instance_ = new Game(mainLoop);
-                game.run();
-            } finally {
-                Game.instance_ = null;
+
+            public static currentGame(): Game {
+                return instance_;
+            }
+
+            public static run(mainLoop: (Game) => void): void {
+                if (Game.instance_ != null) {
+                    throw "A game has already run.";
+                }
+                try {
+                    var game = Game.instance_ = new Game(mainLoop);
+                    game.run();
+                } finally {
+                    Game.instance_ = null;
+                }
+            }
+
+            private initialize(): void {
+            }
+
+            private run(): void {
+                var app = new cocos2dApp();
             }
         }
 
-        private initialize(): void {
-        }
+        var cocos2dApp = cc.Application.extend({
+            config:document['ccConfig'],
+            ctor:function (scene) {
+                this._super();
+                this.startScene = scene;
+                cc.COCOS2D_DEBUG = this.config['COCOS2D_DEBUG'];
+                cc.initDebugSetting();
+                cc.setup(this.config['tag']);
+                cc.Loader.getInstance().onloading = function () {
+                    cc.LoaderScene.getInstance().draw();
+                };
+                cc.Loader.getInstance().onload = function () {
+                    cc.AppController.shareAppController().didFinishLaunchingWithOptions();
+                };
+                cc.Loader.getInstance().preload(g_resources);
+            },
+            applicationDidFinishLaunching:function () {
+                // initialize director
+                var director = cc.Director.getInstance();
 
-        private run(): void {
-            // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
-            // director->enableRetinaDisplay(true);
+                // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
+                //     director->enableRetinaDisplay(true);
 
-            var director:cc.Director = cc.Director.getInstance();
+                // turn on display FPS
+                director.setDisplayStats(this.config['showFPS']);
 
-            // turn on display FPS
-            //director.setDisplayStats(config['showFPS']);
-            
-            // set FPS. the default value is 1.0/60 if you don't call this
-            //director.setAnimationInterval(1.0 / config['frameRate']);
-            director.setAnimationInterval(1.0 / 60);
+                // set FPS. the default value is 1.0/60 if you don't call this
+                director.setAnimationInterval(1.0 / this.config['frameRate']);
 
-            //director.runWithScene(new Scene_Title());
-        }
-    }
+                // create a scene. it's an autorelease object
 
-    class Application extends cc.Application {
+                // run
+                //director.runWithScene(new this.startScene());
 
-        private config_ = document['ccConfig'];
-
-        public ctor(): void {
-            this._super();
-            cc.initDebugSetting();
-            cc.setup(this.config_['tag']);
-            //cc.AudioEngine.getInstance().init("mp3,ogg");
-            cc.Loader.getInstance().onloading = function () {
-                cc.LoaderScene.getInstance().draw();
-            };
-            cc.Loader.getInstance().onload = function () {
-                cc.AppController.shareAppController().didFinishLaunchingWithOptions();
-            };
-            cc.Loader.getInstance().preload(g_resources);
-        }
-
-        public applicationDidFinishLaunching(): bool {
-            return true;
-        }
+                return true;
+            }
+        });
 
     }
-
 }

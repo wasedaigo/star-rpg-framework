@@ -1,8 +1,15 @@
 /// <reference path='../game/Game.ts' />
 
-class Main {
-    static main(): void {
+module ebi {
+    export module rpg {
+
+        export class Main {
+            public static main(): void {
+                ebi.game.Game.run(function () {
+                    console.log();
+                });
+            }
+        }
+
     }
 }
-
-Main.main();

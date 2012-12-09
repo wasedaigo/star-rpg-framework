@@ -1,5 +1,7 @@
 module cc {
 
+    var COCOS2D_DEBUG;
+
     function initDebugSetting(): void;
     function rect(x:number, y:number, width:number, height:number):Rect;
     function p(x:number, y:number):Point;
@@ -7,9 +9,13 @@ module cc {
     function setup(el: string);
     function setup(el: string, width: string, height: string);
 
+    interface IApplicationClass {
+        new(): cc.Application;
+    }
+
     class Application {
         constructor();
-        _super(): void;
+        static extend(prop:any): IApplicationClass;
     }
 
     class Point {
