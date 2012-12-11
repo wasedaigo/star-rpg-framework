@@ -15,9 +15,9 @@ module cc {
     }
     class Director {
     	static getInstance(): Director;
-        runWithScene(scene:Scene);
-        setDisplayStats(fps:string);
-        setAnimationInterval(interval:number);
+        runWithScene(scene:Scene): void;
+        setDisplayStats(fps:string): void;
+        setAnimationInterval(interval:number): void;
     }
     class Layer {
         static extend(prop:Object): any;
