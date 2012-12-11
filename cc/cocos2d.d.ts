@@ -6,12 +6,8 @@ module cc {
     function setup(el: string);
     function setup(el: string, width: string, height: string);
 
-    interface IApplicationClass {
-        new(): cc.Application;
-    }
     class Application {
-        constructor();
-        static extend(prop:Object): IApplicationClass;
+        static extend(prop:Object): any;
     }
     class AppController {
         static shareAppController(): AppController;
@@ -23,11 +19,8 @@ module cc {
         setDisplayStats(fps:string);
         setAnimationInterval(interval:number);
     }
-    interface ILayer {
-        new(): cc.Layer;
-    }
     class Layer {
-        static extend(prop:Object): ILayer;
+        static extend(prop:Object): any;
     }
     class Loader {
         static getInstance(): Loader;
@@ -39,11 +32,8 @@ module cc {
         static getInstance(): LoaderScene;
         draw(): void;
     }
-    interface IScene {
-        new(): cc.Scene;
-    }
     class Scene {
-        static extend(prop:Object): IScene;
+        static extend(prop:Object): any;
     }
 
 }
