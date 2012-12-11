@@ -23,6 +23,12 @@ module cc {
         setDisplayStats(fps:string);
         setAnimationInterval(interval:number);
     }
+    interface ILayer {
+        new(): cc.Layer;
+    }
+    class Layer {
+        static extend(prop:Object): ILayer;
+    }
     class Loader {
         static getInstance(): Loader;
         preload(res:any): void;
@@ -33,7 +39,11 @@ module cc {
         static getInstance(): LoaderScene;
         draw(): void;
     }
+    interface IScene {
+        new(): cc.Scene;
+    }
     class Scene {
+        static extend(prop:Object): IScene;
     }
 
 }
