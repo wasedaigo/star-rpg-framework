@@ -6,7 +6,7 @@ module ebi {
         export class Main {
             public static main(): void {
                 ebi.game.Game.run(function () {
-                    console.log();
+                    console.log('Update!');
                 });
             }
         }

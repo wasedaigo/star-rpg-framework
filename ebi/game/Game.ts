@@ -36,15 +36,19 @@ module ebi {
             }
 
             private run(): void {
-                var app = new Cocos2dApp();
+                var app = new Cocos2dApp(this.mainLoop_);
             }
         }
 
         var Cocos2dApp = cc.Application.extend({
             // 'document' is a kind of a global variable.
-            config:document['ccConfig'],
-            ctor:function () {
+            // document['ccConfig'] is defined in cocos2d.js.
+            config: document['ccConfig'],
+            mainLoop: null,
+            ctor: function (mainLoop) {
                 this._super();
+                this.mainLoop = mainLoop;
+
                 cc.COCOS2D_DEBUG = this.config['COCOS2D_DEBUG'];
                 cc.initDebugSetting();
                 cc.setup(this.config['tag']);
@@ -72,7 +76,7 @@ module ebi {
                 // create a scene. it's an autorelease object
 
                 // run
-                var scene = new Cocos2dScene;
+                var scene = new Cocos2dScene(this.mainLoop);
                 director.runWithScene(scene);
 
                 return true;
@@ -80,13 +84,18 @@ module ebi {
         });
 
         var Cocos2dScene = cc.Scene.extend({
+            mainLoop: null,
+            ctor: function(mainLoop) {
+                this._super();
+                this.mainLoop = mainLoop;
+            },
             onEnter: function() {
                 this._super();
                 this.scheduleUpdate();
             },
             update: function (delta) {
                 this._super();
-                console.log('update');
+                this.mainLoop();
             }
         });
 
