@@ -19,7 +19,7 @@ class GlobalModel
   #
   def load_character_settings
     charasets_setting = {}
-    File.open("data/common/charasets_setting.yaml", "r") { |f| charasets_setting = YAML::load(f.read) }
+    File.open("data/common/charasets_setting.json", "r") { |f| charasets_setting = JSON.parse(f.read) }
     return charasets_setting
   end
   
@@ -28,7 +28,7 @@ class GlobalModel
   #
   def load_start_info
     start_info = {}
-    File.open("data/common/start.yaml", "r") { |f| start_info = YAML::load(f.read) }
+    File.open("data/common/start.json", "r") { |f| start_info = JSON.parse(f.read) }
     return start_info
   end
 end

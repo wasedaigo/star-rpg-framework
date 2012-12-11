@@ -1,4 +1,4 @@
-require "yaml"
+require "json"
 require "dgo/graphics/sprite"
 require "dgo/graphics/animation_frame"
 require "dgo/graphics/animation"

@@ -5,7 +5,7 @@ require "dgo/tile_map/basic_map_chipset"
 require "dgo/tile_map/anime_map_chipset"
 require "dgo/tile_map/map_chip"
 require "dgo/table/table"
-require "yaml"
+require "json"
 require 'dgo/graphics/sprite'
       
 module DGO
@@ -43,19 +43,19 @@ module DGO
         
         base_chipset = BasicMapChipset.new("#{root_path}/images/game/map/base/#{base_chipset}", grid_width, grid_height)
 
-        str = "#{root_path}/data/chipsets/anime/#{anime_chipset}.yaml"
+        str = "#{root_path}/data/chipsets/anime/#{anime_chipset}.json"
         if File.exist?(str)
-          File.open(str, "r"){|f| chipset_info = YAML::load(f.read)}
+          File.open(str, "r"){|f| chipset_info = JSON.parse(f.read)}
           MapLoader.set_chipset_attributes(base_chipset, chipset_info)
         end
         
         # Anime
         anime_chipset = AnimeMapChipset.new("#{root_path}/images/game/map/anime/#{anime_chipset}", grid_width, grid_height)
         
-        str = "#{root_path}/data/chipsets/anime/#{anime_chipset}.yaml"
+        str = "#{root_path}/data/chipsets/anime/#{anime_chipset}.json"
         if File.exist?(str)
           chipset_info = nil
-          File.open(str, "r") { |f| chipset_info = YAML::load(f.read) }
+          File.open(str, "r") { |f| chipset_info = JSON.parse(f.read) }
           MapLoader.set_chipset_attributes(anime_chipset, chipset_info)
         end
 
@@ -96,8 +96,8 @@ module DGO
             # Load auto chipsets
             when "auto"
               unless auto_chipsets_info
-                File.open(root_path + "/data/chipsets/auto/setting.yaml", "r") do |f|
-                  auto_chipsets_info = YAML::load(f.read)
+                File.open(root_path + "/data/chipsets/auto/setting.json", "r") do |f|
+                  auto_chipsets_info = JSON.parse(f.read)
                 end
               end
  
@@ -113,8 +113,8 @@ module DGO
 
       def self.load_anime_chipset(root_path, id, grid_width, grid_height)
         chipset_info = nil
-        fn = root_path + "/data/chipsets/anime/#{id}.yaml"
-        File.open(fn, "r") { |f| chipset_info = YAML::load(f.read) } if File.exists?(fn)
+        fn = root_path + "/data/chipsets/anime/#{id}.json"
+        File.open(fn, "r") { |f| chipset_info = JSON.parse(f.read) } if File.exists?(fn)
         c = AnimeMapChipset.new(root_path + "/images/game/map/anime/#{id}", grid_width, grid_height)
         MapLoader.set_chipset_attributes(c, chipset_info)
         return c
@@ -122,8 +122,8 @@ module DGO
       
       def self.load_base_chipset(root_path, id, grid_width, grid_height)
         chipset_info = nil
-        fn = root_path + "/data/chipsets/base/#{id}.yaml"
-        File.open(fn, "r") { |f| chipset_info = YAML::load(f.read) } if File.exists?(fn)
+        fn = root_path + "/data/chipsets/base/#{id}.json"
+        File.open(fn, "r") { |f| chipset_info = JSON.parse(f.read) } if File.exists?(fn)
         c = BasicMapChipset.new(root_path + "/images/game/map/base/#{id}", grid_width, grid_height)
         MapLoader.set_chipset_attributes(c, chipset_info)
         return c
@@ -135,7 +135,7 @@ module DGO
       def self.load_editor_chipsets(root_path, model, grid_width, grid_height)
         
         chipset_info = nil
-        File.open(root_path + "/data/chipsets/auto/setting.yaml", "r") {|f| chipset_info = YAML::load(f.read) }
+        File.open(root_path + "/data/chipsets/auto/setting.json", "r") {|f| chipset_info = JSON.parse(f.read) }
         
         auto_chipsets = []
         Find.find(root_path + "/images/game/map/auto") do |path|
@@ -224,9 +224,9 @@ module DGO
         
         model = []
         
-        # open up Yaml file and load
+        # open up json file and load
         File.open(root_path + "/" + filename, "r") do |f|
-          model = YAML::load(f.read)
+          model = JSON.parse(f.read)
         end
         
         # get header map information

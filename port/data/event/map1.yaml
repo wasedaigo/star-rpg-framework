@@ -695,8 +695,7 @@
   pos: 
   - 11
   - 7
-- name: !binary |
-    44OG44Os44OT
+- name: "test"
 
   id: 7
   pages: 
@@ -2109,8 +2108,7 @@
   pos: 
   - 10
   - 0
-- name: !binary |
-    44OK44Kk44OV
+- name: "test"
 
   id: 9
   pages: 
@@ -2305,8 +2303,7 @@
   pos: 
   - 6
   - 14
-- name: !binary |
-    5YaN55Sf44OR44K/44O844Oz77yR
+- name: "test"
 
   id: 10
   pages: 
@@ -3413,7 +3410,7 @@
   pos: 
   - 1
   - 0
-- name: "T\xE6\xB0\x8F"
+- name: "test1"
   id: 11
   pages: 
   - status: 
@@ -3450,8 +3447,7 @@
   pos: 
   - 2
   - 14
-- name: !binary |
-    5aWz5oCn
+- name: "test"
 
   id: 12
   pages: 
@@ -3489,7 +3485,7 @@
   pos: 
   - 10
   - 4
-- name: "\xE5\xB7\xBB\xE3\x81\x8D\xE6\x88\xBB\xE3\x81\x97\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB31"
+- name: "test1"
   id: 13
   pages: 
   - status: 
@@ -4537,8 +4533,7 @@
   pos: 
   - 8
   - 6
-- name: !binary |
-    5YaN55Sf44OR44K/44O844Oz77yS
+- name: "test"
 
   id: 15
   pages: 
@@ -5330,8 +5325,7 @@
   pos: 
   - 2
   - 0
-- name: !binary |
-    5YaN55Sf44OR44K/44O844Oz77yT
+- name: "test"
 
   id: 16
   pages: 
@@ -5826,7 +5820,7 @@
   pos: 
   - 3
   - 0
-- name: "\xE5\x86\x8D\xE7\x94\x9F\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB34"
+- name: "test1"
   id: 17
   pages: 
   - status: 
@@ -6217,7 +6211,7 @@
   pos: 
   - 4
   - 0
-- name: "\xE5\x86\x8D\xE7\x94\x9F\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB35"
+- name: "test1"
   id: 18
   pages: 
   - status: 
@@ -6517,7 +6511,7 @@
   pos: 
   - 5
   - 0
-- name: "\xE5\x86\x8D\xE7\x94\x9F\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB36"
+- name: "test1"
   id: 19
   pages: 
   - status: 
@@ -6898,7 +6892,7 @@
           - left
           - 1
     - - message
-      - "No \xE2\x80\x93 I'm sorry!"
+      - "No ..! I'm sorry!"
       - 12
       - normal_baloon
       - -1
@@ -7031,7 +7025,7 @@
   pos: 
   - 11
   - 11
-- name: "\xE5\x86\x8D\xE7\x94\x9F\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB310"
+- name: "test1"
   id: 22
   pages: 
   - status: 
@@ -7303,7 +7297,7 @@
   pos: 
   - 7
   - 0
-- name: "\xE5\xB7\xBB\xE3\x81\x8D\xE6\x88\xBB\xE3\x81\x97\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB32"
+- name: "test1"
   id: 23
   pages: 
   - status: 
@@ -7975,7 +7969,7 @@
   pos: 
   - 0
   - 2
-- name: "\xE5\xB7\xBB\xE3\x81\x8D\xE6\x88\xBB\xE3\x81\x97\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB33"
+- name: "test1"
   id: 24
   pages: 
   - status: 
@@ -8372,7 +8366,7 @@
   pos: 
   - 0
   - 3
-- name: "\xE5\xB7\xBB\xE3\x81\x8D\xE6\x88\xBB\xE3\x81\x97\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB34"
+- name: "test1"
   id: 25
   pages: 
   - status: 
@@ -8735,7 +8729,7 @@
   pos: 
   - 0
   - 4
-- name: "\xE5\xB7\xBB\xE3\x81\x8D\xE6\x88\xBB\xE3\x81\x97\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB35"
+- name: "test1"
   id: 26
   pages: 
   - status: 
@@ -8974,7 +8968,7 @@
   pos: 
   - 0
   - 6
-- name: "\xE5\xB7\xBB\xE3\x81\x8D\xE6\x88\xBB\xE3\x81\x97\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB36"
+- name: "test1"
   id: 27
   pages: 
   - status: 
@@ -9494,7 +9488,7 @@
   pos: 
   - 1
   - 14
-- name: "\xE5\xB7\xBB\xE3\x81\x8D\xE6\x88\xBB\xE3\x81\x97\xE3\x83\x91\xE3\x82\xBF\xE3\x83\xBC\xE3\x83\xB310"
+- name: "test1"
   id: 30
   pages: 
   - status: 
@@ -9686,7 +9680,7 @@
   pos: 
   - 0
   - 8
-- name: "\xE3\x83\x89\xE3\x82\xA22\xE9\x96\x8B\xE3\x81\x91\xE3\x82\x8B(2\xE3\x81\xAF\xE9\x80\x86"
+- name: "test1"
   id: 31
   pages: 
   - status: 
@@ -9810,7 +9804,7 @@
   pos: 
   - 4
   - 14
-- name: "\xE3\x83\x89\xE3\x82\xA21\xE9\x96\x8B\xE3\x81\x91\xE3\x82\x8B(2\xE3\x81\xAF\xE9\x80\x86"
+- name: "test1"
   id: 32
   pages: 
   - status: 
@@ -9937,8 +9931,7 @@
   pos: 
   - 5
   - 14
-- name: !binary |
-    6Iqx55O2
+- name: "test"
 
   id: 33
   pages: 
@@ -9976,9 +9969,7 @@
   pos: 
   - 12
   - 11
-- name: !binary |
-    44Kk44K5
-
+- name: "test"
   id: 34
   pages: 
   - status: 
@@ -10093,7 +10084,7 @@
   pos: 
   - 12
   - 10
-- name: "\xE3\x82\xA4\xE3\x82\xB9\xE8\xBB\xA2\xE3\x81\xB6(2\xE3\x81\xAF\xE9\x80\x86"
+- name: "test"
   id: 35
   pages: 
   - status: 
@@ -10342,9 +10333,7 @@
   pos: 
   - 4
   - 2
-- name: !binary |
-    56qT
-
+- name: "test"
   id: 37
   pages: 
   - status: 
@@ -10502,9 +10491,7 @@
   pos: 
   - 1
   - 2
-- name: !binary |
-    6Zu76Kmx
-
+- name: "test"
   id: 38
   pages: 
   - status: 
@@ -10619,9 +10606,7 @@
   pos: 
   - 3
   - 3
-- name: !binary |
-    5aWz5oCn5Yi65q665L2T
-
+- name: "test"
   id: 39
   pages: 
   - status: 
@@ -10660,9 +10645,7 @@
   pos: 
   - 0
   - 10
-- name: !binary |
-    5oq844GX5YCS44GX
-
+- name: "test"
   id: 40
   pages: 
   - status: 
@@ -10734,9 +10717,7 @@
   pos: 
   - 6
   - 9
-- name: !binary |
-    44GT44GR44Gf
-
+- name: "test"
   id: 41
   pages: 
   - status: 
@@ -10986,9 +10967,7 @@
   pos: 
   - 8
   - 9
-- name: !binary |
-    44Kk44K56Lui44KT44Gn44KL
-
+- name: "test"
   id: 42
   pages: 
   - status: 
@@ -11027,7 +11006,7 @@
   pos: 
   - 9
   - 10
-- name: "\xE6\x8A\xBC\xE3\x81\x97\xE5\x80\x92\xE3\x81\x97111"
+- name: "test1"
   id: 43
   pages: 
   - status: 
@@ -11099,9 +11078,7 @@
   pos: 
   - 10
   - 12
-- name: !binary |
-    44Op44Kk44OI
-
+- name: "test"
   id: 44
   pages: 
   - status: 
@@ -11266,8 +11243,7 @@
   pos: 
   - 9
   - 6
-- name: !binary |
-    44OI44Kk44Os
+- name: "test"
 
   id: 45
   pages: 
@@ -11357,8 +11333,7 @@
   pos: 
   - 7
   - 3
-- name: !binary |
-    44Kk44OZ44Oz44OI6ZuG
+- name: "test"
 
   id: 46
   pages: 
@@ -11946,7 +11921,7 @@
   pos: 
   - 9
   - 0
-- name: "\xE8\xAD\xA6\xE5\xAE\x981"
+- name: "test1"
   id: 47
   pages: 
   - status: 
@@ -11983,7 +11958,7 @@
   pos: 
   - 1
   - 14
-- name: "\xE8\xAD\xA6\xE5\xAE\x982"
+- name: "test1"
   id: 48
   pages: 
   - status: 

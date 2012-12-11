@@ -14,8 +14,7 @@ module MiniRPG1
         events = []  
         # load events data
         data = nil
-        File.open("data/event/" + event_id + ".yaml", "r"){|f| data = YAML::load(f.read)}
-        
+        File.open("data/event/" + event_id + ".json", "r"){|f| data = JSON.parse(f.read)}
         # add characters
         data.each { |event| model.add_character(event['id'].to_i, event['pos'][0].to_i, event['pos'][1].to_i)}
         

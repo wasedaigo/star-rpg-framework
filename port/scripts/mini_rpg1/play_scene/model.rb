@@ -50,12 +50,12 @@ module MiniRPG1
           start_x = start_info['start_x'].to_i
           start_y = start_info['start_y'].to_i
         end
-        
+		
         @character_chipsets = {}
         @grid_size = GRID_SIZE
         
         # Load Map Data
-        data = MapLoader.load_map(".", "data/map/" + map_id + ".yaml") #load map
+        data = MapLoader.load_map(".", "data/map/" + map_id + ".json") #load map
         
         @panorama = data[:panorama]
         @map =  Map.new(data[:x_count], data[:y_count], MAP_H_GRIDS, MAP_V_GRIDS, GRID_SIZE, GRID_SIZE, data[:collision_data], 2, 4, :game)
