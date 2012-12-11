@@ -36,11 +36,11 @@ module ebi {
             }
 
             private run(): void {
-                var app = new cocos2dApp();
+                var app = new Cocos2dApp();
             }
         }
 
-        var cocos2dApp = cc.Application.extend({
+        var Cocos2dApp = cc.Application.extend({
             // 'document' is a kind of a global variable.
             config:document['ccConfig'],
             ctor:function (scene) {
