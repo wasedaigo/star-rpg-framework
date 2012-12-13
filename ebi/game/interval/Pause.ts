@@ -1,18 +1,19 @@
 /// <reference path='./IInterval.ts' />
 module ebi.game.interval {
-    export class Func implements IInterval {
+    export class Pause implements IInterval {
+
         /*
          *  Private members
          */
         private isDone_: bool;
-        private func_: (Func)=>void;
+        private func_: ()=>bool;
 
         /*
          *  Initialize
          */
-        constructor(func?: (Func)=>void) {
-            this.isDone_ = false;
+        constructor(func: ()=>bool) {
             this.func_ = func;
+            this.isDone_ = false;
         }
 
         /*
@@ -47,11 +48,10 @@ module ebi.game.interval {
          *  Get a value in range based on tween option
          */
         public update(delta: number): void {
-            if (!this.isDone_) {
-                if (this.func_) {
-                    this.func_(this);
+            if (!this.isDone) {
+                if (this.func_()) {
+                    this.isDone_ = true;
                 }
-                this.isDone_ = true;
             }
         }
     }

@@ -45,12 +45,12 @@ module ebi.game.interval {
         private duration_: number;
         private frameNo_: number;
         private tween_: string;
-        private func_: any;
+        private func_: (Step, number)=>void;
 
         /*
          *  Initialize
          */
-        constructor(duration: number, start: number, end: number, tween: string, func: (Step, number)=>any) {
+        constructor(duration: number, start: number, end: number, tween: string, func?: (Step, number)=>void) {
             this.start_ = start;
             this.end_ = end;
             this.duration_ = duration;
@@ -95,7 +95,9 @@ module ebi.game.interval {
                 this.frameNo_ += delta;
 
                 var value: number = Step.completement(this.start_, this.end_, this.frameNo_ / this.duration_, this.tween_);
-                this.func_(this, value);
+                if (this.func_) {
+                    this.func_(this, value);
+                }
             }
         }
     }

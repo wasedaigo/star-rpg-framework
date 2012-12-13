@@ -12,14 +12,15 @@ module ebi.game.interval {
             if (intervals.length === 0) {
                 throw Error("Interval of length 0 is passed");
             }
-
+            this.intervals_ = intervals ? intervals : [];
+            
             var duration = 0;
             this.intervals_.forEach((interval: IInterval) => {
                 duration += interval.duration;
             });
             this.duration_ = duration;
 
-            this.intervals_ = intervals ? intervals : [];
+            
             this.index_ = 0;
             this.lastInterval_ = this.intervals_[this.intervals_.length - 1];
         }
