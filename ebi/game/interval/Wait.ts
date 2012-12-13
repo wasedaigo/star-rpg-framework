@@ -1,29 +1,6 @@
 /// <reference path='./IInterval.ts' />
 module ebi.game.interval {
-    export class Step implements IInterval {
-
-        /*
-         *  List of completement methods
-         */
-        private static _funcs = {
-            "linear": (start: number, end: number, proportion: number): number => {
-                return start + (end - start) * proportion;
-            },
-            "easeIn": (start: number, end: number, proportion: number): number => {
-                return start + (end - start) * proportion * proportion;
-            },
-            "easeOut": (start: number, end: number, proportion: number): number => {
-                return start + (end - start) * Math.sqrt(proportion);
-            },
-            "easeInOut": (start: number, end: number, proportion: number): number => {
-                if (proportion < 0.5 ) {
-                    return start + (end - start) * proportion * proportion;
-                } else {
-                    return start + (end - start) * Math.sqrt(proportion);
-                } 
-            }
-        };
-
+    export class Wait implements IInterval {
         /*
          *  Get a value in range based on tween option
          */
@@ -45,17 +22,19 @@ module ebi.game.interval {
         private duration_: number;
         private frameNo_: number;
         private tween_: string;
+        private isDone_: bool;
         private func_: any;
 
         /*
          *  Initialize
          */
-        constructor(duration: number, start: number, end: number, tween: string, func: (Step, number)=>any) {
+        constructor(duration: number, start: number, end: number, tween: string, func: (number)=>any) {
             this.start_ = start;
             this.end_ = end;
             this.duration_ = duration;
             this.frameNo_ = 0;
             this.tween_ = tween ? tween : "linear";
+            this.isDone_ = false;
             this.func_ = func;
         }
 
@@ -71,31 +50,25 @@ module ebi.game.interval {
          */
         public reset(): void {
             this.frameNo_ = 0;
+            this.isDone_ = false;
         }
 
         /*
          *  Check whether this interval is finished
          */
         public get isDone(): bool {
-            return this.frameNo_ >= this.duration_;
-        }
-
-        /*
-         *  Force finish the interval
-         */
-        public finish(): void {
-            this.frameNo_ = this.duration_;
+            return this.frameNo_ >= this.duration_
         }
 
         /*
          *  Get a value in range based on tween option
          */
         public update(delta: number): void {
-            if (!this.isDone) {
+            if (!this.isDone_) {
                 this.frameNo_ += delta;
 
                 var value: number = Step.completement(this.start_, this.end_, this.frameNo_ / this.duration_, this.tween_);
-                this.func_(this, value);
+                this.func_(value);
             }
         }
     }
