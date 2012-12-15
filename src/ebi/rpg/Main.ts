@@ -4,16 +4,22 @@ module ebi {
     export module rpg {
 
         export class Main {
+
             public static main(): void {
-                var image: ebi.game.Image = null;
-                ebi.game.Game.run(function () {
-                    if (!image) {
-                        ebi.game.Image.load('res/images/game/title.png', function(loadedImage) {
-                            image = loadedImage;
-                        });
-                    }
-                });
+                ebi.game.Game.run(loop);
             }
+
+            private static image: ebi.game.Image = null;
+
+            private static loop(): void {
+                if (!image) {
+                    ebi.game.Image.load('res/images/game/title.png', (loadedImage) => {
+                        image = loadedImage;
+                        console.log('loaded!');
+                    });
+                }
+            }
+
         }
 
     }

@@ -5,9 +5,10 @@ module ebi.game {
     export class Image {
 
         public static load(path:string, callback: (Image) => void): void {
-            // The 2nd arguemnt should not be null.
-            cc.TextureCache.getInstance().addImageAsync(path, this, () => {
-                var ccImage = cc.TextureCache.getInstance().textureForKey(path);
+            var ccCache = cc.TextureCache.getInstance();
+            // The 2nd arguemnt should not be null (nor false) to call the callback.
+            ccCache.addImageAsync(path, true, () => {
+                var ccImage = ccCache.textureForKey(path);
                 callback(new Image(ccImage));
             });
         }
