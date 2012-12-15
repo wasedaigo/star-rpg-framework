@@ -33,6 +33,13 @@ module ebi.game.interval {
         }
 
         /*
+         *  Wait cannot be infinite
+         */
+        public get isInfiniteLoop(): bool {
+            return false;
+        }
+
+        /*
          *  Check whether this interval is finished
          */
         public get isDone(): bool {

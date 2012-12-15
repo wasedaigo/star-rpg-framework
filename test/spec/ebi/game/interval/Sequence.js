@@ -25,6 +25,14 @@ describe('Ebi::Game::Interval::Sequence', function(){
             expect(interval.isDone).toEqual(true);
         }); 
 
+        it('infinite', function(){
+            var interval1 = new Sequence([
+                new Loop(new Sequence([new Wait(5)])),
+                new Wait(5)
+            ]);
+            expect(interval1.isInfiniteLoop).toEqual(true);
+        });
+
         it('finish', function(){
             var interval = new Sequence([
                 new Step(2, 0, 2),

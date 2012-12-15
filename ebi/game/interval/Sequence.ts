@@ -26,6 +26,15 @@ module ebi.game.interval {
         }
         
         /*
+         *  If any of intervals is infinite, this interval is infinite
+         */
+        public get isInfiniteLoop(): bool {
+            return this.intervals_.some(function(interval: IInterval): bool {
+                return interval.isInfiniteLoop;
+            });
+        }
+
+        /*
          *  Check whether this interval is finished
          */
         public get isDone(): bool {

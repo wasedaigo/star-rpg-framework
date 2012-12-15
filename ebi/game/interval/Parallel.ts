@@ -1,7 +1,7 @@
 /// <reference path='./IInterval.ts' />
 
 module ebi.game.interval {
-    export class Prallel implements IInterval {
+    export class Parallel implements IInterval {
         
         private intervals_: IInterval[];
         private duration_: number;
@@ -11,26 +11,36 @@ module ebi.game.interval {
                 throw Error("Interval of length 0 is passed");
             }
 
+            this.intervals_ = intervals ? intervals : [];
             var durations: number[] = this.intervals_.map(
                     (interval: IInterval) => interval.duration
             );
             this.duration_ = Math.max.apply(durations);
+        }
 
-            this.intervals_ = intervals ? intervals : [];;
+        /*
+         *  If all intervals are infinite-loop, this parallel is infinite-loop
+         */
+        public get isInfiniteLoop(): bool {
+            return this.intervals_.every(function(interval: IInterval): bool {
+                return interval.isInfiniteLoop;
+            });
         }
 
         /*
          *  Check whether this interval is finished
          */
         public get isDone(): bool {
-            var isDone = true;
-            for (var i in this.intervals_) {
-                if (!this.intervals_[i].isInfiniteLoop && !this.intervals_[i].isDone) {
-                    isDone = false;
-                    break;
-                }
+            if (this.isInfiniteLoop) {
+                // Infinite loop can never finish
+                return false;
+            } else {
+                // Since we know some of intervals are not infinite,
+                // We can end this interval once all of non-infinite intervals has finished
+                return this.intervals_.every(function(interval: IInterval): bool {
+                  return interval.isInfiniteLoop || interval.isDone;
+                });
             }
-            return isDone;
         }
 
         /*

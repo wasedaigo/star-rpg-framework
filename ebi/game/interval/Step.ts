@@ -33,7 +33,7 @@ module ebi.game.interval {
                                     tween: string): number {
             // Get appropriate completement function
             var func: (start: number, end: number, proportion: number) => number;
-            func = this._funcs[tween] ? this._funcs[tween] : this._linear;
+            func = Step._funcs[tween] ? Step._funcs[tween] : Step._funcs["linear"];
             return func(start, end, proportion);
         }
 
@@ -74,6 +74,13 @@ module ebi.game.interval {
         }
 
         /*
+         *  Step cannot be infinite
+         */
+        public get isInfiniteLoop(): bool {
+            return false;
+        }
+
+        /*
          *  Check whether this interval is finished
          */
         public get isDone(): bool {
@@ -93,7 +100,6 @@ module ebi.game.interval {
         public update(delta: number): void {
             if (!this.isDone) {
                 this.frameNo_ += delta;
-
                 var value: number = Step.completement(this.start_, this.end_, this.frameNo_ / this.duration_, this.tween_);
                 if (this.func_) {
                     this.func_(this, value);

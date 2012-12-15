@@ -31,6 +31,14 @@ module ebi.game.interval {
         }
 
         /*
+         *  It is not possible to find out Pause can be infinite or not
+         *  Assuem it is not.
+         */
+        public get isInfiniteLoop(): bool {
+            return false;
+        }
+
+        /*
          *  Check whether this interval is finished
          */
         public get isDone(): bool {

@@ -3,7 +3,6 @@
 module ebi.game.interval {
     export class Loop implements IInterval {
 
-        private isInfiniteLoop_: bool;
         private currentLoop_: number;
         private loopCount_: number;
         private interval_: IInterval;
@@ -12,15 +11,18 @@ module ebi.game.interval {
         private forceFinish_: bool;
         constructor(interval: IInterval, loopCount?: number) {
             this.loopCount_ = loopCount ? loopCount : 0;
-            this.isInfiniteLoop_ = false;
             this.currentLoop_ = 0;
-            if (this.loopCount_ <= 0) {
-                this.isInfiniteLoop_ = true;
-            }
             this.interval_ = interval;
             this.finished_ = false;
             this.duration_ = 0;
             this.forceFinish_ = false;
+        }
+
+        /*
+         *  Check whether this interval lasts infinite
+         */
+        public get isInfiniteLoop(): bool {
+            return this.loopCount_ <= 0;
         }
 
         /*
@@ -31,7 +33,7 @@ module ebi.game.interval {
                 return true;
             }
 
-            if (this.isInfiniteLoop_) {
+            if (this.isInfiniteLoop) {
                 // Infinite SPLoop never ends
                 return false;
             }
@@ -66,12 +68,12 @@ module ebi.game.interval {
         /*
          *  Progress the interval
          */ 
-        public update(delta): void {
+        public update(delta: number): void {
             if (!this.isDone) {
                 this.interval_.update(delta);
                 if (this.interval_.isDone) {
                     this.currentLoop_++;
-                    if (this.isInfiniteLoop_ || this.currentLoop_ < this.loopCount_) {
+                    if (this.isInfiniteLoop || this.currentLoop_ < this.loopCount_) {
                         // Repeat this interval again, since this is a subanimation
                         this.interval_.reset();
                     }

@@ -30,6 +30,13 @@ module ebi.game.interval {
         }
 
         /*
+         *  Func can never be infinite
+         */
+        public get isInfiniteLoop(): bool {
+            return false;
+        }
+
+        /*
          *  Check whether this interval is finished
          */
         public get isDone(): bool {
