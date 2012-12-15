@@ -1,17 +1,20 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
 
 // TODO: Refactoring
-declare var g_resources: any;
+declare var g_resources: Object;
 
 module ebi.game {
+
+    interface MainLoop {
+        (Game): void;
+    }
 
     export class Game {
 
         private static instance_: Game = null;
-        private mainLoop_: (Game) => void;
+        private mainLoop_: MainLoop;
 
-        constructor(mainLoop: (Game) => void) {
-            // TODO: Use it!
+        constructor(mainLoop: MainLoop) {
             this.mainLoop_ = mainLoop;
         }
 
@@ -19,7 +22,7 @@ module ebi.game {
             return instance_;
         }
 
-        public static run(mainLoop: (Game) => void): void {
+        public static run(mainLoop: MainLoop): void {
             if (Game.instance_ != null) {
                 throw "A game has already run.";
             }
@@ -39,7 +42,7 @@ module ebi.game {
         }
     }
 
-    var Cocos2dApp = cc.Application.extend({
+    var Cocos2dApp: new(MainLoop) => cc.Application = cc.Application.extend({
         // 'document' is a kind of a global variable.
         // document['ccConfig'] is defined in cocos2d.js.
         config: document['ccConfig'],
@@ -59,7 +62,7 @@ module ebi.game {
             };
             cc.Loader.getInstance().preload(g_resources);
         },
-        applicationDidFinishLaunching:function () {
+        applicationDidFinishLaunching: function () {
             // initialize director
             var director = cc.Director.getInstance();
 
@@ -82,17 +85,17 @@ module ebi.game {
         }
     });
 
-    var Cocos2dScene = cc.Scene.extend({
+    var Cocos2dScene: new(MainLoop) => cc.Scene = cc.Scene.extend({
         mainLoop: null,
-        ctor: function(mainLoop) {
+        ctor: function(mainLoop: MainLoop): void {
             this._super();
             this.mainLoop = mainLoop;
         },
-        onEnter: function() {
+        onEnter: function(): void {
             this._super();
             this.scheduleUpdate();
         },
-        update: function (delta) {
+        update: function (delta: number): void {
             this._super();
             this.mainLoop();
         }
