@@ -1,6 +1,6 @@
-var Step = ebi.game.interval.Step;
+var Step = clock.interval.Step;
 
-describe('Ebi::Game::Interval::Step', function(){
+describe('Clock::Interval::Step', function(){
     describe('methods', function(){
         it('update', function(){
         	var i = 0;

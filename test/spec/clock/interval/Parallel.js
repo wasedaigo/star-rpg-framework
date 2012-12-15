@@ -1,9 +1,9 @@
-var Parallel = ebi.game.interval.Parallel;
-var Step = ebi.game.interval.Step;
-var Wait = ebi.game.interval.Wait;
-var Func = ebi.game.interval.Func;
+var Parallel = clock.interval.Parallel;
+var Step = clock.interval.Step;
+var Wait = clock.interval.Wait;
+var Func = clock.interval.Func;
 
-describe('Ebi::Game::Interval::Parallel', function(){
+describe('Clock::Interval::Parallel', function(){
 
     function makeTestData(testFunc) {
         return new Parallel([

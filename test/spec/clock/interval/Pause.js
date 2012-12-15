@@ -1,34 +1,35 @@
-var Func = ebi.game.interval.Func;
+var Pause = clock.interval.Pause;
 
-describe('Ebi::Game::Interval::Func', function(){
+describe('Clock::Interval::Pause', function(){
     describe('methods', function(){
         it('update', function(){
         	var i = 0;
-        	var interval = new Func(function() {i++;});
+        	var interval = new Pause(function() {return i == 1});
 
             expect(interval.isDone).toEqual(false);
-        	interval.update(1);
+            interval.update();
+            expect(interval.isDone).toEqual(false);
+            i = 1;
+            interval.update();
             expect(interval.isDone).toEqual(true);
-            expect(i).toEqual(1);
+
         }); 
 
         it('finish', function(){
             var i = 0;
-            var interval = new Func(function() {i++;});
+            var interval = new Pause(function() {i == 1});
 
             expect(interval.isDone).toEqual(false);
             interval.finish();
             expect(interval.isDone).toEqual(true);
-            expect(i).toEqual(0);
         }); 
 
         it('reset', function(){
-            var interval = new Func();
-
-            expect(interval.isDone).toEqual(false);
+            var interval = new Pause(function() {});
+            
             interval.finish();
             interval.reset();
             expect(interval.isDone).toEqual(false);
-        });
+        }); 
     });
 });

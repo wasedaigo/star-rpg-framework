@@ -1,9 +1,9 @@
-var Loop = ebi.game.interval.Loop;
-var Sequence = ebi.game.interval.Sequence;
-var Step = ebi.game.interval.Step;
-var Func = ebi.game.interval.Func;
+var Loop = clock.interval.Loop;
+var Sequence = clock.interval.Sequence;
+var Step = clock.interval.Step;
+var Func = clock.interval.Func;
 
-describe('Ebi::Game::Interval::Loop', function(){
+describe('Clock::Interval::Loop', function(){
     describe('methods', function(){
         it('loop3', function(){
         	var i = 0;

@@ -1,6 +1,6 @@
-var Wait = ebi.game.interval.Wait;
+var Wait = clock.interval.Wait;
 
-describe('Ebi::Game::Interval::Wait', function(){
+describe('Clock::Interval::Wait', function(){
     describe('methods', function(){
         it('update', function(){
         	var i = 0;

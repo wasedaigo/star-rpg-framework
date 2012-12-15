@@ -14,7 +14,7 @@ clean:
 
 # Execute tests
 unittest:
-	tsc ebi/game/interval.ts --out test/ebi_game_interval.js --target ES5
+	tsc ./src/clock/interval.ts --out ./test/ebi_game_interval.js --target ES5
 
 # Declare 'bake' is a command in case of existence of a file named 'bake'
 .PHONY: all bake clean
