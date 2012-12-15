@@ -7,14 +7,12 @@ module ebi.game.interval {
         private loopCount_: number;
         private interval_: IInterval;
         private finished_: bool;
-        private duration_: number;
         private forceFinish_: bool;
         constructor(interval: IInterval, loopCount?: number) {
             this.loopCount_ = loopCount ? loopCount : 0;
             this.currentLoop_ = 0;
             this.interval_ = interval;
             this.finished_ = false;
-            this.duration_ = 0;
             this.forceFinish_ = false;
         }
 
@@ -48,13 +46,6 @@ module ebi.game.interval {
          public finish(): void {
             this.forceFinish_ = true;
          }
-
-        /*
-         *  Duration of this interval
-         */
-        public get duration(): number {
-            return this.duration_;
-        }
 
         /*
          *  Reset to start state

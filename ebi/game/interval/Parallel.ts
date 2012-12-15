@@ -4,18 +4,12 @@ module ebi.game.interval {
     export class Parallel implements IInterval {
         
         private intervals_: IInterval[];
-        private duration_: number;
-
         constructor(intervals: IInterval[]) {
             if (intervals.length === 0) {
                 throw Error("Interval of length 0 is passed");
             }
 
             this.intervals_ = intervals ? intervals : [];
-            var durations: number[] = this.intervals_.map(
-                    (interval: IInterval) => interval.duration
-            );
-            this.duration_ = Math.max.apply(durations);
         }
 
         /*
@@ -50,13 +44,6 @@ module ebi.game.interval {
             for (var i in this.intervals_) {
                 this.intervals_[i].finish();
             }
-        }
-
-        /*
-         *  Duration of this interval
-         */
-        public get duration(): number {
-            return this.duration_;
         }
 
         /*

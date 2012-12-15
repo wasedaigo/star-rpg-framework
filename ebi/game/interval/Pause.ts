@@ -17,13 +17,6 @@ module ebi.game.interval {
         }
 
         /*
-         *  Duration of this interval
-         */
-        public get duration(): number {
-            return 0;
-        }
-
-        /*
          *  Check whether this interval is finished
          */
         public reset(): void {

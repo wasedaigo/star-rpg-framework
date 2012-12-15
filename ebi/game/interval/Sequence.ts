@@ -6,21 +6,12 @@ module ebi.game.interval {
         private intervals_: IInterval[];
         private lastInterval_: IInterval;
         private index_: number;
-        private duration_: number;
         
         constructor(intervals: IInterval[]) {
             if (intervals.length === 0) {
                 throw Error("Interval of length 0 is passed");
             }
             this.intervals_ = intervals ? intervals : [];
-            
-            var duration = 0;
-            this.intervals_.forEach((interval: IInterval) => {
-                duration += interval.duration;
-            });
-            this.duration_ = duration;
-
-            
             this.index_ = 0;
             this.lastInterval_ = this.intervals_[this.intervals_.length - 1];
         }
@@ -52,13 +43,6 @@ module ebi.game.interval {
         }
 
         /*
-         *  Duration of this interval
-         */
-        public get duration(): number {
-            return this.duration_;
-        }
-
-        /*
          *  Reset to start state
          */ 
         public reset(): void {
@@ -77,7 +61,7 @@ module ebi.game.interval {
                 currentInterval.update(delta);
                 if (currentInterval.isDone) {
                     this.index_++;
-                    if (currentInterval.duration == 0) {
+                    if (currentInterval instanceof Func || currentInterval instanceof  Pause) {
                         this.update(delta);
                     }
                 }
