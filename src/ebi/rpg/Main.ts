@@ -5,8 +5,13 @@ module ebi {
 
         export class Main {
             public static main(): void {
+                var image: ebi.game.Image = null;
                 ebi.game.Game.run(function () {
-                    console.log('Update!');
+                    if (!image) {
+                        ebi.game.Image.load('res/images/game/title.png', function(loadedImage) {
+                            image = loadedImage;
+                        });
+                    }
                 });
             }
         }

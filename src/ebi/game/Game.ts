@@ -1,11 +1,15 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
+/// <reference path='./Image.ts' />
 
 // TODO: Refactoring
 declare var g_resources: Object;
 
 module ebi.game {
-
-    interface MainLoop {
+    
+    /*
+     * TODO: Rename it. This is not the 'main loop'.
+     */
+    export interface MainLoop {
         (Game): void;
     }
 

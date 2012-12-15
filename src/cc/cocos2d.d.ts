@@ -19,14 +19,18 @@ module cc {
         setDisplayStats(fps:string): void;
         setAnimationInterval(interval:number): void;
     }
+    class Image {
+        getHeight(): number;
+        getWidth(): number;
+    }
     class Layer {
         static extend(prop:Object): any;
     }
     class Loader {
         static getInstance(): Loader;
-        preload(res:any): void;
         onloading: () => void;
         onload: () => void;
+        preload(res:any): void;
     }
     class LoaderScene {
         static getInstance(): LoaderScene;
@@ -34,6 +38,11 @@ module cc {
     }
     class Scene {
         static extend(prop:Object): any;
+    }
+    class TextureCache {
+        static getInstance(): TextureCache;
+        addImageAsync(path: string, target: any, selector: () => void);
+        textureForKey(key:string): Image;
     }
 
 }
