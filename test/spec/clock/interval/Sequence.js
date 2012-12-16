@@ -1,5 +1,5 @@
 var Sequence = clock.interval.Sequence;
-var Step = clock.interval.Step;
+var Lerp = clock.interval.Lerp;
 var Wait = clock.interval.Wait;
 var Func = clock.interval.Func;
 
@@ -9,7 +9,7 @@ describe('Clock::Interval::Sequence', function(){
             var i = 0;
             var j = 0;
         	var interval = new Sequence([
-                new Step(2, 0, 2, "linear", function(self, value) {i++;}),
+                new Lerp(2, 0, 2, "linear", function(self, value) {i++;}),
                 new Func(function(self) {i++;}),
                 new Wait(2, function(self) {j++;})
             ]);
@@ -35,7 +35,7 @@ describe('Clock::Interval::Sequence', function(){
 
         it('finish', function(){
             var interval = new Sequence([
-                new Step(2, 0, 2),
+                new Lerp(2, 0, 2),
                 new Func(),
                 new Wait(2)
             ]);
@@ -48,7 +48,7 @@ describe('Clock::Interval::Sequence', function(){
 
         it('reset', function(){
             var interval = new Sequence([
-                new Step(2, 0, 2),
+                new Lerp(2, 0, 2),
                 new Func(),
                 new Wait(2)
             ]);

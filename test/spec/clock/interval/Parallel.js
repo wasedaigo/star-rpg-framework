@@ -1,5 +1,5 @@
 var Parallel = clock.interval.Parallel;
-var Step = clock.interval.Step;
+var Lerp = clock.interval.Lerp;
 var Wait = clock.interval.Wait;
 var Func = clock.interval.Func;
 
@@ -9,7 +9,7 @@ describe('Clock::Interval::Parallel', function(){
         return new Parallel([
             new Loop(
                 new Sequence([
-                    new Step(2, 3, 5, "linear", testFunc),
+                    new Lerp(2, 3, 5, "linear", testFunc),
                     new Wait(2, testFunc)
                 ])
             ),

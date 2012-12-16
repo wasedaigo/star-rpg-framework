@@ -1,6 +1,6 @@
 var Loop = clock.interval.Loop;
 var Sequence = clock.interval.Sequence;
-var Step = clock.interval.Step;
+var Lerp = clock.interval.Lerp;
 var Func = clock.interval.Func;
 
 describe('Clock::Interval::Loop', function(){
@@ -9,7 +9,7 @@ describe('Clock::Interval::Loop', function(){
         	var i = 0;
             var j = 0;
         	var interval = new Loop(new Sequence([
-                new Step(2, 0, 2, "linear", function() {
+                new Lerp(2, 0, 2, "linear", function() {
                     i++;
                 }),
                 new Func(function() {
@@ -42,7 +42,7 @@ describe('Clock::Interval::Loop', function(){
 
         it('loop-infinite', function(){
             var v = 0;
-            var interval = new Loop(new Step(2, 0, 2, "linear", function(self, value){v = value;}));
+            var interval = new Loop(new Lerp(2, 0, 2, "linear", function(self, value){v = value;}));
 
             expect(interval.isInfiniteLoop).toEqual(true);
             for (var i = 0; i < 10; i++) {

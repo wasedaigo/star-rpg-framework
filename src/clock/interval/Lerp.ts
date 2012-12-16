@@ -1,6 +1,6 @@
 /// <reference path='./IInterval.ts' />
 module clock.interval {
-    export class Step implements IInterval {
+    export class Lerp implements IInterval {
 
         /*
          *  List of completement methods
@@ -33,7 +33,7 @@ module clock.interval {
                                     tween: string): number {
             // Get appropriate completement function
             var func: (start: number, end: number, proportion: number) => number;
-            func = Step._funcs[tween] ? Step._funcs[tween] : Step._funcs["linear"];
+            func = Lerp._funcs[tween] ? Lerp._funcs[tween] : Lerp._funcs["linear"];
             return func(start, end, proportion);
         }
 
@@ -45,12 +45,12 @@ module clock.interval {
         private duration_: number;
         private frameNo_: number;
         private tween_: string;
-        private func_: (Step, number)=>void;
+        private func_: (Lerp, number)=>void;
 
         /*
          *  Initialize
          */
-        constructor(duration: number, start: number, end: number, tween: string, func?: (Step, number)=>void) {
+        constructor(duration: number, start: number, end: number, tween: string, func?: (Lerp, number)=>void) {
             this.start_ = start;
             this.end_ = end;
             this.duration_ = duration;
@@ -67,7 +67,7 @@ module clock.interval {
         }
 
         /*
-         *  Step cannot be infinite
+         *  Lerp cannot be infinite
          */
         public get isInfiniteLoop(): bool {
             return false;
@@ -93,7 +93,7 @@ module clock.interval {
         public update(delta: number): void {
             if (!this.isDone) {
                 this.frameNo_ += delta;
-                var value: number = Step.completement(this.start_, this.end_, this.frameNo_ / this.duration_, this.tween_);
+                var value: number = Lerp.completement(this.start_, this.end_, this.frameNo_ / this.duration_, this.tween_);
                 if (this.func_) {
                     this.func_(this, value);
                 }
