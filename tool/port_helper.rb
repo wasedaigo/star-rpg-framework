@@ -89,7 +89,7 @@ member_str = "
 //
 "
 privates.each do |member|
-	member_str += "private" + " #{member}_:any;\n"
+	member_str += "private" + " #{member}_: any;\n"
 end
 
 member_str += "
@@ -98,7 +98,7 @@ member_str += "
 //
 "
 publics.each do |member|
-	member_str += "public" + " #{member}:any;\n"
+	member_str += "public" + " #{member}: any;\n"
 end
 
 member_str += "
@@ -118,7 +118,7 @@ str.gsub!(/public initialize\((.*)\): any \{/, 'constructor(\1) {')
 str.gsub!(")()", ')')
 
 ("a".."z").each do |v|
-	str.gsub!(/\.#{v}(\w*)\?/, ".is" + v.upcase + '\1')
+	str.gsub!(/([\s\.])#{v}(\w*)\?/, '\1is' + v.upcase + '\2')
 end
 
 puts str
