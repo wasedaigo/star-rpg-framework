@@ -8,9 +8,7 @@ bake:
 
 # Clean generated files
 clean:
-	rm ./html/resources.js
-	rm ./html/game.js
-	rm ./html/game.js.map
+	node script/clean.js
 
 # Execute tests
 unittest:
