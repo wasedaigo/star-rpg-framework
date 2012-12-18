@@ -13,18 +13,6 @@ $ make bake
 
 http://localhost:8000/
 
-directories
-==================
-apps:
-Put all projects here
-
-external:
-All submodules are placed here
-
-framework:
-rpg-framework itself
-
-
 setup typescript environment
 ==================
 npm install -g typescript
