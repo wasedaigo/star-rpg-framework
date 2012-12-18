@@ -20,6 +20,14 @@ module ebi.game {
             this.ccImage_ = ccImage;
         }
 
+        public get width(): number {
+            return this.ccImage_.getWidth();
+        }
+
+        public get height(): number {
+            return this.ccImage_.getHeight();
+        }
+
     }
 
 }

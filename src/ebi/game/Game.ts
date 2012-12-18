@@ -1,5 +1,5 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
-/// <reference path='./Image.ts' />
+/// <reference path='./Sprite.ts' />
 
 // TODO: Refactoring
 declare var g_resources: Object;
@@ -42,7 +42,15 @@ module ebi.game {
         }
 
         private run(): void {
-            var app = new Cocos2dApp(this.mainLoop_);
+            var app = new Cocos2dApp(this.mainLoopWithRendering);
+        }
+
+        private mainLoopWithRendering(game: Game): void {
+            this.mainLoop_(game);
+            // TODO: Use Layer
+            Sprite.sprites.forEach(function (sprite) {
+                // TODO: Implement
+            });
         }
     }
 
