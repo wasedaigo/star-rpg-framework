@@ -19,19 +19,17 @@ function escapeRegExp(str) {
 };
 
 /*
- * Glob a directory or a file path with the extension.
+ * Glob a directory or a file path.
  * This will be executed synchronously.
  */
-function globWithExtSync(pathStr, ext) {
+function globSync(pathStr) {
     var stat = fs.lstatSync(pathStr);
     if (stat.isFile()) {
-        if (path.extname(pathStr) === '.' + ext) {
-            return [pathStr];
-        }
+        return [pathStr];
     } else if (stat.isDirectory()) {
         return fs.readdirSync(pathStr).reduce(function (res, file) {
             var newPathStr = path.join(pathStr, file);
-            return res.concat(globWithExtSync(newPathStr, ext));
+            return res.concat(globSync(newPathStr));
         }, []);
     }
     return [];
@@ -43,26 +41,29 @@ if (inputDir === void(0)) {
     process.abort();
 }
 
-var list = [
-    {ext: 'png', type: 'image'},
-    {ext: 'tmx', type: 'tmx'},
-    {ext: 'wav', type: 'effect'},
-];
+var types = {
+    png: 'image',
+    tmx: 'tmx',
+    wav: 'effect',
+};
 
-var result = list.reduce(function (res, desc) {
-    var paths = globWithExtSync(inputDir, desc['ext']);
-    var newRes = paths.map(function (pathStr) {
-        var src = path.join('res', path.relative(inputDir, pathStr));
-        if (path.sep !== '/') {
-            var reg = new RegExp(escapeRegExp(path.sep), 'g');
-            src = src.replace(reg, '/');
-        }
-        return {
-            type: desc['type'],
-            src:  src,
-        }
+var paths = globSync(inputDir);
+var result = paths.filter(function (pathStr) {
+    return Object.keys(types).some(function (ext) {
+        return path.extname(pathStr) === '.' + ext;
     });
-    return res.concat(newRes);
-}, []);
+}).map(function (pathStr) {
+    var ext = path.extname(pathStr);
+    var type = types[ext];
+    var src = path.join('res', path.relative(inputDir, pathStr));
+    if (path.sep !== '/') {
+        var reg = new RegExp(escapeRegExp(path.sep), 'g');
+        src = src.replace(reg, '/');
+    }
+    return {
+        type: type,
+        src:  src,
+    }
+});
 
 console.log('var g_resources = ' + JSON.stringify(result) + ';');
