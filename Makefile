@@ -3,7 +3,7 @@ all: bake
 
 # Build JS file from TS files
 bake:
-	ruby tool/html_resource_packer.rb ./html/res > ./html/resources.js
+	node tool/html_resource_packer.js ./html/res > ./html/resources.js
 	tsc --sourcemap ./src/ebi/rpg/Main.ts --out ./html/game.js --target ES5
 
 # Clean generated files
