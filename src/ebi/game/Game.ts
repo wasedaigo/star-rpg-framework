@@ -55,6 +55,7 @@ module ebi.game {
     }
 
     var Cocos2dApp: new(MainLoop) => cc.Application = cc.Application.extend({
+        scene: null,
         // 'document' is a kind of a global variable.
         // document['ccConfig'] is defined in cocos2d.js.
         config: document['ccConfig'],
@@ -90,8 +91,8 @@ module ebi.game {
             // create a scene. it's an autorelease object
 
             // run
-            var scene = new Cocos2dScene(this.mainLoop);
-            director.runWithScene(scene);
+            this.scene = new Cocos2dScene(this.mainLoop);
+            director.runWithScene(this.scene);
 
             return true;
         }
