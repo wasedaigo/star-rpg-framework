@@ -50,12 +50,15 @@ module ebi.game {
 
         private mainLoopWithRendering(game: Game): void {
             this.mainLoop_(game);
-            var scene = this.ccApp_.scene;
+            var scene: cc.Scene = this.ccApp_.scene;
+
             scene.removeAllChildren();
             ebi.game.Sprite.sprites.forEach((sprite) => {
                 scene.addChild(sprite.innerSprite);
             });
         }
+
+        private static 
     }
 
     var Cocos2dApp: new(MainLoop) => cc.Application = cc.Application.extend({
