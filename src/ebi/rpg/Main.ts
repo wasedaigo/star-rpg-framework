@@ -10,6 +10,7 @@ module ebi {
             }
 
             private static image: ebi.game.Image = null;
+            private static sprite: ebi.game.Sprite = null;
 
             private static loop(): void {
                 if (!image) {
@@ -18,6 +19,7 @@ module ebi {
                         console.log('loaded!');
                     });
                 }
+                sprite = new ebi.game.Sprite(image);
             }
 
         }

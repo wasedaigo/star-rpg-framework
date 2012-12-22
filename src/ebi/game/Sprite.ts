@@ -1,3 +1,4 @@
+/// <reference path='../../cc/cocos2d.d.ts' />
 /// <reference path='./Image.ts' />
 
 module ebi.game {
@@ -12,34 +13,48 @@ module ebi.game {
         private static ids_: number = 0;
         private static sprites_: Object = {};
 
+        private ccSprite_: cc.Sprite;
         private id_: number = 0;
         private image_: Image;
-        private x_: number = 0;
-        private y_: number = 0;
 
         public static get sprites(): Sprite[] {
-            return Object.keys(sprites_).map(function (id) {
+            return Object.keys(sprites_).map((id) => {
                 return sprites_[id];
             });
         }
 
-        constructor() {
+        constructor(image: Image) {
             Sprite.ids_++;
             this.id_ = Sprite.ids_;
             Sprite.sprites_[this.id_.toString()] = this;
+
+            this.image_ = image;
+            var rect = new cc.Rect(0, 0, image.width, image.height);
+            this.ccSprite_ = cc.Sprite.createWithTexture(image.innerImage, rect);
         }
 
         public get image(): Image { return this.image_; }
-        public set image(image: Image) { this.image_ = image; }
 
-        public get x(): number { return this.x_; }
-        public set x(x: number) { this.x_ = x; }
+        public get x(): number {
+            return this.ccSprite_.getPositionX();
+        }
+        public set x(x: number) {
+            this.ccSprite_.setPositionX(x);
+        }
 
-        public get y(): number { return this.y_; }
-        public set y(y: number) { this.y_ = y; }
+        public get y(): number {
+            return this.ccSprite_.getPositionY();;
+        }
+        public set y(y: number) {
+            this.ccSprite_.setPositionY(y);
+        }
 
         public dispose(): void {
             delete Sprite.sprites_[this.id_.toString()];
+        }
+
+        public get innerSprite(): cc.Sprite {
+            return this.ccSprite_;
         }
 
     }

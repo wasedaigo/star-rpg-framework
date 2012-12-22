@@ -5,7 +5,7 @@
 declare var g_resources: Object;
 
 module ebi.game {
-    
+
     /*
      * TODO: Rename it. This is not the 'main loop'.
      */
@@ -17,12 +17,13 @@ module ebi.game {
 
         private static instance_: Game = null;
         private mainLoop_: MainLoop;
+        private ccApp_: any; // temporary
 
         constructor(mainLoop: MainLoop) {
             this.mainLoop_ = mainLoop;
         }
 
-        public static currentGame(): Game {
+        public static get currentGame(): Game {
             return instance_;
         }
 
@@ -42,14 +43,17 @@ module ebi.game {
         }
 
         private run(): void {
-            var app = new Cocos2dApp(this.mainLoopWithRendering);
+            this.ccApp_ = new Cocos2dApp((game: Game) => {
+                this.mainLoopWithRendering(game);
+            });
         }
 
         private mainLoopWithRendering(game: Game): void {
             this.mainLoop_(game);
-            // TODO: Use Layer
-            Sprite.sprites.forEach(function (sprite) {
-                // TODO: Implement
+            var scene = this.ccApp_.scene;
+            scene.removeAllChildren();
+            ebi.game.Sprite.sprites.forEach((sprite) => {
+                scene.addChild(sprite.innerSprite);
             });
         }
     }

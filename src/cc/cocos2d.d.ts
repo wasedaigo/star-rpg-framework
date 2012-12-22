@@ -20,8 +20,8 @@ module cc {
         setAnimationInterval(interval:number): void;
     }
     class Image {
-        getHeight(): number;
-        getWidth(): number;
+        height: number;
+        width: number;
     }
     class Layer {
         static extend(prop:Object): any;
@@ -36,8 +36,23 @@ module cc {
         static getInstance(): LoaderScene;
         draw(): void;
     }
+    class Point {
+        constructor(_x: number, _y: number);
+        _x: number;
+        _y: number;
+    }
+    class Rect {
+        constructor(x1: number, y1: number, width1: number, height1: number);
+    }
     class Scene {
         static extend(prop:Object): any;
+    }
+    class Sprite {
+        static createWithTexture(texture: cc.Image, rect: cc.Rect): cc.Sprite;
+        getPositionX(): number;
+        getPositionY(): number;
+        setPositionX(x: number);
+        setPositionY(y: number);
     }
     class TextureCache {
         static getInstance(): TextureCache;
