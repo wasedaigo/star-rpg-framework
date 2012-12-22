@@ -19,7 +19,9 @@ module ebi {
                         console.log('loaded!');
                     });
                 }
-                sprite = new ebi.game.Sprite(image);
+                if (!sprite) {
+                    sprite = new ebi.game.Sprite(image);
+                }
             }
 
         }
