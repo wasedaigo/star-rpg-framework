@@ -30,11 +30,26 @@ module cc {
         static getInstance(): Loader;
         onloading: () => void;
         onload: () => void;
-        preload(res:any): void;
+        preload(res:Object): void;
     }
     class LoaderScene {
         static getInstance(): LoaderScene;
         draw(): void;
+    }
+    class Node {
+        addChild(child: Node): void;
+        getChildByTag(tag: number): Node;
+        getChildren(): Node[];
+        getPositionX(): number;
+        getPositionY(): number;
+        getTag(): number;
+        removeAllChildren(): void;
+        removeChild(child: Node): void;
+        removeChildByTag(tag: number): void;
+        setAnchorPoint(point: Point): void;
+        setPositionX(x: number): void;
+        setPositionY(y: number): void;
+        setTag(tag: number): void;
     }
     class Point {
         constructor(_x: number, _y: number);
@@ -42,16 +57,11 @@ module cc {
     class Rect {
         constructor(x1: number, y1: number, width1: number, height1: number);
     }
-    class Scene {
+    class Scene extends Node {
         static extend(prop:Object): any;
     }
-    class Sprite {
+    class Sprite extends Node {
         static createWithTexture(texture: cc.Image, rect: cc.Rect): cc.Sprite;
-        getPositionX(): number;
-        getPositionY(): number;
-        setAnchorPoint(point: Point): void;
-        setPositionX(x: number): void;
-        setPositionY(y: number): void;
     }
     class TextureCache {
         static getInstance(): TextureCache;

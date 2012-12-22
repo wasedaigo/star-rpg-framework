@@ -14,7 +14,6 @@ module ebi.game {
         private static sprites_: Object = {};
 
         private ccSprite_: cc.Sprite;
-        private id_: number = 0;
         private image_: Image;
 
         public static get sprites(): Sprite[] {
@@ -25,13 +24,18 @@ module ebi.game {
 
         constructor(image: Image) {
             Sprite.ids_++;
-            this.id_ = Sprite.ids_;
-            Sprite.sprites_[this.id_.toString()] = this;
+            var id = Sprite.ids_;
+            Sprite.sprites_[id.toString()] = this;
 
             this.image_ = image;
             var rect = new cc.Rect(0, 0, image.width, image.height);
             this.ccSprite_ = cc.Sprite.createWithTexture(image.innerImage, rect);
             this.ccSprite_.setAnchorPoint(new cc.Point(0, 0));
+            this.ccSprite_.setTag(id);
+        }
+
+        private get id(): number {
+            return this.ccSprite_.getTag();
         }
 
         public get image(): Image { return this.image_; }
@@ -51,7 +55,7 @@ module ebi.game {
         }
 
         public dispose(): void {
-            delete Sprite.sprites_[this.id_.toString()];
+            delete Sprite.sprites_[this.id.toString()];
         }
 
         public get innerSprite(): cc.Sprite {
