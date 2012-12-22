@@ -12,6 +12,10 @@ bake: build
 clean:
 	node script/clean.js
 
+# Run HTTP File server
+server:
+	node script/server.js
+
 # Execute tests
 unittest:
 	tsc ./src/clock/interval.ts ./src/clock/util.ts --out ./test/ebi_game_interval.js --target ES5

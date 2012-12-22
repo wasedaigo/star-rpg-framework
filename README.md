@@ -7,8 +7,8 @@ run sample app
 ==================
 ```sh
 $ cd star-rpg-framework
-$ (cd html; python -m SimpleHTTPServer)
-$ make bake
+$ node script/server.js
+$ ./script/build.sh
 ```
 
 http://localhost:8000/
@@ -23,7 +23,9 @@ http://blogs.msdn.com/b/interoperability/archive/2012/10/01/sublime-text-vi-emac
 
 how to build
 ==================
-make bake
+```sh
+$ ./script/build.sh
+```
 
 project management
 ==================
