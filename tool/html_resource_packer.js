@@ -53,7 +53,7 @@ var result = paths.filter(function (pathStr) {
         return path.extname(pathStr) === '.' + ext;
     });
 }).map(function (pathStr) {
-    var ext = path.extname(pathStr);
+    var ext = path.extname(pathStr).substr(1);
     var type = types[ext];
     var src = path.join('res', path.relative(inputDir, pathStr));
     if (path.sep !== '/') {
