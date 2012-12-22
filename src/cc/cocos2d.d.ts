@@ -51,8 +51,9 @@ module cc {
         static createWithTexture(texture: cc.Image, rect: cc.Rect): cc.Sprite;
         getPositionX(): number;
         getPositionY(): number;
-        setPositionX(x: number);
-        setPositionY(y: number);
+        setAnchorPoint(point: Point): void;
+        setPositionX(x: number): void;
+        setPositionY(y: number): void;
     }
     class TextureCache {
         static getInstance(): TextureCache;

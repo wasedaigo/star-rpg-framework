@@ -31,6 +31,7 @@ module ebi.game {
             this.image_ = image;
             var rect = new cc.Rect(0, 0, image.width, image.height);
             this.ccSprite_ = cc.Sprite.createWithTexture(image.innerImage, rect);
+            this.ccSprite_.setAnchorPoint(new cc.Point(0, 0));
         }
 
         public get image(): Image { return this.image_; }
