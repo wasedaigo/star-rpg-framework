@@ -3,7 +3,7 @@ all: build
 
 # Build JS file from TS files
 build:
-	./script/build.sh
+	node script/build.js
 
 # Alias for 'build'
 bake: build
