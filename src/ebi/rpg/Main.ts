@@ -22,6 +22,7 @@ module ebi {
                 if (!sprite) {
                     sprite = new ebi.game.Sprite(image);
                 }
+                sprite.x++;
             }
 
         }
