@@ -21,4 +21,4 @@ unittest:
 	tsc ./src/clock/interval.ts ./src/clock/util.ts --out ./test/ebi_game_interval.js --target ES5
 
 # Declare 'build' is a command in case of existence of a file named 'build'
-.PHONY: all bake build clean unittest
+.PHONY: all bake build clean server unittest
