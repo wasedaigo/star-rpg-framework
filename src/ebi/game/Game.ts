@@ -53,6 +53,7 @@ module ebi.game {
             var scene: cc.Scene = this.ccApp_.scene;
 
             scene.removeAllChildren();
+            // TODO: Integrate all elements to render including Sprite
             ebi.game.Sprite.sprites.forEach((sprite) => {
                 scene.addChild(sprite.innerSprite);
             });
