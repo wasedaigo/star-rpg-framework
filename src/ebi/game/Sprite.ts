@@ -50,9 +50,11 @@ module ebi.game {
         }
 
         public get y(): number {
+            // TODO: Replace the magic number
             return 480 - this.ccSprite_.getPositionY();;
         }
         public set y(y: number) {
+            // TODO: Replace the magic number
             this.ccSprite_.setPositionY(480 - y);
         }
 
