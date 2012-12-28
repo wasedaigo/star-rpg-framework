@@ -30,8 +30,10 @@ module ebi.game {
             this.image_ = image;
             var rect = new cc.Rect(0, 0, image.width, image.height);
             this.ccSprite_ = cc.Sprite.createWithTexture(image.innerImage, rect);
-            this.ccSprite_.setAnchorPoint(new cc.Point(0, 0));
+            this.ccSprite_.setAnchorPoint(new cc.Point(0, 1));
             this.ccSprite_.setTag(id);
+            this.x = 0;
+            this.y = 0;
         }
 
         private get id(): number {
@@ -48,10 +50,10 @@ module ebi.game {
         }
 
         public get y(): number {
-            return this.ccSprite_.getPositionY();;
+            return 480 - this.ccSprite_.getPositionY();;
         }
         public set y(y: number) {
-            this.ccSprite_.setPositionY(y);
+            this.ccSprite_.setPositionY(480 - y);
         }
 
         public dispose(): void {
