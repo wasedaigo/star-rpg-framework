@@ -7,8 +7,8 @@ run sample app
 ==============
 ```sh
 $ cd star-rpg-framework
-$ node script/server.js
-$ node ./script/build.js
+$ ./script/server.js
+$ ./script/build.js
 ```
 
 http://localhost:8000/
