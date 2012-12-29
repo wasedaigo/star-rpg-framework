@@ -16,19 +16,38 @@ module ebi.game {
         private ccSprite_: cc.Sprite;
         private image_: Image;
 
+        public srcX: number;
+        public srcY: number;
+        public srcWidth: number;
+        public srcHeight: number;
+
         public static get sprites(): Sprite[] {
             return Object.keys(sprites_).map((id) => {
                 return sprites_[id];
             });
         }
 
-        constructor(image: Image) {
+        constructor(image: Image, 
+                    options?: {
+                        srcX?:number;
+                        srcY?:number;
+                        srcWidth?:number;
+                        srcHeight?:number;
+                    }) {
+
+            if (options) {
+                this.srcX = options.srcX ? options.srcX : 0;
+                this.srcY = options.srcY ? options.srcY : 0;
+                this.srcWidth = options.srcWidth ? options.srcWidth : image.width;
+                this.srcHeight = options.srcHeight ? options.srcHeight : image.height;
+            }
+            
             Sprite.ids_++;
             var id = Sprite.ids_;
             Sprite.sprites_[id.toString()] = this;
 
             this.image_ = image;
-            var rect = new cc.Rect(0, 0, image.width, image.height);
+            var rect = new cc.Rect(this.srcX, this.srcY, this.srcWidth, this.srcHeight);
             this.ccSprite_ = cc.Sprite.createWithTexture(image.innerImage, rect);
             this.ccSprite_.setAnchorPoint(new cc.Point(0, 1));
             this.ccSprite_.setTag(id);

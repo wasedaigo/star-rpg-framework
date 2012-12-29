@@ -19,7 +19,7 @@ module ebi.rpg {
                 });
             }
             if (!sprite) {
-                sprite = new ebi.game.Sprite(image);
+                sprite = new ebi.game.Sprite(image, {srcX:50, srcY:50, srcWidth:50, srcHeight:50});
             }
             sprite.x++;
         }
