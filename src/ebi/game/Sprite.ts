@@ -16,10 +16,10 @@ module ebi.game {
         private ccSprite_: cc.Sprite;
         private image_: Image;
 
-        public srcX: number;
-        public srcY: number;
-        public srcWidth: number;
-        public srcHeight: number;
+        private srcX_: number;
+        private srcY_: number;
+        private srcWidth_: number;
+        private srcHeight_: number;
 
         public static get sprites(): Sprite[] {
             return Object.keys(sprites_).map((id) => {
@@ -36,10 +36,10 @@ module ebi.game {
                     }) {
 
             if (options) {
-                this.srcX = options.srcX ? options.srcX : 0;
-                this.srcY = options.srcY ? options.srcY : 0;
-                this.srcWidth = options.srcWidth ? options.srcWidth : image.width;
-                this.srcHeight = options.srcHeight ? options.srcHeight : image.height;
+                this.srcX_ = options.srcX ? options.srcX : 0;
+                this.srcY_ = options.srcY ? options.srcY : 0;
+                this.srcWidth_ = options.srcWidth ? options.srcWidth : image.width;
+                this.srcHeight_ = options.srcHeight ? options.srcHeight : image.height;
             }
             
             Sprite.ids_++;
@@ -47,7 +47,7 @@ module ebi.game {
             Sprite.sprites_[id.toString()] = this;
 
             this.image_ = image;
-            var rect = new cc.Rect(this.srcX, this.srcY, this.srcWidth, this.srcHeight);
+            var rect = new cc.Rect(this.srcX_, this.srcY_, this.srcWidth_, this.srcHeight_);
             this.ccSprite_ = cc.Sprite.createWithTexture(image.innerImage, rect);
             this.ccSprite_.setAnchorPoint(new cc.Point(0, 1));
             this.ccSprite_.setTag(id);
@@ -77,12 +77,52 @@ module ebi.game {
             this.ccSprite_.setPositionY(480 - y);
         }
 
+        // srcX
+        public get srcX(): number {
+            return this.srcX_;
+        }
+        public set srcX(value: number) {
+            this.srcX_ = value;
+            this.updateSrcRect();
+        }
+
+        // srcY
+        public get srcY(): number {
+            return this.srcY_;
+        }
+        public set srcY(value: number) {
+            this.srcY_ = value;
+            this.updateSrcRect();
+        }
+
+        // srcWidth
+        public get srcWidth(): number {
+            return this.srcWidth_;
+        }
+        public set srcWidth(value: number) {
+            this.srcWidth_ = value;
+            this.updateSrcRect();
+        }
+
+        // srcHeight
+        public get srcHeight(): number {
+            return this.srcHeight_;
+        }
+        public set srcHeight(value: number) {
+            this.srcHeight_ = value;
+            this.updateSrcRect();
+        }
+
         public dispose(): void {
             delete Sprite.sprites_[this.id.toString()];
         }
 
         public get innerSprite(): cc.Sprite {
             return this.ccSprite_;
+        }
+
+        private updateSrcRect(): void {
+            this.ccSprite_.setTextureRect(new cc.Rect(this.srcX_, this.srcY_, this.srcWidth_, this.srcHeight_));
         }
 
     }

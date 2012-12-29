@@ -56,14 +56,23 @@ module cc {
         x: number;
         y: number;
     }
+    class Size {
+        constructor(_width: number, _height: number);
+        width: number;
+        height: number;
+    }
     class Rect {
         constructor(x1: number, y1: number, width1: number, height1: number);
+        origin: Point;
+        size: Size;
     }
     class Scene extends Node {
         static extend(prop:Object): any;
     }
     class Sprite extends Node {
         static createWithTexture(texture: cc.Image, rect: cc.Rect): cc.Sprite;
+        setTextureRect(rect: cc.Rect): void;
+        getTextureRect(): cc.Rect;
     }
     class TextureCache {
         static getInstance(): TextureCache;
