@@ -1,4 +1,5 @@
 /// <reference path='../game/Game.ts' />
+/// <reference path='../game/Input.ts' />
 
 module ebi.rpg {
 
@@ -21,7 +22,11 @@ module ebi.rpg {
             if (!sprite) {
                 sprite = new ebi.game.Sprite(image, {srcX:50, srcY:50, srcWidth:50, srcHeight:50});
             }
-            sprite.x++;
+
+            if (ebi.game.Input.isTouched) {
+                sprite.x++;
+                console.log(ebi.game.Input.touchX + ", " + ebi.game.Input.touchY);
+            }
         }
 
     }

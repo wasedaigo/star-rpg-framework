@@ -53,6 +53,8 @@ module cc {
     }
     class Point {
         constructor(_x: number, _y: number);
+        x: number;
+        y: number;
     }
     class Rect {
         constructor(x1: number, y1: number, width1: number, height1: number);

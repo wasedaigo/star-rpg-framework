@@ -1,5 +1,6 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
 /// <reference path='./Sprite.ts' />
+/// <reference path='./Input.ts' />
 
 // TODO: Refactoring
 declare var g_resources: Object;
@@ -18,6 +19,8 @@ module ebi.game {
         private static instance_: Game = null;
         private mainLoop_: MainLoop;
         private ccApp_: any; // temporary
+        private inputLayer_: any; // temporary
+        private initialized_: bool = false;
 
         constructor(mainLoop: MainLoop) {
             this.mainLoop_ = mainLoop;
@@ -40,11 +43,21 @@ module ebi.game {
         }
 
         private initialize(): void {
+            this.inputLayer_ = new InputLayer();
+            this.inputLayer_.init();
+            this.inputLayer_.setTouchEnabled(true);
         }
 
         private run(): void {
             this.ccApp_ = new Cocos2dApp((game: Game) => {
+                // Initialize in the first loop
+                if (!this.initialized_) {
+                    this.initialize();
+                    this.initialized_ = true;
+                }
+
                 this.mainLoopWithRendering(game);
+                ebi.game.Input.update();
             });
         }
 
@@ -57,9 +70,9 @@ module ebi.game {
             ebi.game.Sprite.sprites.forEach((sprite) => {
                 scene.addChild(sprite.innerSprite);
             });
-        }
 
-        private static 
+            scene.addChild(this.inputLayer_);
+        }
     }
 
     var Cocos2dApp: new(MainLoop) => cc.Application = cc.Application.extend({
@@ -122,4 +135,34 @@ module ebi.game {
         }
     });
 
+
+    var InputLayer: new() => cc.Layer = cc.Layer.extend({
+        setTouchEnabled: function(enabled: bool): void {
+            this._super(enabled);
+        },
+        onTouchBegan: function(touch, event): void {
+            console.log("onTouchBegan");
+        },
+        onTouchMoved: function(touch, event): void {
+            console.log("onTouchMoved");
+        },
+        onTouchEnded: function(touch, event): void {
+            console.log("onTouchEnded");
+        },
+        onTouchesBegan: function(touches, event): void {
+            if (!touches[0]){ return; }
+            var point:cc.Point = touches[0].getLocation();
+            Input.beginTouch(point.x, point.y);
+        },
+        onTouchesMoved: function(touches, event): void {
+            if (!touches[0]){ return; }
+            var point:cc.Point = touches[0].getLocation();
+            Input.moveTouch(point.x, point.y);
+        },
+        onTouchesEnded: function(touches, event): void {
+            if (!touches[0]){ return; }
+            var point:cc.Point = touches[0].getLocation();
+            Input.endTouch(point.x, point.y);
+        }
+    });
 }
