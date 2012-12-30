@@ -44,6 +44,7 @@ if (inputDir === void(0)) {
 var types = {
     png: 'image',
     tmx: 'tmx',
+    tsx: 'tmx',
     wav: 'effect',
 };
 

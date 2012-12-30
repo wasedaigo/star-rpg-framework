@@ -2,21 +2,28 @@
 <map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="TileA" tilewidth="32" tileheight="32">
   <image source="TileA.png" width="512" height="384"/>
+  <tile id="0">
+   <properties>
+    <property name="collision" value="0"/>
+   </properties>
+  </tile>
+  <tile id="48">
+   <properties>
+    <property name="collision" value="1"/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="193" name="TileB" tilewidth="32" tileheight="32">
   <image source="TileB.png" width="512" height="512"/>
  </tileset>
- <tileset firstgid="449" name="room" tilewidth="240" tileheight="240">
-  <image source="../images/game/panorama/room.png" width="240" height="240"/>
- </tileset>
  <layer name="bottom" width="10" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA1NlYGBQA2IxJCyKRgsCsSoUw8TUoHw1NHWCUD5MLQyoYlGHDYihqcUF0N2ICyCbRcg8mH/U8KiDuRGXH2BhRcivgkhq1ZD4ACfhcDeQAQAA
+   H4sIAAAAAAAAA2NkYGBgHMWDBgMAjw2X0pABAAA=
   </data>
  </layer>
  <layer name="middle" width="10" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NggIBpBDAyQBbDxWZgwK4Pmzps5qK7iRx1uMzHZz+x5hEyC5saYjAAbQxruJABAAA=
+   H4sIAAAAAAAAA2NggAAjAhgZIIvhYjMwYNeHTR02c9HdRI46XObjs59Y8wiZhU0NMRgA0XbE/ZABAAA=
   </data>
  </layer>
  <layer name="top" width="10" height="10">
@@ -24,9 +31,4 @@
    H4sIAAAAAAAAA2NgwASiQCyGRRxdXhWI1fCoh8nj4tMLEPIPDAyU+5ABACLKVG2QAQAA
   </data>
  </layer>
- <objectgroup name="object" width="10" height="10">
-  <object gid="276" x="112" y="137"/>
-  <object gid="276" x="198" y="118"/>
-  <object gid="276" x="105" y="199"/>
- </objectgroup>
 </map>
