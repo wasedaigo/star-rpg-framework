@@ -36,7 +36,8 @@ module ebi.game {
             var rect = new cc.Rect(this.srcX_, this.srcY_, this.srcWidth_, this.srcHeight_);
             this.ccSprite_ = cc.Sprite.createWithTexture(image.innerImage, rect);
             this.ccSprite_.setAnchorPoint(new cc.Point(0, 1));
-            this.ccSprite_.setTag(id);
+            // TODO: Replace the magic number. This should be unique in the global.
+            this.ccSprite_.setTag(id + 1000000);
             this.x = 0;
             this.y = 0;
             this.srcX = 0;
@@ -45,7 +46,7 @@ module ebi.game {
             this.srcHeight = image.height;
         }
 
-        private get id(): number {
+        public get id(): number {
             return this.ccSprite_.getTag();
         }
 

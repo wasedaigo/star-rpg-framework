@@ -19,6 +19,12 @@ module ebi.game {
         private ccApp_: any; // temporary
         private ccInputLayer_: any; // temporary
 
+        /*
+         * The keys are the tags of the sprites. The values are the sprites.
+         */
+        private shownSprites_: Object = {};
+        private shownTmxTiledMaps_: Object = {};
+
         constructor(mainLoop: MainLoop) {
             this.mainLoop_ = mainLoop;
         }
@@ -46,30 +52,51 @@ module ebi.game {
         }
 
         private mainLoopWithRendering(game: Game): void {
+            ebi.game.Input.update();
+            this.mainLoop_(game);
+
+            var scene: cc.Scene = this.ccApp_.scene;
             if (!this.ccInputLayer_) {
                 this.ccInputLayer_ = new Cocos2dInputLayer();
                 this.ccInputLayer_.init();
                 this.ccInputLayer_.setTouchEnabled(true);
+                // TODO: Replace the magic number
+                scene.addChild(this.ccInputLayer_, 10000000);
             }
-
-            this.mainLoop_(game);
-            var scene: cc.Scene = this.ccApp_.scene;
-
-            scene.removeAllChildren(true);
-            // TODO: Integrate all elements to render including Sprite
-            ebi.game.Sprite.sprites.forEach((sprite) => {
-                scene.addChild(sprite.innerSprite, 1);
-            });
-
+            
+            var spriteNodes = ebi.game.Sprite.sprites.map((sprite) => sprite.innerSprite);
+            Game.addAndRemoveNodes(scene, this.shownSprites_, spriteNodes);
+            var mapNodes = [];
             if (ebi.game.TmxTiledMap.isMapLoaded) {
-                scene.addChild(ebi.game.TmxTiledMap.mapObject, 0);
+                mapNodes.push(ebi.game.TmxTiledMap.innerTmxTiledMap);
             }
+            Game.addAndRemoveNodes(scene, this.shownTmxTiledMaps_, mapNodes);
 
-            // TODO: Replace the magic number
-            scene.addChild(this.ccInputLayer_, 10000000);
-
-            ebi.game.Input.update();
+            // ref scene.addChild(ebi.game.TmxTiledMap.mapObject, 0);
         }
+
+        private static addAndRemoveNodes(scene: cc.Scene, nodesHash: Object, latestNodes: cc.Node[]): void {
+            // TODO: Use Tag?
+            Object.keys(nodesHash).forEach((tagStr: string): void => {
+                var addedNode: cc.Node = nodesHash[tagStr];
+                if (latestNodes.indexOf(addedNode) === -1) {
+                    var tag: number = parseInt(tagStr, 10);
+                    scene.removeChildByTag(tag);
+                    delete nodesHash[tagStr];
+                    console.log('Node Removed:', tag);
+                }
+            });
+            latestNodes.forEach((node: cc.Node): void => {
+                var tag: number = node.getTag();
+                if (!(tag.toString() in nodesHash)) {
+                    // TODO: Modify the Z order
+                    scene.addChild(node, 1, tag);
+                    nodesHash[tag.toString()] = node;
+                    console.log('Node Added:', tag);
+                }
+            });
+        }
+
     }
 
     var Cocos2dApp: new(MainLoop) => cc.Application = cc.Application.extend({

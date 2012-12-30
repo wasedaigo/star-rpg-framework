@@ -46,7 +46,6 @@ module cc {
         getPositionX(): number;
         getPositionY(): number;
         getTag(): number;
-        removeAllChildren(cleanup?: bool): void;
         removeChild(child: Node): void;
         removeChildByTag(tag: number): void;
         setAnchorPoint(point: Point): void;
@@ -69,6 +68,10 @@ module cc {
         origin: Point;
         size: Size;
     }
+    class SAXParser {
+        static getInstance(): SAXParser;
+        preloadPlist(path: string): void;
+    }
     class Scene extends Node {
         static extend(prop:Object): any;
     }
@@ -86,9 +89,5 @@ module cc {
         static create(path: string): TMXTiledMap;
         getLayer(name: string): Node;
         propertiesForGID(gid: number): any;
-    }
-    class SAXParser {
-        static getInstance(): SAXParser;
-        preloadPlist(path: string): void;
     }
 }
