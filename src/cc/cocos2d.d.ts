@@ -31,6 +31,9 @@ module cc {
         onloading: () => void;
         onload: () => void;
         preload(res:Object[]): void;
+        resourceCount: number;
+        loadedResourceCount: number;
+        timer: number;
     }
     class LoaderScene {
         static getInstance(): LoaderScene;
@@ -83,5 +86,9 @@ module cc {
         static create(path: string): TMXTiledMap;
         getLayer(name: string): Node;
         propertiesForGID(gid: number): any;
+    }
+    class SAXParser {
+        static getInstance(): SAXParser;
+        preloadPlist(path: string): void;
     }
 }

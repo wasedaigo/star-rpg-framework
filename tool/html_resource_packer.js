@@ -67,4 +67,5 @@ var result = paths.filter(function (pathStr) {
     }
 });
 
-console.log('var g_resources = ' + JSON.stringify(result) + ';');
+//console.log('var g_resources = ' + JSON.stringify(result) + ';');
+console.log('var g_resources = [];');

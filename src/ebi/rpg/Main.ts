@@ -36,14 +36,18 @@ module ebi.rpg {
         }
 
         private static init(): void {
+            ImageManager.preloadTmx("sample");
             for (var i = 1; i <= 3; i++) {
                 var charaChipsetData = DatabaseManager.getCharaChipsetData(i);
                 ImageManager.preloadImage(charaChipsetData.srcImage);
             }
-            ebi.game.TmxTiledMap.loadMap("sample");
+            ImageManager.preloadTmxImage('tile_a');
+            ImageManager.preloadTmxImage('tile_b');
         }
 
         private static onPreloadFinished(): void {
+            ebi.game.TmxTiledMap.loadMap("sample");
+
             var mapCharacter: MapCharacter = new MapCharacter(1);
             mapCharacters.push(mapCharacter);
             var mapCharacter: MapCharacter = new MapCharacter(2);
