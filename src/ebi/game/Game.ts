@@ -71,8 +71,6 @@ module ebi.game {
                 mapNodes.push(ebi.game.TmxTiledMap.innerTmxTiledMap);
             }
             Game.addAndRemoveNodes(scene, this.shownTmxTiledMaps_, mapNodes);
-
-            // ref scene.addChild(ebi.game.TmxTiledMap.mapObject, 0);
         }
 
         private static addAndRemoveNodes(scene: cc.Scene, nodesHash: Object, latestNodes: cc.Node[]): void {
