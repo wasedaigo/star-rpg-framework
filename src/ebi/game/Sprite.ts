@@ -27,21 +27,7 @@ module ebi.game {
             });
         }
 
-        constructor(image: Image, 
-                    options?: {
-                        srcX?:number;
-                        srcY?:number;
-                        srcWidth?:number;
-                        srcHeight?:number;
-                    }) {
-
-            if (options) {
-                this.srcX_ = options.srcX ? options.srcX : 0;
-                this.srcY_ = options.srcY ? options.srcY : 0;
-                this.srcWidth_ = options.srcWidth ? options.srcWidth : image.width;
-                this.srcHeight_ = options.srcHeight ? options.srcHeight : image.height;
-            }
-            
+        constructor(image: Image) {
             Sprite.ids_++;
             var id = Sprite.ids_;
             Sprite.sprites_[id.toString()] = this;
@@ -53,6 +39,10 @@ module ebi.game {
             this.ccSprite_.setTag(id);
             this.x = 0;
             this.y = 0;
+            this.srcX = 0;
+            this.srcY = 0;
+            this.srcWidth = image.width;
+            this.srcHeight = image.height;
         }
 
         private get id(): number {

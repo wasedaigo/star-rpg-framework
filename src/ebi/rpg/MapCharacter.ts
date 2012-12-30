@@ -13,18 +13,15 @@ module ebi.rpg {
 
         constructor(id: number) {
             this.charaChipsetData_ = DatabaseManager.getCharaChipsetData(id);
-            var image: ebi.game.Image = ResourceManager.getImage(this.charaChipsetData_.srcImage);
-
+            var image = ResourceManager.getImage(this.charaChipsetData_.srcImage);
             var data = this.charaChipsetData_;
             this.frameCount_ = data.startAnim;
             this.dir_ = data.startDir;
-            this.sprite_ = new ebi.game.Sprite(image, {
-                "srcImage": data.srcImage,
-                "srcX": (data.charaX * data.animCount + this.frameCount_) * data.srcWidth,
-                "srcY": (data.charaY * data.dirCount + this.dir_) * data.srcHeight,
-                "srcWidth": data.srcWidth,
-                "srcHeight": data.srcHeight
-            });
+            this.sprite_ = new ebi.game.Sprite(image);
+            this.sprite_.srcX      = (data.charaX * data.animCount + this.frameCount_) * data.srcWidth;
+            this.sprite_.srcY      = (data.charaY * data.dirCount + this.dir_) * data.srcHeight;
+            this.sprite_.srcWidth  = data.srcWidth;
+            this.sprite_.srcHeight = data.srcHeight;
         }
 
         // x
