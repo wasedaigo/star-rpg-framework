@@ -30,7 +30,7 @@ module cc {
         static getInstance(): Loader;
         onloading: () => void;
         onload: () => void;
-        preload(res:Object): void;
+        preload(res:Object[]): void;
     }
     class LoaderScene {
         static getInstance(): LoaderScene;

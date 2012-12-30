@@ -4,7 +4,7 @@
 /// <reference path='./Input.ts' />
 
 // TODO: Refactoring
-declare var g_resources: Object;
+declare var g_resources: Object[];
 
 module ebi.game {
 
