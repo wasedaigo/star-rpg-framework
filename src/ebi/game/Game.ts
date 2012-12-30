@@ -17,7 +17,7 @@ module ebi.game {
         private static instance_: Game = null;
         private mainLoop_: MainLoop;
         private ccApp_: any; // temporary
-        private inputLayer_: any; // temporary
+        private ccInputLayer_: any; // temporary
 
         constructor(mainLoop: MainLoop) {
             this.mainLoop_ = mainLoop;
@@ -41,10 +41,10 @@ module ebi.game {
 
         private run(): void {
             this.ccApp_ = new Cocos2dApp((game: Game) => {
-                if (!this.inputLayer_) {
-                    this.inputLayer_ = new InputLayer();
-                    this.inputLayer_.init();
-                    this.inputLayer_.setTouchEnabled(true);
+                if (!this.ccInputLayer_) {
+                    this.ccInputLayer_ = new Cocos2dInputLayer();
+                    this.ccInputLayer_.init();
+                    this.ccInputLayer_.setTouchEnabled(true);
                 }
                 this.mainLoopWithRendering(game);
                 ebi.game.Input.update();
@@ -65,7 +65,8 @@ module ebi.game {
                 scene.addChild(ebi.game.TmxTiledMap.mapObject, 0);
             }
 
-            scene.addChild(this.inputLayer_, 10000000);
+            // TODO: Replace the magic number
+            scene.addChild(this.ccInputLayer_, 10000000);
         }
     }
 
@@ -124,7 +125,7 @@ module ebi.game {
     });
 
 
-    var InputLayer: new() => cc.Layer = cc.Layer.extend({
+    var Cocos2dInputLayer: new() => cc.Layer = cc.Layer.extend({
         setTouchEnabled: function(enabled: bool): void {
             this._super(enabled);
         },
