@@ -90,14 +90,7 @@ module ebi.game {
             cc.COCOS2D_DEBUG = this.config['COCOS2D_DEBUG'];
             cc.initDebugSetting();
             cc.setup(this.config['tag']);
-            cc.Loader.getInstance().onloading = function () {
-                cc.LoaderScene.getInstance().draw();
-            };
-            cc.Loader.getInstance().onload = function () {
-                cc.AppController.shareAppController().didFinishLaunchingWithOptions();
-            };
-            // TODO: Remove this statement!
-            cc.Loader.getInstance().preload([]);
+            cc.AppController.shareAppController().didFinishLaunchingWithOptions();
         },
         applicationDidFinishLaunching: function () {
             // initialize director
