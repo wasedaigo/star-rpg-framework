@@ -18,7 +18,7 @@ module ebi.game {
         private mainLoop_: MainLoop;
         private ccApp_: any; // temporary
         private inputLayer_: any; // temporary
-        private initialized_: bool = false;
+        private isInitialized_: bool = false;
 
         constructor(mainLoop: MainLoop) {
             this.mainLoop_ = mainLoop;
@@ -49,9 +49,9 @@ module ebi.game {
         private run(): void {
             this.ccApp_ = new Cocos2dApp((game: Game) => {
                 // Initialize in the first loop
-                if (!this.initialized_) {
+                if (!this.isInitialized_) {
                     this.initialize();
-                    this.initialized_ = true;
+                    this.isInitialized_ = true;
                 }
 
                 this.mainLoopWithRendering(game);
@@ -146,17 +146,23 @@ module ebi.game {
             console.log("onTouchEnded");
         },
         onTouchesBegan: function(touches, event): void {
-            if (!touches[0]){ return; }
+            if (!touches[0]) {
+                return;
+            }
             var point:cc.Point = touches[0].getLocation();
             Input.beginTouch(point.x, point.y);
         },
         onTouchesMoved: function(touches, event): void {
-            if (!touches[0]){ return; }
+            if (!touches[0]) {
+                return;
+            }
             var point:cc.Point = touches[0].getLocation();
             Input.moveTouch(point.x, point.y);
         },
         onTouchesEnded: function(touches, event): void {
-            if (!touches[0]){ return; }
+            if (!touches[0]) {
+                return;
+            }
             var point:cc.Point = touches[0].getLocation();
             Input.endTouch(point.x, point.y);
         }
