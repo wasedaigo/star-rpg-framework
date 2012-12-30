@@ -66,17 +66,17 @@ module ebi.game {
             this.mainLoop_(game);
             var scene: cc.Scene = this.ccApp_.scene;
 
-            scene.removeAllChildren();
+            scene.removeAllChildren(true);
             // TODO: Integrate all elements to render including Sprite
             ebi.game.Sprite.sprites.forEach((sprite) => {
-                scene.addChild(sprite.innerSprite);
+                scene.addChild(sprite.innerSprite, 1);
             });
 
-            scene.addChild(this.inputLayer_);
-
-            if (ebi.game.TmxTiledMap.innerDisplayObject) {
-                scene.addChild(ebi.game.TmxTiledMap.innerDisplayObject);
+            if (ebi.game.TmxTiledMap.isMapLoaded) {
+                scene.addChild(ebi.game.TmxTiledMap.mapObject, 0);
             }
+
+            scene.addChild(this.inputLayer_, 10000000);
         }
     }
 

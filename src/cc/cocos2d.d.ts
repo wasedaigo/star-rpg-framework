@@ -37,13 +37,13 @@ module cc {
         draw(): void;
     }
     class Node {
-        addChild(child: Node): void;
+        addChild(child: Node, zOrder?: number, tag?: number): void;
         getChildByTag(tag: number): Node;
         getChildren(): Node[];
         getPositionX(): number;
         getPositionY(): number;
         getTag(): number;
-        removeAllChildren(): void;
+        removeAllChildren(cleanup?: bool): void;
         removeChild(child: Node): void;
         removeChildByTag(tag: number): void;
         setAnchorPoint(point: Point): void;
@@ -81,5 +81,6 @@ module cc {
     }
     class TMXTiledMap extends Node {
         static create(path: string): TMXTiledMap;
+        getLayer(name: string): Node;
     }
 }

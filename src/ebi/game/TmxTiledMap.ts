@@ -2,19 +2,35 @@
 module ebi.game {
 
     export class TmxTiledMap {
-        private static mapObject: cc.TMXTiledMap = null;
-        private static prefix: string = "res/tmx/";
+        private static mapObject_: cc.TMXTiledMap = null;
+        private static prefix_: string = "res/tmx/";
 
         public static loadMap(id: string) {
-        	mapObject = cc.TMXTiledMap.create(prefix + id + ".tmx");
+        	mapObject_ = cc.TMXTiledMap.create(prefix_ + id + ".tmx");
         }
 
-        public static get innerDisplayObject(): cc.TMXTiledMap {
-            return mapObject;
+        public static get isMapLoaded(): bool {
+        	return !!mapObject_;
+        }
+
+        public static get mapObject(): cc.TMXTiledMap {
+            return mapObject_;
+        }
+
+        public static get bottomLayer(): cc.Node {
+            return mapObject_.getLayer("bottom");
+        }
+
+        public static get middleLayer(): cc.Node {
+            return mapObject_.getLayer("middle");
+        }
+
+        public static get topLayer(): cc.Node {
+            return mapObject_.getLayer("top");
         }
 
         public static disposeMap(): void {
-            delete mapObject;
+            delete mapObject_;
         }
     }
 
