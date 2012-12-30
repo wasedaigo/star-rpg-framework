@@ -18,7 +18,6 @@ module ebi.game {
         private mainLoop_: MainLoop;
         private ccApp_: any; // temporary
         private inputLayer_: any; // temporary
-        private isInitialized_: bool = false;
 
         constructor(mainLoop: MainLoop) {
             this.mainLoop_ = mainLoop;
@@ -40,20 +39,13 @@ module ebi.game {
             }
         }
 
-        private initialize(): void {
-            this.inputLayer_ = new InputLayer();
-            this.inputLayer_.init();
-            this.inputLayer_.setTouchEnabled(true);
-        }
-
         private run(): void {
             this.ccApp_ = new Cocos2dApp((game: Game) => {
-                // Initialize in the first loop
-                if (!this.isInitialized_) {
-                    this.initialize();
-                    this.isInitialized_ = true;
+                if (!this.inputLayer_) {
+                    this.inputLayer_ = new InputLayer();
+                    this.inputLayer_.init();
+                    this.inputLayer_.setTouchEnabled(true);
                 }
-
                 this.mainLoopWithRendering(game);
                 ebi.game.Input.update();
             });
