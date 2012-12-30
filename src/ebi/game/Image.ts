@@ -9,7 +9,6 @@ module ebi.game {
             // The 2nd arguemnt should not be null (nor false) to call the callback.
             ccCache.addImageAsync(path, true, () => {
                 var ccImage = ccCache.textureForKey(path);
-                console.log(ccImage);
                 callback(new Image(ccImage));
             });
         }

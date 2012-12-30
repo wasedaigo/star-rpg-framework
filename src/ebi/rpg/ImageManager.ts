@@ -7,7 +7,6 @@ module ebi.rpg {
         public static preloadImage(id: string): void {
             loadingCount++;
             ebi.game.Image.load(prefix + id + ".png", (loadedImage) => {
-                console.log(id + " ! loaded");
                 images[id] = loadedImage;
                 loadingCount--;
             }); 
