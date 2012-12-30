@@ -32,8 +32,8 @@ module ebi.game {
                 throw 'A game has already run.';
             }
             try {
-                var game = Game.instance_ = new Game(mainLoop);
-                game.run();
+                Game.instance_ = new Game(mainLoop);
+                Game.instance_.run();
             } finally {
                 Game.instance_ = null;
             }
@@ -41,17 +41,17 @@ module ebi.game {
 
         private run(): void {
             this.ccApp_ = new Cocos2dApp((game: Game) => {
-                if (!this.ccInputLayer_) {
-                    this.ccInputLayer_ = new Cocos2dInputLayer();
-                    this.ccInputLayer_.init();
-                    this.ccInputLayer_.setTouchEnabled(true);
-                }
                 this.mainLoopWithRendering(game);
-                ebi.game.Input.update();
             });
         }
 
         private mainLoopWithRendering(game: Game): void {
+            if (!this.ccInputLayer_) {
+                this.ccInputLayer_ = new Cocos2dInputLayer();
+                this.ccInputLayer_.init();
+                this.ccInputLayer_.setTouchEnabled(true);
+            }
+
             this.mainLoop_(game);
             var scene: cc.Scene = this.ccApp_.scene;
 
@@ -67,6 +67,8 @@ module ebi.game {
 
             // TODO: Replace the magic number
             scene.addChild(this.ccInputLayer_, 10000000);
+
+            ebi.game.Input.update();
         }
     }
 
