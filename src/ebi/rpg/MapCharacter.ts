@@ -1,6 +1,6 @@
 /// <reference path='../game/Game.ts' />
 /// <reference path='./DatabaseManager.ts' />
-/// <reference path='./ImageManager.ts' />
+/// <reference path='./ResourceManager.ts' />
 
 module ebi.rpg {
     export class MapCharacter {
@@ -13,7 +13,7 @@ module ebi.rpg {
 
         constructor(id: number) {
             this.charaChipsetData_ = DatabaseManager.getCharaChipsetData(id);
-            var image: ebi.game.Image = ImageManager.getImage(this.charaChipsetData_.srcImage);
+            var image: ebi.game.Image = ResourceManager.getImage(this.charaChipsetData_.srcImage);
 
             var data = this.charaChipsetData_;
             this.frameCount_ = data.startAnim;

@@ -2,7 +2,7 @@
 /// <reference path='../game/Input.ts' />
 /// <reference path='../game/TmxTiledMap.ts' />
 /// <reference path='./DatabaseManager.ts' />
-/// <reference path='./ImageManager.ts' />
+/// <reference path='./ResourceManager.ts' />
 /// <reference path='./MapCharacter.ts' />
 
 module ebi.rpg {
@@ -23,7 +23,7 @@ module ebi.rpg {
                 init();
                 isInitialized = true;
             }
-            if (!ImageManager.isLoading()){
+            if (!ResourceManager.isLoading()){
                 if (!isPreloadFinishd) {
                     onPreloadFinished();
                     isPreloadFinishd = true;
@@ -36,13 +36,13 @@ module ebi.rpg {
         }
 
         private static init(): void {
-            ImageManager.preloadTmx("sample");
+            ResourceManager.preloadTmx("sample");
             for (var i = 1; i <= 3; i++) {
                 var charaChipsetData = DatabaseManager.getCharaChipsetData(i);
-                ImageManager.preloadImage(charaChipsetData.srcImage);
+                ResourceManager.preloadImage(charaChipsetData.srcImage);
             }
-            ImageManager.preloadTmxImage('tile_a');
-            ImageManager.preloadTmxImage('tile_b');
+            ResourceManager.preloadTmxImage('tile_a');
+            ResourceManager.preloadTmxImage('tile_b');
         }
 
         private static onPreloadFinished(): void {

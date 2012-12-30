@@ -1,5 +1,5 @@
 module ebi.rpg {
-    export class ImageManager {
+    export class ResourceManager {
         private static images: {} = {};
         private static loadingCount: number = 0;
 
