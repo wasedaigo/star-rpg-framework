@@ -1,5 +1,6 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
 /// <reference path='./Sprite.ts' />
+/// <reference path='./TmxTiledMap.ts' />
 /// <reference path='./Input.ts' />
 
 // TODO: Refactoring
@@ -72,6 +73,10 @@ module ebi.game {
             });
 
             scene.addChild(this.inputLayer_);
+
+            if (ebi.game.TmxTiledMap.innerDisplayObject) {
+                scene.addChild(ebi.game.TmxTiledMap.innerDisplayObject);
+            }
         }
     }
 

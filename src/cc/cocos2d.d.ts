@@ -79,5 +79,7 @@ module cc {
         addImageAsync(path: string, target: any, selector: () => void);
         textureForKey(key:string): Image;
     }
-
+    class TMXTiledMap extends Node {
+        static create(path: string): TMXTiledMap;
+    }
 }
