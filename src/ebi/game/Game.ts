@@ -73,8 +73,8 @@ module ebi.game {
             Game.addAndRemoveNodes(scene, this.shownTmxTiledMaps_, mapNodes);
         }
 
+        // TODO: To use the Z-order, latestNodes should have a property indicating Z-order.
         private static addAndRemoveNodes(scene: cc.Scene, nodesHash: Object, latestNodes: cc.Node[]): void {
-            // TODO: Use Tag?
             Object.keys(nodesHash).forEach((tagStr: string): void => {
                 var addedNode: cc.Node = nodesHash[tagStr];
                 if (latestNodes.indexOf(addedNode) === -1) {
