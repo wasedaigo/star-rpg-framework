@@ -3,9 +3,6 @@
 /// <reference path='./TmxTiledMap.ts' />
 /// <reference path='./Input.ts' />
 
-// TODO: Refactoring
-declare var g_resources: Object[];
-
 module ebi.game {
 
     /*
@@ -99,7 +96,8 @@ module ebi.game {
             cc.Loader.getInstance().onload = function () {
                 cc.AppController.shareAppController().didFinishLaunchingWithOptions();
             };
-            cc.Loader.getInstance().preload(g_resources);
+            // TODO: Remove this statement!
+            cc.Loader.getInstance().preload([]);
         },
         applicationDidFinishLaunching: function () {
             // initialize director
