@@ -4,11 +4,13 @@
 
 module ebi.rpg {
     export class MapCharacter {
+        // TODO: Rename it
         private a_: number = 1;
         private frameCount_: number = 1;
         private dir_: number = 0;
         private timer_: number = 0;
         private sprite_: ebi.game.Sprite = null;
+        // TODO: I suggest to create the new class named CharaChipsetData.
         private charaChipsetData_: Object;
 
         constructor(id: number) {
