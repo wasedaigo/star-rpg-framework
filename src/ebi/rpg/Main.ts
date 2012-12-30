@@ -23,7 +23,7 @@ module ebi.rpg {
                 init();
                 isInitialized = true;
             }
-            if (ImageManager.isLoading()){
+            if (!ImageManager.isLoading()){
                 if (!isPreloadFinishd) {
                     onPreloadFinished();
                     isPreloadFinishd = true;

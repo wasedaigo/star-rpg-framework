@@ -17,7 +17,7 @@ module ebi.rpg {
         }
 
         public static isLoading(): bool {
-            return loadingCount === 0;
+            return loadingCount > 0;
         }
 
         public static clear(): void {
