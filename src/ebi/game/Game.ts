@@ -29,7 +29,7 @@ module ebi.game {
 
         public static run(mainLoop: MainLoop): void {
             if (Game.instance_ != null) {
-                throw "A game has already run.";
+                throw 'A game has already run.';
             }
             try {
                 var game = Game.instance_ = new Game(mainLoop);
@@ -129,13 +129,13 @@ module ebi.game {
             this._super(enabled);
         },
         onTouchBegan: function(touch, event): void {
-            console.log("onTouchBegan");
+            console.log('onTouchBegan');
         },
         onTouchMoved: function(touch, event): void {
-            console.log("onTouchMoved");
+            console.log('onTouchMoved');
         },
         onTouchEnded: function(touch, event): void {
-            console.log("onTouchEnded");
+            console.log('onTouchEnded');
         },
         onTouchesBegan: function(touches, event): void {
             if (!touches[0]) {
