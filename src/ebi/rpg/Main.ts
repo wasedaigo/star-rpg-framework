@@ -39,7 +39,7 @@ module ebi.rpg {
             ResourceManager.preloadTmx("sample");
             for (var i = 1; i <= 3; i++) {
                 var charaChipsetData = DatabaseManager.getCharaChipsetData(i);
-                ResourceManager.preloadImage(charaChipsetData.srcImage);
+                ResourceManager.preloadImage(charaChipsetData['srcImage']);
             }
             ResourceManager.preloadTmxImage('tile_a');
             ResourceManager.preloadTmxImage('tile_b');

@@ -36,7 +36,7 @@ module ebi.rpg {
             },     
         };
 
-        public static getCharaChipsetData(id: number): any {
+        public static getCharaChipsetData(id: number): Object {
             return mapCharacterChipsetData[id.toString()];
         }
     }
