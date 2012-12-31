@@ -6,8 +6,7 @@
 
 module ebi.rpg {
     export class MapCharacter {
-        // TODO: Rename it
-        private a_: number = 1;
+        private switchAnimDir_: number = 1;
         private frameNo_: number = 1;
         private dir_: number = 0;
         private timer_: number = 0;
@@ -53,26 +52,30 @@ module ebi.rpg {
             this.timer_++;
             if (this.timer_ > 10) {
                 this.timer_ = 0;
-                this.frameNo_ += this.a_;
+                this.frameNo_ += this.switchAnimDir_;
 
                 // ----> switching the animation to the right
                 if (this.frameNo_ >= this.charaChipset_.frameCount - 1) {
                     this.frameNo_ = this.charaChipset_.frameCount - 1;
-                    this.a_ = -1;
+                    this.switchAnimDir_ = -1;
                 }
 
                 // <---- switching the animation to the left
                 if (this.frameNo_ <= 0) {
                     this.frameNo_ = 0;
-                    this.a_ = 1;
+                    this.switchAnimDir_ = 1;
                 }
             }
-            
+
             // Update animation frame
             this.sprite_.srcX = (this.charaChipset_.indexW * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.sizeX;
 
             // Update animation dir
             this.sprite_.srcY = (this.charaChipset_.indexH * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.sizeY;
+        }
+
+        private updateDir(): void {
+            
         }
     }
 }
