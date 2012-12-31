@@ -17,6 +17,7 @@ module ebi.game {
         private ccSprite_: cc.Sprite;
         private image_: Image;
 
+        private z_: number = 0;
         private srcX_: number;
         private srcY_: number;
         private srcWidth_: number;
@@ -69,6 +70,14 @@ module ebi.game {
             this.ccSprite_.setPositionY(480 - y);
         }
 
+        public get z(): number {
+            return this.z_;
+        }
+
+        public set z(z) {
+            this.z_ = z;
+        }
+
         // srcX
         public get srcX(): number {
             return this.srcX_;
@@ -109,7 +118,7 @@ module ebi.game {
             delete Sprite.sprites_[this.id.toString()];
         }
 
-        public get innerSprite(): cc.Sprite {
+        public get innerObject(): cc.Sprite {
             return this.ccSprite_;
         }
 

@@ -64,28 +64,28 @@ module ebi.game {
                 scene.addChild(this.ccInputLayer_, 10000000);
             }
             
-            var spriteNodes = ebi.game.Sprite.sprites.map((sprite) => sprite.innerSprite);
-            Game.addAndRemoveNodes(scene, this.shownSprites_, spriteNodes);
-            var mapNodes = ebi.game.TmxTiledMap.tmxTiledMaps.map((map) => map.innerTmxTiledMap);
-            Game.addAndRemoveNodes(scene, this.shownTmxTiledMaps_, mapNodes);
+            var sprites = ebi.game.Sprite.sprites.map((sprite) => sprite.innerObject);
+            Game.addAndRemoveNodes(scene, this.shownSprites_, sprites);
+            var maps = ebi.game.TmxTiledMap.tmxTiledMaps.map((map) => map.innerObject);
+            Game.addAndRemoveNodes(scene, this.shownTmxTiledMaps_, maps);
         }
 
-        // TODO: To use the Z-order, latestNodes should have a property indicating Z-order.
-        private static addAndRemoveNodes(scene: cc.Scene, nodesHash: Object, latestNodes: cc.Node[]): void {
+        private static addAndRemoveNodes(scene: cc.Scene, nodesHash: Object, drawables: IDrawable[]): void {
+            var nodesToShow = drawables.map((drawable: IDrawable) => drawable.innerObject);
             Object.keys(nodesHash).forEach((tagStr: string): void => {
                 var addedNode: cc.Node = nodesHash[tagStr];
-                if (latestNodes.indexOf(addedNode) === -1) {
+                if (nodesToShow.indexOf(addedNode) === -1) {
                     var tag: number = parseInt(tagStr, 10);
                     scene.removeChildByTag(tag);
                     delete nodesHash[tagStr];
                     console.log('Node Removed:', tag);
                 }
             });
-            latestNodes.forEach((node: cc.Node): void => {
+            drawables.forEach((drawable: IDrawable): void => {
+                var node = drawable.innerObject;
                 var tag: number = node.getTag();
                 if (!(tag.toString() in nodesHash)) {
-                    // TODO: Modify the Z order
-                    scene.addChild(node, 1, tag);
+                    scene.addChild(node, drawable.z, tag);
                     nodesHash[tag.toString()] = node;
                     console.log('Node Added:', tag);
                 }

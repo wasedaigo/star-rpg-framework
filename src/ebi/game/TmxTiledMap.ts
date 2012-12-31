@@ -10,6 +10,7 @@ module ebi.game {
         private static prefix_: string = 'res/tmx/';
 
         private ccTMXTiledMap_: cc.TMXTiledMap = null;
+        private z_: number = 0;
 
         public static get tmxTiledMaps(): TmxTiledMap[] {
             return Object.keys(tmxTiledMaps_).map((id) => tmxTiledMaps_[id]);
@@ -19,6 +20,7 @@ module ebi.game {
             TmxTiledMap.ids_++;
             var id = TmxTiledMap.ids_;
             TmxTiledMap.tmxTiledMaps_[id.toString()] = this;
+            this.z = 0;
         }
 
         // TODO: Make it async
@@ -32,7 +34,15 @@ module ebi.game {
             return !!this.ccTMXTiledMap_;
         }
 
-        public get innerTmxTiledMap(): cc.TMXTiledMap {
+        public get z(): number {
+            return this.z_;
+        }
+
+        public set z(z) {
+            this.z_ = z;
+        }
+
+        public get innerObject(): cc.TMXTiledMap {
             return this.ccTMXTiledMap_;
         }
 
