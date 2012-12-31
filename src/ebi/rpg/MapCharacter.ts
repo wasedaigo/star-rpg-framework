@@ -50,7 +50,7 @@ module ebi.rpg {
             this.vx_ = 0;
             this.vy_ = 0;
 
-            if (this.controlable && AnalogInputController.hasInput) {
+            if (this.controlable) {
                 this.setVelocity(AnalogInputController.inputDx, AnalogInputController.inputDy);
             }
             
