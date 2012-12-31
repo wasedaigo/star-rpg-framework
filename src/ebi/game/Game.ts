@@ -64,9 +64,9 @@ module ebi.game {
                 scene.addChild(this.ccInputLayer_, 10000000);
             }
             
-            var sprites = ebi.game.Sprite.sprites.map((sprite) => sprite.innerObject);
+            var sprites = ebi.game.Sprite.sprites;
             Game.addAndRemoveNodes(scene, this.shownSprites_, sprites);
-            var maps = ebi.game.TmxTiledMap.tmxTiledMaps.map((map) => map.innerObject);
+            var maps = ebi.game.TmxTiledMap.tmxTiledMaps;
             Game.addAndRemoveNodes(scene, this.shownTmxTiledMaps_, maps);
         }
 

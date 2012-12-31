@@ -24,9 +24,7 @@ module ebi.game {
         private srcHeight_: number;
 
         public static get sprites(): Sprite[] {
-            return Object.keys(sprites_).map((id) => {
-                return sprites_[id];
-            });
+            return Object.keys(sprites_).map((id) => sprites_[id]);
         }
 
         constructor(image: Image) {
