@@ -38,8 +38,8 @@ module ebi.rpg {
         private static init(): void {
             ResourceManager.preloadTmx("sample");
             for (var i = 1; i <= 3; i++) {
-                var charaChipsetData = DatabaseManager.getCharaChipsetData(i);
-                ResourceManager.preloadImage(charaChipsetData['srcImage']);
+                // TODO: unload when the scene/map changes
+                DatabaseManager.loadCharaChipsetData(i);
             }
             ResourceManager.preloadTmxImage('tile_a');
             ResourceManager.preloadTmxImage('tile_b');

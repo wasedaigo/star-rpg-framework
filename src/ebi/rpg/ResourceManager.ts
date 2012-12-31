@@ -11,6 +11,10 @@ module ebi.rpg {
             }); 
         }
 
+        public static unloadImage(id: string): void {
+            delete images[id];
+        }
+
         public static preloadTmxImage(id: string): void {
             loadingCount++;
             ebi.game.Image.load('res/tmx/images/' + id + ".png", (loadedImage) => {

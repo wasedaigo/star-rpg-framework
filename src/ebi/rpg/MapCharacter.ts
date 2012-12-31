@@ -1,30 +1,29 @@
 /// <reference path='../game/Game.ts' />
 /// <reference path='./DatabaseManager.ts' />
 /// <reference path='./ResourceManager.ts' />
+/// <reference path='./MapCharacterChipset.ts' />
 /// <reference path='./AnalogInputController.ts' />
 
 module ebi.rpg {
     export class MapCharacter {
         // TODO: Rename it
         private a_: number = 1;
-        private frameCount_: number = 1;
+        private frameNo_: number = 1;
         private dir_: number = 0;
         private timer_: number = 0;
         private sprite_: ebi.game.Sprite = null;
-        // TODO: I suggest to create the new class named CharaChipsetData.
-        private charaChipsetData_: Object;
+        private charaChipset_: MapCharacterChipset;
 
         constructor(id: number) {
-            this.charaChipsetData_ = DatabaseManager.getCharaChipsetData(id);
-            var image = ResourceManager.getImage(this.charaChipsetData_['srcImage']);
-            var data = this.charaChipsetData_;
-            this.frameCount_ = data['startAnim'];
-            this.dir_ = data['startDir'];
+            this.charaChipset_ = DatabaseManager.getCharaChipsetData(id);
+            var image = ResourceManager.getImage(this.charaChipset_.src);
+            this.frameNo_ = this.charaChipset_.defaultFrameNo;
+            this.dir_ = 0;
             this.sprite_ = new ebi.game.Sprite(image);
-            this.sprite_.srcX      = (data['charaX'] * data['animCount'] + this.frameCount_) * data['srcWidth'];
-            this.sprite_.srcY      = (data['charaY'] * data['dirCount'] + this.dir_) * data['srcHeight'];
-            this.sprite_.srcWidth  = data['srcWidth'];
-            this.sprite_.srcHeight = data['srcHeight'];
+            this.sprite_.srcX      = (this.charaChipset_.indexW * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.sizeX;
+            this.sprite_.srcY      = (this.charaChipset_.indexH * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.sizeY;
+            this.sprite_.srcWidth  = this.charaChipset_.sizeX;
+            this.sprite_.srcHeight = this.charaChipset_.sizeY;
         }
 
         // x
@@ -54,28 +53,26 @@ module ebi.rpg {
             this.timer_++;
             if (this.timer_ > 10) {
                 this.timer_ = 0;
-                this.frameCount_ += this.a_;
+                this.frameNo_ += this.a_;
 
                 // ----> switching the animation to the right
-                if (this.frameCount_ >= this.charaChipsetData_['animCount'] - 1) {
-                    this.frameCount_ = this.charaChipsetData_['animCount'] - 1;
+                if (this.frameNo_ >= this.charaChipset_.frameCount - 1) {
+                    this.frameNo_ = this.charaChipset_.frameCount - 1;
                     this.a_ = -1;
                 }
 
                 // <---- switching the animation to the left
-                if (this.frameCount_ <= 0) {
-                    this.frameCount_ = 0;
+                if (this.frameNo_ <= 0) {
+                    this.frameNo_ = 0;
                     this.a_ = 1;
                 }
             }
-
-            var data = this.charaChipsetData_;
-
+            
             // Update animation frame
-            this.sprite_.srcX = (data['charaX'] * data['animCount'] + this.frameCount_) * data['srcWidth'];
+            this.sprite_.srcX = (this.charaChipset_.indexW * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.sizeX;
 
             // Update animation dir
-            this.sprite_.srcY = (data['charaY'] * data['dirCount'] + this.dir_) * data['srcHeight'];
+            this.sprite_.srcY = (this.charaChipset_.indexH * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.sizeY;
         }
     }
 }

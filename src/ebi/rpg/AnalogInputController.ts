@@ -5,8 +5,8 @@ module ebi.rpg {
 
         private static touchStartLocationX_: number;
         private static touchStartLocationY_: number;
-        private static inputDx_: number;
-        private static inputDy_: number;
+        private static inputDx_: number; // 0.0 ~ 1.0
+        private static inputDy_: number; // 0.0 ~ 1.0
 
         // value less than min will be invalid
         // value more than max will be rounded to max
