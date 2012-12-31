@@ -4,6 +4,7 @@
 /// <reference path='./DatabaseManager.ts' />
 /// <reference path='./ResourceManager.ts' />
 /// <reference path='./MapCharacter.ts' />
+/// <reference path='./MapCamera.ts' />
 /// <reference path='./AnalogInputController.ts' />
 
 module ebi.rpg {
@@ -32,6 +33,7 @@ module ebi.rpg {
 
                 mapCharacters.forEach((mapCharacter) => mapCharacter.update());
                 AnalogInputController.update();
+                MapCamera.update();
             }
         }
 
@@ -54,6 +56,7 @@ module ebi.rpg {
             mapCharacter.y = 60;
             mapCharacter.controlable = true;
             mapCharacters.push(mapCharacter);
+            MapCamera.focusTarget = mapCharacter;
             var mapCharacter: MapCharacter = new MapCharacter(3);
             mapCharacter.y = 120;
             mapCharacters.push(mapCharacter);
