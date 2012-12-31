@@ -46,6 +46,16 @@ module ebi.game {
             return this.ccTMXTiledMap_;
         }
 
+        public get mapWidth(): number {
+            var size = this.ccTMXTiledMap_.getMapSize();
+            return size.width;
+        }
+
+        public get mapHeight(): number {
+            var size = this.ccTMXTiledMap_.getMapSize();
+            return size.height;
+        }
+
         public getProperties(layerName: string, key: string): any[] {
             var layer = this.ccTMXTiledMap_.getLayer(layerName);
             

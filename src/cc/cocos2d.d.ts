@@ -89,6 +89,7 @@ module cc {
         static create(path: string): TMXTiledMap;
         getLayer(name: string): TMXLayer;
         propertiesForGID(gid: number): {};
+        getMapSize(): Size;
     }
     class TMXLayer extends Node {
         getTiles(): number[];
