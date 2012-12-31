@@ -52,6 +52,7 @@ module ebi.rpg {
             mapCharacters.push(mapCharacter);
             var mapCharacter: MapCharacter = new MapCharacter(2);
             mapCharacter.y = 60;
+            mapCharacter.controlable = true;
             mapCharacters.push(mapCharacter);
             var mapCharacter: MapCharacter = new MapCharacter(3);
             mapCharacter.y = 120;

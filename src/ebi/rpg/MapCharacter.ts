@@ -14,6 +14,7 @@ module ebi.rpg {
         private charaChipset_: MapCharacterChipset;
         private vx_: number;
         private vy_: number;
+        public controlable: bool;
 
         constructor(id: number) {
             this.charaChipset_ = DatabaseManager.getCharaChipsetData(id);
@@ -45,19 +46,28 @@ module ebi.rpg {
         }
 
         public update(): void {
-            if (!AnalogInputController.hasInput) {
-                return;
+
+            this.vx_ = 0;
+            this.vy_ = 0;
+
+            if (this.controlable && AnalogInputController.hasInput) {
+                this.setVelocity(AnalogInputController.inputDx, AnalogInputController.inputDy);
+            }
+            
+            if (this.isMoving) {
+                this.updateDir();
+                this.updateFrame();
             }
 
-            this.updateVelocity();
-            this.updateDir();
             this.updatePosition();
-            this.updateFrame();
             this.updateVisual();
         }
 
-        private updateVelocity(): void {
-            // update veocity
+        private get isMoving(): bool {
+            return (this.vx_ !== 0 || this.vy_ !== 0);
+        }
+
+        private setVelocity(vx: number, vy: number): void {
             this.vx_ = AnalogInputController.inputDx;
             this.vy_ = AnalogInputController.inputDy;
         }
