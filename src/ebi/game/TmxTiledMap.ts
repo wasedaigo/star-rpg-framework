@@ -46,6 +46,26 @@ module ebi.game {
             return this.ccTMXTiledMap_;
         }
 
+        public getProperties(layerName: string, key: string): any[] {
+            var layer = this.ccTMXTiledMap_.getLayer(layerName);
+            
+            var result = [];
+            if (layer) {
+                var tiles = layer.getTiles();
+                tiles.forEach((gid)=>{
+                    var properties = this.ccTMXTiledMap_.propertiesForGID(gid);
+                    if (properties) {
+                        var property = properties[key];
+                        result.push(property);
+                    } else {
+                        result.push(null);
+                    }
+                })
+            } else {
+                console.log("No layer defined for layerName = " + layerName);
+            }
+            return result;
+        }
     }
 
 }

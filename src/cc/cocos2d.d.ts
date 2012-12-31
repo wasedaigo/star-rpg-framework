@@ -87,7 +87,10 @@ module cc {
     }
     class TMXTiledMap extends Node {
         static create(path: string): TMXTiledMap;
-        getLayer(name: string): Node;
-        propertiesForGID(gid: number): any;
+        getLayer(name: string): TMXLayer;
+        propertiesForGID(gid: number): {};
+    }
+    class TMXLayer extends Node {
+        getTiles(): number[];
     }
 }

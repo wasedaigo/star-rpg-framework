@@ -52,6 +52,9 @@ module ebi.rpg {
             map_ = new ebi.game.TmxTiledMap();
             map_.loadMap("sample");
 
+            // Test for getting collision data
+            var collision = map_.getProperties('middle', 'collision');
+
             var mapCharacter: MapCharacter = new MapCharacter(1);
             mapCharacters.push(mapCharacter);
             var mapCharacter: MapCharacter = new MapCharacter(2);
