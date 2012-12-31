@@ -1,8 +1,9 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
+/// <reference path='../IDrawable.ts' />
 
 module ebi.game {
 
-    export class TmxTiledMap {
+    export class TmxTiledMap implements IDrawable {
 
         private static ids_: number = 0;
         private static tmxTiledMaps_: Object = {};

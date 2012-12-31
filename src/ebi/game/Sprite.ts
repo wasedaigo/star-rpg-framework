@@ -1,4 +1,5 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
+/// <reference path='./IDrawable.ts' />
 /// <reference path='./Image.ts' />
 
 module ebi.game {
@@ -8,7 +9,7 @@ module ebi.game {
      *
      * I'll make a layer which holds multiple sprites later.
      */
-    export class Sprite {
+    export class Sprite implements IDrawable {
 
         private static ids_: number = 0;
         private static sprites_: Object = {};
