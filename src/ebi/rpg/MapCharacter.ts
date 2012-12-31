@@ -12,6 +12,8 @@ module ebi.rpg {
         private timer_: number = 0;
         private sprite_: ebi.game.Sprite = null;
         private charaChipset_: MapCharacterChipset;
+        private vx_: number;
+        private vy_: number;
 
         constructor(id: number) {
             this.charaChipset_ = DatabaseManager.getCharaChipsetData(id);
@@ -19,10 +21,11 @@ module ebi.rpg {
             this.frameNo_ = this.charaChipset_.defaultFrameNo;
             this.dir_ = 0;
             this.sprite_ = new ebi.game.Sprite(image);
-            this.sprite_.srcX      = (this.charaChipset_.indexW * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.sizeX;
-            this.sprite_.srcY      = (this.charaChipset_.indexH * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.sizeY;
+            this.sprite_.srcX      = 0;
+            this.sprite_.srcY      = 0;
             this.sprite_.srcWidth  = this.charaChipset_.sizeX;
             this.sprite_.srcHeight = this.charaChipset_.sizeY;
+            this.updateVisual();   
         }
 
         // x
@@ -46,9 +49,32 @@ module ebi.rpg {
                 return;
             }
 
-            this.sprite_.x += AnalogInputController.inputDx;
-            this.sprite_.y += AnalogInputController.inputDy;
+            this.updateVelocity();
+            this.updateDir();
+            this.updatePosition();
+            this.updateFrame();
+            this.updateVisual();
+        }
 
+        private updateVelocity(): void {
+            // update veocity
+            this.vx_ = AnalogInputController.inputDx;
+            this.vy_ = AnalogInputController.inputDy;
+        }
+
+        private updatePosition(): void {
+            this.sprite_.x += this.vx_;
+            this.sprite_.y += this.vy_;
+        }
+
+        private updateDir(): void {
+            var t = Math.atan2(this.vy_, this.vx_) / Math.PI; // -1.0 ~ 1.0
+            // Match the angle with chipset image format
+            var angle = (0.5 * t + 1.5 - (1 / (2 * this.charaChipset_.dirCount))) % 1.0; // 0.0 ~ 1.0
+            this.dir_ = Math.floor(angle * this.charaChipset_.dirCount) % this.charaChipset_.dirCount;
+        }
+
+        private updateFrame(): void {
             this.timer_++;
             if (this.timer_ > 10) {
                 this.timer_ = 0;
@@ -66,16 +92,13 @@ module ebi.rpg {
                     this.switchAnimDir_ = 1;
                 }
             }
-
-            // Update animation frame
-            this.sprite_.srcX = (this.charaChipset_.indexW * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.sizeX;
-
-            // Update animation dir
-            this.sprite_.srcY = (this.charaChipset_.indexH * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.sizeY;
         }
 
-        private updateDir(): void {
-            
+        private updateVisual(): void {
+            // Update animation frame
+            this.sprite_.srcX = (this.charaChipset_.indexW * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.sizeX;
+            // Update animation dir
+            this.sprite_.srcY = (this.charaChipset_.indexH * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.sizeY;
         }
     }
 }

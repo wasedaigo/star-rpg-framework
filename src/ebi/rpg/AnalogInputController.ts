@@ -1,7 +1,7 @@
 module ebi.rpg {
     export class AnalogInputController {
-        private static MinInputValue: number = 16; // Logical Pixels
-        private static MaxInputValue: number = 64; // Logical Pixels
+        private static MinInputValue: number = 8; // Logical Pixels
+        private static MaxInputValue: number = 48; // Logical Pixels
 
         private static touchStartLocationX_: number;
         private static touchStartLocationY_: number;
@@ -36,8 +36,10 @@ module ebi.rpg {
                 var dx: number = ebi.game.Input.touchX - touchStartLocationX_;
                 var dy: number = ebi.game.Input.touchY - touchStartLocationY_;
 
-                inputDx_ = roundValue(dx, MinInputValue, MaxInputValue) / MaxInputValue;
-                inputDy_ = roundValue(-dy, MinInputValue, MaxInputValue) / MaxInputValue;
+                if ((dx * dx + dy * dy) > MinInputValue * MinInputValue) {
+                    inputDx_ = roundValue(dx, 0, MaxInputValue) / MaxInputValue;
+                    inputDy_ = roundValue(-dy, 0, MaxInputValue) / MaxInputValue;          
+                }
             }
         }
 
