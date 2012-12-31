@@ -1,6 +1,7 @@
 /// <reference path='../game/Game.ts' />
 /// <reference path='./DatabaseManager.ts' />
 /// <reference path='./ResourceManager.ts' />
+/// <reference path='./AnalogInputController.ts' />
 
 module ebi.rpg {
     export class MapCharacter {
@@ -43,7 +44,12 @@ module ebi.rpg {
         }
 
         public update(): void {
-            this.sprite_.x += 1;
+            if (!AnalogInputController.hasInput) {
+                return;
+            }
+
+            this.sprite_.x += AnalogInputController.inputDx;
+            this.sprite_.y += AnalogInputController.inputDy;
 
             this.timer_++;
             if (this.timer_ > 10) {

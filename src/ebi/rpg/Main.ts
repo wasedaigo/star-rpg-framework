@@ -4,6 +4,7 @@
 /// <reference path='./DatabaseManager.ts' />
 /// <reference path='./ResourceManager.ts' />
 /// <reference path='./MapCharacter.ts' />
+/// <reference path='./AnalogInputController.ts' />
 
 module ebi.rpg {
 
@@ -29,9 +30,8 @@ module ebi.rpg {
                     isPreloadFinishd = true;
                 }
 
-                if (ebi.game.Input.isTouched) {
-                    mapCharacters.forEach((mapCharacter) => mapCharacter.update());
-                }
+                mapCharacters.forEach((mapCharacter) => mapCharacter.update());
+                AnalogInputController.update();
             }
         }
 
