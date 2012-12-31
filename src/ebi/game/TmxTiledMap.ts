@@ -36,18 +36,6 @@ module ebi.game {
             return this.ccTMXTiledMap_;
         }
 
-        public get bottomLayer(): cc.Node {
-            return this.ccTMXTiledMap_.getLayer('bottom');
-        }
-
-        public get middleLayer(): cc.Node {
-            return this.ccTMXTiledMap_.getLayer('middle');
-        }
-
-        public get topLayer(): cc.Node {
-            return this.ccTMXTiledMap_.getLayer('top');
-        }
-
     }
 
 }
