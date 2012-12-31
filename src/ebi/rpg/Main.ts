@@ -19,6 +19,7 @@ module ebi.rpg {
         private static mapCharacters: MapCharacter[] = [];
         private static isInitialized: bool = false;
         private static isPreloadFinishd: bool = false;
+        private static map_: ebi.game.TmxTiledMap;
 
         private static loop(): void {
             if (!isInitialized) {
@@ -48,7 +49,8 @@ module ebi.rpg {
         }
 
         private static onPreloadFinished(): void {
-            ebi.game.TmxTiledMap.loadMap("sample");
+            map_ = new ebi.game.TmxTiledMap();
+            map_.loadMap("sample");
 
             var mapCharacter: MapCharacter = new MapCharacter(1);
             mapCharacters.push(mapCharacter);

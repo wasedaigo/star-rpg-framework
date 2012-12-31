@@ -66,10 +66,7 @@ module ebi.game {
             
             var spriteNodes = ebi.game.Sprite.sprites.map((sprite) => sprite.innerSprite);
             Game.addAndRemoveNodes(scene, this.shownSprites_, spriteNodes);
-            var mapNodes = [];
-            if (ebi.game.TmxTiledMap.isMapLoaded) {
-                mapNodes.push(ebi.game.TmxTiledMap.innerTmxTiledMap);
-            }
+            var mapNodes = ebi.game.TmxTiledMap.tmxTiledMaps.map((map) => map.innerTmxTiledMap);
             Game.addAndRemoveNodes(scene, this.shownTmxTiledMaps_, mapNodes);
         }
 

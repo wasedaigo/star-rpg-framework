@@ -4,40 +4,49 @@ module ebi.game {
 
     export class TmxTiledMap {
 
-        private static ccTMXTiledMap_: cc.TMXTiledMap = null;
+        private static ids_: number = 0;
+        private static tmxTiledMaps_: Object = {};
         private static prefix_: string = 'res/tmx/';
 
+        private ccTMXTiledMap_: cc.TMXTiledMap = null;
+
+        public static get tmxTiledMaps(): TmxTiledMap[] {
+            return Object.keys(tmxTiledMaps_).map((id) => tmxTiledMaps_[id]);
+        }
+
+        constructor() {
+            TmxTiledMap.ids_++;
+            var id = TmxTiledMap.ids_;
+            TmxTiledMap.tmxTiledMaps_[id.toString()] = this;
+        }
+
         // TODO: Make it async
-        public static loadMap(id: string) {
-            ccTMXTiledMap_ = cc.TMXTiledMap.create(prefix_ + id + '.tmx');
+        public loadMap(id: string) {
+            this.ccTMXTiledMap_ = cc.TMXTiledMap.create(TmxTiledMap.prefix_ + id + '.tmx');
             // TODO: Replace the magic number. This should be unique in the global.
-            ccTMXTiledMap_.setTag(1 + 2000000);
+            this.ccTMXTiledMap_.setTag(1 + 2000000);
         }
 
-        public static get isMapLoaded(): bool {
-            return !!ccTMXTiledMap_;
+        public get isMapLoaded(): bool {
+            return !!this.ccTMXTiledMap_;
         }
 
-        public static get innerTmxTiledMap(): cc.TMXTiledMap {
-            return ccTMXTiledMap_;
+        public get innerTmxTiledMap(): cc.TMXTiledMap {
+            return this.ccTMXTiledMap_;
         }
 
-        public static get bottomLayer(): cc.Node {
-            return ccTMXTiledMap_.getLayer('bottom');
+        public get bottomLayer(): cc.Node {
+            return this.ccTMXTiledMap_.getLayer('bottom');
         }
 
-        public static get middleLayer(): cc.Node {
-            return ccTMXTiledMap_.getLayer('middle');
+        public get middleLayer(): cc.Node {
+            return this.ccTMXTiledMap_.getLayer('middle');
         }
 
-        public static get topLayer(): cc.Node {
-            return ccTMXTiledMap_.getLayer('top');
+        public get topLayer(): cc.Node {
+            return this.ccTMXTiledMap_.getLayer('top');
         }
 
-        // TODO: ???
-        public static disposeMap(): void {
-            delete ccTMXTiledMap_;
-        }
     }
 
 }
