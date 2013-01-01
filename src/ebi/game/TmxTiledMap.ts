@@ -5,32 +5,22 @@ module ebi.game {
 
     export class TmxTiledMap implements IDrawable {
 
-        private static ids_: number = 0;
-        private static tmxTiledMaps_: Object = {};
         private static prefix_: string = 'res/tmx/';
 
         private ccTMXTiledMap_: cc.TMXTiledMap = null;
+        private id_: number;
         private z_: number = 0;
 
-        public static get tmxTiledMaps(): TmxTiledMap[] {
-            return Object.keys(tmxTiledMaps_).map((id) => tmxTiledMaps_[id]);
-        }
-
         constructor() {
-            TmxTiledMap.ids_++;
-            var id = TmxTiledMap.ids_;
-            TmxTiledMap.tmxTiledMaps_[id.toString()] = this;
-
-            DisplayObjects.add(this);
-
+            var id = DisplayObjects.add(this);
+            this.id_ = id;
             this.z = 0;
         }
 
         // TODO: Make it async
         public loadMap(id: string) {
             this.ccTMXTiledMap_ = cc.TMXTiledMap.create(TmxTiledMap.prefix_ + id + '.tmx');
-            // TODO: Replace the magic number. This should be unique in the global.
-            this.ccTMXTiledMap_.setTag(1 + 2000000);
+            this.ccTMXTiledMap_.setTag(this.id_);
         }
 
         public get isMapLoaded(): bool {
@@ -65,7 +55,7 @@ module ebi.game {
             var result = [];
             if (layer) {
                 var tiles = layer.getTiles();
-                tiles.forEach((gid)=>{
+                tiles.forEach((gid) => {
                     var properties = this.ccTMXTiledMap_.propertiesForGID(gid);
                     if (properties) {
                         var property = properties[key];
