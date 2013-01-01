@@ -1,4 +1,5 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
+/// <reference path='./DisplayObjects.ts' />
 /// <reference path='./IDrawable.ts' />
 /// <reference path='./Image.ts' />
 
@@ -31,6 +32,8 @@ module ebi.game {
             Sprite.ids_++;
             var id = Sprite.ids_;
             Sprite.sprites_[id.toString()] = this;
+
+            DisplayObjects.add(this);
 
             this.image_ = image;
             var rect = new cc.Rect(this.srcX_, this.srcY_, this.srcWidth_, this.srcHeight_);
@@ -114,6 +117,8 @@ module ebi.game {
 
         public dispose(): void {
             delete Sprite.sprites_[this.id.toString()];
+
+            DisplayObjects.remove(this);
         }
 
         public get innerObject(): cc.Sprite {

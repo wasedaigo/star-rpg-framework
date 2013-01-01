@@ -64,10 +64,12 @@ module ebi.game {
                 scene.addChild(this.ccInputLayer_, 10000000);
             }
             
-            var sprites = ebi.game.Sprite.sprites;
+            /*var sprites = ebi.game.Sprite.sprites;
             Game.addAndRemoveNodes(scene, this.shownSprites_, sprites);
             var maps = ebi.game.TmxTiledMap.tmxTiledMaps;
-            Game.addAndRemoveNodes(scene, this.shownTmxTiledMaps_, maps);
+            Game.addAndRemoveNodes(scene, this.shownTmxTiledMaps_, maps);*/
+            var drawables = ebi.game.DisplayObjects.drawables;
+            Game.addAndRemoveNodes(scene, this.shownSprites_, drawables);
         }
 
         private static addAndRemoveNodes(scene: cc.Scene, nodesHash: Object, drawables: IDrawable[]): void {

@@ -20,6 +20,9 @@ module ebi.game {
             TmxTiledMap.ids_++;
             var id = TmxTiledMap.ids_;
             TmxTiledMap.tmxTiledMaps_[id.toString()] = this;
+
+            DisplayObjects.add(this);
+
             this.z = 0;
         }
 
@@ -75,6 +78,10 @@ module ebi.game {
                 console.log("No layer defined for layerName = " + layerName);
             }
             return result;
+        }
+        
+        public dispose(): void {
+            DisplayObjects.remove(this);
         }
     }
 
