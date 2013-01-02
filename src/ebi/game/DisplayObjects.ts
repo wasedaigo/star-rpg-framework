@@ -1,36 +1,21 @@
 /// <reference path='./IDrawable.ts' />
 
-/*
- * Append 'id' property to Object.
- * Any objects can have the unique IDs.
- */
-(() => {
-    var id = 1;
-
-    function generateId() {
-        return id++;
-    };
-
-    var proto: any = Object.prototype;
-
-    // TODO: Should this be a getter property?
-    proto.getId = function() {
-        var newId = generateId();
-        this.id = () => {
-            return newId;
-        };
-        return newId;
-    };
-})();
-
 module ebi.game {
+
+    var objectId = 0;
 
     /*
      * Get the unique Object ID.
      */
     function getObjectId(object: Object): number {
-        var anyObject: any = object;
-        return anyObject.getId();
+        if (!object) {
+            return 0;
+        }
+        if (!object.hasOwnProperty('_objectId')) {
+            objectId++;
+            object['_objectId'] = objectId;
+        }
+        return object['_objectId'];
     }
 
     /*
