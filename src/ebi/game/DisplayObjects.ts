@@ -2,28 +2,29 @@
 
 module ebi.game {
 
-    var objectId = 0;
-
-    /*
-     * Get the unique Object ID.
-     */
-    function getObjectId(object: Object): number {
-        if (!object) {
-            return 0;
-        }
-        if (!object.hasOwnProperty('_objectId')) {
-            objectId++;
-            object['_objectId'] = objectId;
-        }
-        return object['_objectId'];
-    }
-
     /*
      * This class holds all objects to draw on the screen.
      * This class is only for the inner classes of ebi.game.
      * Don't use this class directly for your game.
      */
     export class DisplayObjects {
+
+        private static objectId_: number = 0;
+
+        /*
+         * Get the unique Object ID.
+         * NOTICE: This method will add the property '_objectID' to the argument.
+         */
+        private static getObjectId(object: Object): number {
+            if (!object) {
+                return 0;
+            }
+            if (!object.hasOwnProperty('_objectId')) {
+                objectId_++;
+                object['_objectId'] = objectId_;
+            }
+            return object['_objectId'];
+        }
 
         private static drawables_: Object = {};
 
