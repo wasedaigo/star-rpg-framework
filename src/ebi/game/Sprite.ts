@@ -59,6 +59,7 @@ module ebi.game {
         }
 
         public set z(z) {
+            // TODO: Reorder
             this.z_ = z;
         }
 
