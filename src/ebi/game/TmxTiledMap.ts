@@ -32,8 +32,10 @@ module ebi.game {
         }
 
         public set z(z) {
-            // TODO: Reorder
-            this.z_ = z;
+            if (this.z_ !== z) {
+                this.z_ = z;
+                DisplayObjects.addDrawableToReorder(this);
+            }
         }
 
         public get innerObject(): cc.TMXTiledMap {

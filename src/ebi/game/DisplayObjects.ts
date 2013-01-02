@@ -27,6 +27,7 @@ module ebi.game {
         }
 
         private static drawables_: Object = {};
+        private static drawablesToReorder_: IDrawable[] = [];
 
         public static get drawables(): IDrawable[] {
             return Object.keys(drawables_).map((idStr: string) => drawables_[idStr]);
@@ -41,6 +42,19 @@ module ebi.game {
         public static remove(drawable: IDrawable): void {
             var id = getObjectId(drawable);
             delete drawables_[id.toString()];
+        }
+
+        public static get drawablesToReorder(): IDrawable[] {
+            // TODO: Clone?
+            return drawablesToReorder_;
+        }
+
+        public static addDrawableToReorder(drawable: IDrawable): void {
+            drawablesToReorder_.push(drawable);
+        }
+
+        public static clearDrawablesToReorder(): void {
+            drawablesToReorder_.length = 0;
         }
 
     }

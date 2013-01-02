@@ -60,8 +60,17 @@ module ebi.game {
                 scene.addChild(this.ccInputLayer_, 10000000);
             }
             
+            // Add and remove drawables
             var drawables = ebi.game.DisplayObjects.drawables;
             Game.addAndRemoveNodes(scene, this.shownDrawables_, drawables);
+
+            // Reordering drawables
+            var drawablesToReorder = ebi.game.DisplayObjects.drawablesToReorder;
+            drawablesToReorder.forEach((drawable: IDrawable) => {
+                var node = drawable.innerObject;
+                scene.reorderChild(node, drawable.z);
+            });
+            ebi.game.DisplayObjects.clearDrawablesToReorder();
         }
 
         private static addAndRemoveNodes(scene: cc.Scene, nodesHash: Object, drawables: IDrawable[]): void {
