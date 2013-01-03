@@ -1,6 +1,5 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
 /// <reference path='./Sprite.ts' />
-/// <reference path='./TmxTiledMap.ts' />
 /// <reference path='./Input.ts' />
 
 module ebi.game {

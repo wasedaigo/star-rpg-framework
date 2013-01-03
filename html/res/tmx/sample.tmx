@@ -31,7 +31,7 @@
    H4sIAAAAAAAAA2NggAAjAhgZIIvhYjMwYNeHTR02c9HdRI46XObjs59Y8wiZhU0NMRgA0XbE/ZABAAA=
   </data>
  </layer>
- <layer name="top" width="10" height="10" visible="0">
+ <layer name="top" width="10" height="10">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA2NgwASiQCyGRRxdXhWI1fCoh8nj4tMLEPIPDAyU+5ABACLKVG2QAQAA
   </data>

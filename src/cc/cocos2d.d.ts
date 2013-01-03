@@ -46,7 +46,7 @@ module cc {
         getPositionX(): number;
         getPositionY(): number;
         getTag(): number;
-        removeChild(child: Node): void;
+        removeChild(child: Node, cleanUp?: bool): void;
         removeChildByTag(tag: number): void;
         reorderChild(child: Node, zOrder: number);
         setAnchorPoint(point: Point): void;
