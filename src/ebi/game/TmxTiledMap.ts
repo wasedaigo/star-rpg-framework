@@ -10,17 +10,22 @@ module ebi.game {
         private static tmxLayers_: {[s: string]: TmxLayer;} = {};
 
         // TODO: Make it async
+        // TODO: Handle cases invalid arguments are passed
         public static loadMap(id: string, layerInfo: {[s: string]: number;}) {
             ccTMXTiledMap_ = cc.TMXTiledMap.create(TmxTiledMap.prefix_ + id + '.tmx');
 
+            // Set up layers
             for (var layerName in layerInfo) {
                 var z = layerInfo[layerName];
                 var layer = ccTMXTiledMap_.getLayer(layerName);
+                // Remove layers from map w/o cleanup, 
+                // so that we can manage layers by ourselves.
                 ccTMXTiledMap_.removeChild(layer, false);
                 tmxLayers_[layerName] = new TmxLayer(layer);
                 tmxLayers_[layerName].z = z;
             }
         }
+
 
         public static get isMapLoaded(): bool {
             return !!ccTMXTiledMap_;
