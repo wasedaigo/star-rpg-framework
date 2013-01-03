@@ -46,21 +46,32 @@ module ebi.rpg {
         }
 
         public update(): void {
+            // Save previous moving state
+            var wasMoving: bool = this.isMoving;
 
+            // Setup velocity
             this.vx_ = 0;
             this.vy_ = 0;
-
             if (this.controlable) {
                 this.setVelocity(AnalogInputController.inputDx, AnalogInputController.inputDy);
             }
-            
-            if (this.isMoving) {
-                this.updateDir();
-                this.updateFrame();
+
+            // Detect move stop event
+            if (!this.isMoving && wasMoving) {
+                this.onMoveStop();
             }
 
+            // TODO: collision with map / characters
+
+            // Update character state
+            this.updateDir();
+            this.updateFrame();
             this.updatePosition();
             this.updateVisual();
+        }
+
+        private onMoveStop(): void {
+            this.frameNo_ = this.charaChipset_.defaultFrameNo;
         }
 
         private get isMoving(): bool {
@@ -78,6 +89,10 @@ module ebi.rpg {
         }
 
         private updateDir(): void {
+            if (!this.isMoving) {
+                return;
+            }
+
             var t = Math.atan2(this.vy_, this.vx_) / Math.PI; // -1.0 ~ 1.0
             // Match the angle with chipset image format
             var angle = (0.5 * t + 1.5 - (1 / (2 * this.charaChipset_.dirCount))) % 1.0; // 0.0 ~ 1.0
@@ -85,6 +100,10 @@ module ebi.rpg {
         }
 
         private updateFrame(): void {
+            if (!this.isMoving) {
+                return;
+            }
+
             this.timer_++;
             if (this.timer_ > 10) {
                 this.timer_ = 0;
