@@ -21,6 +21,9 @@
  <tileset firstgid="193" name="TileB" tilewidth="32" tileheight="32">
   <image source="images/tile_b.png" width="512" height="512"/>
  </tileset>
+ <tileset firstgid="449" name="collision" tilewidth="32" tileheight="32">
+  <image source="images/collision.png" width="128" height="128"/>
+ </tileset>
  <layer name="bottom" width="10" height="10">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA2NkYGBgHMWDBgMAjw2X0pABAAA=
@@ -31,9 +34,14 @@
    H4sIAAAAAAAAA2NggAAjAhgZIIvhYjMwYNeHTR02c9HdRI46XObjs59Y8wiZhU0NMRgA0XbE/ZABAAA=
   </data>
  </layer>
- <layer name="top" width="10" height="10" visible="0">
+ <layer name="top" width="10" height="10">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA2NgwASiQCyGRRxdXhWI1fCoh8nj4tMLEPIPDAyU+5ABACLKVG2QAQAA
+  </data>
+ </layer>
+ <layer name="collision" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NggICDjPgxMkAWw8WG8dH1YVOHzVx0N5GjDpf5hNSSqgaXOkJhig0DALSJouyQAQAA
   </data>
  </layer>
 </map>

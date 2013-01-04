@@ -53,8 +53,13 @@ module ebi.rpg {
             map_.loadMap("sample");
 
             // Test for getting collision data
-            var collision = map_.getProperties('middle', 'collision');
-
+            for (var i = 0; i < map_.mapWidth; i++) {
+                for (var j = 0; j < map_.mapHeight; j++) {
+                    var collision = map_.getCollisionAt(i, j);
+                    console.log(i + "," + j + " = " + collision);
+                }
+            }
+            
             var mapCharacter: MapCharacter = new MapCharacter(1);
             mapCharacters.push(mapCharacter);
             var mapCharacter: MapCharacter = new MapCharacter(2);

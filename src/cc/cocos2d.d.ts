@@ -92,7 +92,12 @@ module cc {
         propertiesForGID(gid: number): {};
         getMapSize(): Size;
     }
+    class TMXTilesetInfo extends Node {
+        firstGid: number;
+    }
     class TMXLayer extends Node {
         getTiles(): number[];
+        getTileSet(): TMXTilesetInfo;
+        getTileGIDAt(pos: Point): number;
     }
 }

@@ -52,26 +52,20 @@ module ebi.game {
             return size.height;
         }
 
-        // TODO: Fix the return type!!
-        public getProperties(layerName: string, key: string): Object[] {
-            var layer = this.ccTMXTiledMap_.getLayer(layerName);
-            
-            var result = [];
-            if (layer) {
-                var tiles = layer.getTiles();
-                tiles.forEach((gid) => {
-                    var properties = this.ccTMXTiledMap_.propertiesForGID(gid);
-                    if (properties) {
-                        var property = properties[key];
-                        result.push(property);
-                    } else {
-                        result.push(null);
-                    }
-                })
-            } else {
-                console.log("No layer defined for layerName = " + layerName);
+        // Get collision at specific location
+        // We are assuming collision layer is defined
+        public getCollisionAt(x: number, y: number): number {
+            // TODO: Getting firstGid each time is not optimal
+            var layer = this.ccTMXTiledMap_.getLayer("collision");
+            var tileset = layer.getTileSet();
+            var gid = layer.getTileGIDAt(new cc.Point(x, y));
+            // The position of tile in tileset defines its collision attribute
+            var d = gid - tileset.firstGid;
+            if (d < 0) {
+                d = -1;
             }
-            return result;
+
+            return d;
         }
         
         public dispose(): void {
