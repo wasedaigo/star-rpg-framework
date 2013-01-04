@@ -53,7 +53,7 @@ module ebi.game {
         }
 
         // TODO: Fix the return type!!
-        public getProperties(layerName: string, key: string): any[] {
+        public getProperties(layerName: string, key: string): Object[] {
             var layer = this.ccTMXTiledMap_.getLayer(layerName);
             
             var result = [];
