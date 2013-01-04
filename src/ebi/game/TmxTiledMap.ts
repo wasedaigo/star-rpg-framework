@@ -52,6 +52,7 @@ module ebi.game {
             return size.height;
         }
 
+        // TODO: Fix the return type!!
         public getProperties(layerName: string, key: string): any[] {
             var layer = this.ccTMXTiledMap_.getLayer(layerName);
             
