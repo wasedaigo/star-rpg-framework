@@ -46,7 +46,7 @@ module cc {
         getPositionX(): number;
         getPositionY(): number;
         getTag(): number;
-        removeChild(child: Node): void;
+        removeChild(child: Node, cleanUp?: bool): void;
         removeChildByTag(tag: number): void;
         reorderChild(child: Node, zOrder: number);
         setAnchorPoint(point: Point): void;
@@ -86,6 +86,11 @@ module cc {
         addImageAsync(path: string, target: any, selector: () => void);
         textureForKey(key:string): Image;
     }
+    class TMXLayer extends Node {
+        getTiles(): number[];
+        getTileSet(): TMXTilesetInfo;
+        getTileGIDAt(pos: Point): number;
+    }
     class TMXTiledMap extends Node {
         static create(path: string): TMXTiledMap;
         getLayer(name: string): TMXLayer;
@@ -94,10 +99,5 @@ module cc {
     }
     class TMXTilesetInfo extends Node {
         firstGid: number;
-    }
-    class TMXLayer extends Node {
-        getTiles(): number[];
-        getTileSet(): TMXTilesetInfo;
-        getTileGIDAt(pos: Point): number;
     }
 }
