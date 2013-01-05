@@ -1,9 +1,9 @@
 /// <reference path='../game/Game.ts' />
 /// <reference path='../game/Input.ts' />
-/// <reference path='../game/TmxTiledMap.ts' />
 /// <reference path='./DatabaseManager.ts' />
 /// <reference path='./ResourceManager.ts' />
 /// <reference path='./MapCharacter.ts' />
+/// <reference path='./Map.ts' />
 /// <reference path='./MapCamera.ts' />
 /// <reference path='./AnalogInputController.ts' />
 
@@ -19,7 +19,7 @@ module ebi.rpg {
         private static mapCharacters: MapCharacter[] = [];
         private static isInitialized: bool = false;
         private static isPreloadFinishd: bool = false;
-        private static map_: ebi.game.TmxTiledMap;
+        private static map_: Map = null;
 
         private static loop(): void {
             if (!isInitialized) {
@@ -49,17 +49,8 @@ module ebi.rpg {
         }
 
         private static onPreloadFinished(): void {
-            map_ = new ebi.game.TmxTiledMap();
-            map_.loadMap("sample");
+            map_ = new Map();
 
-            // Test for getting collision data
-            for (var i = 0; i < map_.mapWidth; i++) {
-                for (var j = 0; j < map_.mapHeight; j++) {
-                    var collision = map_.getCollisionAt(i, j);
-                    console.log(i + "," + j + " = " + collision);
-                }
-            }
-            
             var mapCharacter: MapCharacter = new MapCharacter(1);
             mapCharacters.push(mapCharacter);
             var mapCharacter: MapCharacter = new MapCharacter(2);

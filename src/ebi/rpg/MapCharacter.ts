@@ -28,7 +28,7 @@ module ebi.rpg {
             this.sprite_.srcHeight = this.charaChipset_.sizeY;
             this.updateVisual();   
         }
-
+        
         // x
         public get x(): number {
             return this.sprite_.x;
