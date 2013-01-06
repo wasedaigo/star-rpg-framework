@@ -48,8 +48,7 @@ module ebi.game {
         public loadMap(id: string) {
             this.ccTMXTiledMap_ = cc.TMXTiledMap.create(TmxTiledMap.prefix_ + id + '.tmx');
             var layerNames = this.ccTMXTiledMap_.getChildren().filter((node: cc.Node) => {
-                // TODO: use Object.getPrototypeOf / isPrototypeOf?
-                return node['getLayerName'];
+                return node instanceof cc.TMXLayer;
             }).map((node: cc.Node): string => {
                 var layer = <cc.TMXLayer>node;
                 return layer.getLayerName();
