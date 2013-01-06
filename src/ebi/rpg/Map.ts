@@ -7,7 +7,7 @@ module ebi.rpg {
             this.tmxTiledMap_ = new ebi.game.TmxTiledMap();
 
             // TODO Confirm preloading is working properly
-            this.tmxTiledMap_.loadMap('sample', ['bottom', 'middle', 'top']);
+            this.tmxTiledMap_.loadMap('sample');
             this.tmxTiledMap_.setLayerZ('bottom', 0);
             this.tmxTiledMap_.setLayerZ('middle', 0);
             this.tmxTiledMap_.setLayerZ('top',    1);

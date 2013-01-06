@@ -45,9 +45,16 @@ module ebi.game {
         private layers_: Object = {};
 
         // TODO: Make it async
-        public loadMap(id: string, layerNames: string[]) {
+        public loadMap(id: string) {
             this.ccTMXTiledMap_ = cc.TMXTiledMap.create(TmxTiledMap.prefix_ + id + '.tmx');
-            layerNames.forEach((layerName) => {
+            var layerNames = this.ccTMXTiledMap_.getChildren().filter((node: cc.Node) => {
+                // TODO: use Object.getPrototypeOf / isPrototypeOf?
+                return node['getLayerName'];
+            }).map((node: cc.Node): string => {
+                var layer = <cc.TMXLayer>node;
+                return layer.getLayerName();
+            });
+            layerNames.forEach((layerName: string) => {
                 var layer = this.ccTMXTiledMap_.getLayer(layerName);
                 this.ccTMXTiledMap_.removeChild(layer, false);
                 this.layers_[layerName] = new TmxLayer(layer);

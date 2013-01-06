@@ -87,6 +87,7 @@ module cc {
         textureForKey(key:string): Image;
     }
     class TMXLayer extends Node {
+        getLayerName(): string;
         getTiles(): number[];
         getTileSet(): TMXTilesetInfo;
         getTileGIDAt(pos: Point): number;
