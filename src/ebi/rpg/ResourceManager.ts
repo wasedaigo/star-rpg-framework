@@ -5,7 +5,7 @@ module ebi.rpg {
 
         public static preloadImage(id: string): void {
             loadingCount++;
-            ebi.game.Image.load('res/images/' + id + ".png", (loadedImage) => {
+            ebi.game.Image.load('res/images/' + id + '.png', (loadedImage) => {
                 images[id] = loadedImage;
                 loadingCount--;
             }); 
@@ -17,7 +17,7 @@ module ebi.rpg {
 
         public static preloadTmxImage(id: string): void {
             loadingCount++;
-            ebi.game.Image.load('res/tmx/images/' + id + ".png", (loadedImage) => {
+            ebi.game.Image.load('res/tmx/images/' + id + '.png', (loadedImage) => {
                 images[id] = loadedImage;
                 loadingCount--;
             }); 
@@ -25,7 +25,7 @@ module ebi.rpg {
 
         public static preloadTmx(id: string): void {
             loadingCount++;
-            cc.SAXParser.getInstance().preloadPlist("res/tmx/" + id + ".tmx");
+            cc.SAXParser.getInstance().preloadPlist('res/tmx/' + id + '.tmx');
         }
 
         public static getImage(id: string): ebi.game.Image {
