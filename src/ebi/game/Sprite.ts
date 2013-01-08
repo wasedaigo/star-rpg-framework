@@ -26,7 +26,7 @@ module ebi.game {
             this.image_ = image;
             var rect = new cc.Rect(this.srcX_, this.srcY_, this.srcWidth_, this.srcHeight_);
             this.ccSprite_ = cc.Sprite.createWithTexture(image.innerImage, rect);
-            this.ccSprite_.setAnchorPoint(new cc.Point(0, 1));
+            this.ccSprite_.setAnchorPoint(new cc.Point(0, 0));
             this.ccSprite_.setTag(id);
             this.x = 0;
             this.y = 0;
@@ -46,12 +46,10 @@ module ebi.game {
         }
 
         public get y(): number {
-            // TODO: Replace the magic number
-            return 480 - this.ccSprite_.getPositionY();;
+            return this.ccSprite_.getPositionY();;
         }
         public set y(y: number) {
-            // TODO: Replace the magic number
-            this.ccSprite_.setPositionY(480 - y);
+            this.ccSprite_.setPositionY(y);
         }
 
         public get z(): number {

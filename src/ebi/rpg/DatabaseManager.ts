@@ -3,45 +3,30 @@ module ebi.rpg {
         public static charaChipsetData = {
             "1": {
                 "src": "characters/chara01",
-                "indexW": 0,
-                "indexH": 0,
-                "sizeX": 32,
-                "sizeY": 48,
+                "srcIndex": [0, 0],
+                "size": [32, 48],
                 "dirCount": 4,
                 "frameCount": 3,
                 "defaultFrameNo": 0,
-                "hitTop": 0,
-                "hitLeft": 0,
-                "hitWidth": 16,
-                "hitHeight": 16
+                "hitRect": [0, 0, 16, 16]
             },
             "2": {
                 "src": "characters/chara01",
-                "indexW": 1,
-                "indexH": 0,
-                "sizeX": 32,
-                "sizeY": 48,
+                "srcIndex": [3, 1],
+                "size": [32, 48],
                 "dirCount": 4,
                 "frameCount": 3,
                 "defaultFrameNo": 1,
-                "hitTop": 0,
-                "hitLeft": 0,
-                "hitWidth": 16,
-                "hitHeight": 16
+                "hitRect": [0, 0, 16, 16]
             },
             "3": {
                 "src": "characters/chara01",
-                "indexW": 1,
-                "indexH": 1,
-                "sizeX": 32,
-                "sizeY": 48,
+                "srcIndex": [1, 1],
+                "size": [32, 48],
                 "dirCount": 4,
                 "frameCount": 3,
                 "defaultFrameNo": 2,
-                "hitTop": 0,
-                "hitLeft": 0,
-                "hitWidth": 16,
-                "hitHeight": 16
+                "hitRect": [0, 0, 16, 16]
             },     
         };
 
@@ -51,17 +36,12 @@ module ebi.rpg {
             var data = charaChipsetData[id.toString()];
             var chipset = new MapCharacterChipset();
             chipset.src = data['src'];
-            chipset.indexW = data['indexW'];
-            chipset.indexH = data['indexH'];
-            chipset.sizeX = data['sizeX'];
-            chipset.sizeY = data['sizeY'];
+            chipset.srcIndex = data['srcIndex'];
+            chipset.size = data['size'];
             chipset.dirCount = data['dirCount'];
             chipset.frameCount = data['frameCount'];
             chipset.defaultFrameNo = data['defaultFrameNo'];
-            chipset.hitTop = data['hitTop'];
-            chipset.hitLeft = data['hitLeft'];
-            chipset.hitWidth = data['hitWidth'];
-            chipset.hitHeight = data['hitHeight'];
+            chipset.hitRect = data['hitRect'];
             mapCharacterChipsets[id] = chipset;
             ResourceManager.preloadImage(chipset.src);
         }

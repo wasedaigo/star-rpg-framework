@@ -2,21 +2,6 @@
 <map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="TileA" tilewidth="32" tileheight="32">
   <image source="images/tile_a.png" width="512" height="384"/>
-  <tile id="0">
-   <properties>
-    <property name="collision" value="0"/>
-   </properties>
-  </tile>
-  <tile id="48">
-   <properties>
-    <property name="collision" value="1"/>
-   </properties>
-  </tile>
-  <tile id="49">
-   <properties>
-    <property name="collision" value="1"/>
-   </properties>
-  </tile>
  </tileset>
  <tileset firstgid="193" name="TileB" tilewidth="32" tileheight="32">
   <image source="images/tile_b.png" width="512" height="512"/>
@@ -41,7 +26,7 @@
  </layer>
  <layer name="collision" width="10" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NggICDjPgxMkAWw8WG8dH1YVOHzVx0N5GjDpf5hNSSqgaXOkJhig0DALSJouyQAQAA
+   H4sIAAAAAAAAA2NggICDjAjMgEcMHyBWLS51xNpPrjuR1eFTS6oaXOrQ1RCDAWaZZVGQAQAA
   </data>
  </layer>
 </map>

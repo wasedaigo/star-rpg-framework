@@ -38,7 +38,7 @@ module ebi.rpg {
 
                 if ((dx * dx + dy * dy) > MinInputValue * MinInputValue) {
                     inputDx_ = roundValue(dx, 0, MaxInputValue) / MaxInputValue;
-                    inputDy_ = roundValue(-dy, 0, MaxInputValue) / MaxInputValue;          
+                    inputDy_ = roundValue(dy, 0, MaxInputValue) / MaxInputValue;          
                 }
             }
         }

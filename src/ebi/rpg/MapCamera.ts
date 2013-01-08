@@ -6,8 +6,8 @@ module ebi.rpg {
         public static focusTarget: MapCharacter;
         public static update(): void {
             if (focusTarget) {
-                focusX_ = focusTarget.x;
-                focusY_ = focusTarget.y;
+                focusX_ = focusTarget.screenX;
+                focusY_ = focusTarget.screenY;
             }
         }
 

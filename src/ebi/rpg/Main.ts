@@ -51,15 +51,17 @@ module ebi.rpg {
         private static onPreloadFinished(): void {
             map_ = new Map();
 
-            var mapCharacter: MapCharacter = new MapCharacter(1);
+            var mapCharacter: MapCharacter = new MapCharacter(1, map_);
             mapCharacters.push(mapCharacter);
-            var mapCharacter: MapCharacter = new MapCharacter(2);
-            mapCharacter.y = 60;
+
+            var mapCharacter: MapCharacter = new MapCharacter(2, map_);
+            mapCharacter.move(64, 64);
             mapCharacter.controlable = true;
             mapCharacters.push(mapCharacter);
             MapCamera.focusTarget = mapCharacter;
-            var mapCharacter: MapCharacter = new MapCharacter(3);
-            mapCharacter.y = 120;
+
+            var mapCharacter: MapCharacter = new MapCharacter(3, map_);
+            mapCharacter.move(0, 120);
             mapCharacters.push(mapCharacter);
         }
     }

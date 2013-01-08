@@ -7,11 +7,13 @@ module ebi.game {
 
         private ccTMXLayer_: cc.TMXLayer;
         private z_: number = 0;
+        private firstGid_: number = 0;
 
         constructor(ccTMXLayer: cc.TMXLayer) {
             var id = DisplayObjects.add(this);
             this.ccTMXLayer_ = ccTMXLayer;
             this.ccTMXLayer_.setTag(id);
+            this.firstGid_ = this.ccTMXLayer_.getTileSet().firstGid;
             this.z = 0;
         }
 
@@ -30,6 +32,18 @@ module ebi.game {
             return this.ccTMXLayer_;
         }
 
+        public getTileIdAt(x: number, y: number): number {
+            var gid = this.ccTMXLayer_.getTileGIDAt(new cc.Point(x, y));
+
+            // The position of tile in tileset defines its id
+            var id = gid - this.firstGid_;
+            if (id < 0) {
+                id = -1;
+            }
+
+            return id;
+        }
+
         public dispose(): void {
             DisplayObjects.remove(this);
         }
@@ -41,8 +55,8 @@ module ebi.game {
         private static prefix_: string = 'res/tmx/';
 
         private ccTMXTiledMap_: cc.TMXTiledMap = null;
-        //private layers_: {[name: string]: TmxLayer;} = {};
         private layers_: Object = {};
+        private mapSize_: cc.Size;
 
         // TODO: Make it async
         public loadMap(id: string) {
@@ -58,6 +72,7 @@ module ebi.game {
                 this.ccTMXTiledMap_.removeChild(layer, false);
                 this.layers_[layerName] = new TmxLayer(layer);
             });
+            this.mapSize_ = this.ccTMXTiledMap_.getMapSize();
         }
 
         public setLayerZ(layerName: string, z: number) {
@@ -73,29 +88,25 @@ module ebi.game {
         }
 
         public get mapWidth(): number {
-            var size = this.ccTMXTiledMap_.getMapSize();
-            return size.width;
+            return this.mapSize_.width;
         }
 
         public get mapHeight(): number {
-            var size = this.ccTMXTiledMap_.getMapSize();
-            return size.height;
+            return this.mapSize_.height;
         }
 
-        // Get collision at specific location
+        // Get collision at specific location (grid)
         // We are assuming collision layer is defined
         public getCollisionAt(x: number, y: number): number {
-            // TODO: Getting firstGid each time is not optimal
-            var layer = this.ccTMXTiledMap_.getLayer('collision');
-            var tileset = layer.getTileSet();
-            var gid = layer.getTileGIDAt(new cc.Point(x, y));
-            // The position of tile in tileset defines its collision attribute
-            var d = gid - tileset.firstGid;
-            if (d < 0) {
-                d = -1;
+            // If it is trying to get collision outside of map,
+            // it returns collidable flag
+            if (x < 0 || x > this.mapWidth || y < 0 || y > this.mapHeight) {
+                return 0;
             }
+            var layer = this.layers_['collision'];
+            var id = layer.getTileIdAt(x, y);
 
-            return d;
+            return id;
         }
         
         public dispose(): void {

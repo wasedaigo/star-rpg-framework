@@ -23,5 +23,25 @@ module ebi.rpg {
             }
             */
         }
+
+        public get gridSizeX(): number {
+            return 32;
+        }
+
+        public get gridSizeY(): number {
+            return 32;
+        }
+
+        public get mapWidth(): number {
+            return this.tmxTiledMap_.mapWidth;
+        }
+
+        public get mapHeight(): number {
+            return this.tmxTiledMap_.mapHeight;
+        }
+
+        public getCollisionAt(x: number, y: number): number {
+            return this.tmxTiledMap_.getCollisionAt(x, y);
+        }
     }
 }

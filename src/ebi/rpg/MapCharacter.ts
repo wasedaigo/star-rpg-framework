@@ -1,6 +1,7 @@
 /// <reference path='../game/Game.ts' />
 /// <reference path='./DatabaseManager.ts' />
 /// <reference path='./ResourceManager.ts' />
+/// <reference path='./Map.ts' />
 /// <reference path='./MapCharacterChipset.ts' />
 /// <reference path='./AnalogInputController.ts' />
 
@@ -12,37 +13,38 @@ module ebi.rpg {
         private timer_: number = 0;
         private sprite_: ebi.game.Sprite = null;
         private charaChipset_: MapCharacterChipset;
+        private x_: number = 0;
+        private y_: number = 0;
         private vx_: number;
         private vy_: number;
+        private map_: Map;
         public controlable: bool;
 
-        constructor(id: number) {
+        constructor(id: number, map: Map) {
             this.charaChipset_ = DatabaseManager.getCharaChipsetData(id);
             var image = ResourceManager.getImage(this.charaChipset_.src);
             this.frameNo_ = this.charaChipset_.defaultFrameNo;
             this.dir_ = 0;
+            this.map_ = map;
             this.sprite_ = new ebi.game.Sprite(image);
             this.sprite_.srcX      = 0;
             this.sprite_.srcY      = 0;
-            this.sprite_.srcWidth  = this.charaChipset_.sizeX;
-            this.sprite_.srcHeight = this.charaChipset_.sizeY;
+            this.sprite_.srcWidth  = this.charaChipset_.size[0];
+            this.sprite_.srcHeight = this.charaChipset_.size[1];
             this.updateVisual();   
         }
-        
-        // x
-        public get x(): number {
-            return this.sprite_.x;
-        }
-        public set x(value: number) {
-            this.sprite_.x = value;
+
+        public move(x: number, y: number): void {
+            this.x_ = x / this.map_.gridSizeX;
+            this.y_ = y / this.map_.gridSizeY;
         }
 
-        // y
-        public get y(): number {
-            return this.sprite_.y;
+        public get screenX(): number {
+            return this.x_ * this.map_.gridSizeX;
         }
-        public set y(value: number) {
-            this.sprite_.y = value;
+
+        public get screenY(): number {
+            return this.y_ * this.map_.gridSizeY;
         }
 
         public update(): void {
@@ -53,18 +55,39 @@ module ebi.rpg {
             this.vx_ = 0;
             this.vy_ = 0;
             if (this.controlable) {
-                this.setVelocity(AnalogInputController.inputDx, AnalogInputController.inputDy);
+                this.setVelocity(AnalogInputController.inputDx / this.map_.gridSizeX, AnalogInputController.inputDy / this.map_.gridSizeX);
             }
+
+            this.updateDir();
+
+            // TODO: collision with map, still rough version
+            if (this.map_) {
+                // Horizontal direction collision
+                var tx = Math.floor(this.x_ + this.vx_);
+                var ty = (this.map_.mapHeight - 1) - Math.floor(this.y_);
+                var collisionInfo = this.map_.getCollisionAt(tx, ty);
+                if (collisionInfo >= 0) {
+                    this.vx_ = 0;
+                }
+
+                // Vertical direction collision
+                var tx = Math.floor(this.x_);
+                var ty = (this.map_.mapHeight - 1) - Math.floor(this.y_ + this.vy_);
+                var collisionInfo = this.map_.getCollisionAt(tx, ty);
+                if (collisionInfo >= 0) {
+                    this.vy_ = 0;
+                }
+            }
+
+            // TODO collision with characters
 
             // Detect move stop event
             if (!this.isMoving && wasMoving) {
                 this.onMoveStop();
             }
 
-            // TODO: collision with map / characters
-
             // Update character state
-            this.updateDir();
+            
             this.updateFrame();
             this.updatePosition();
             this.updateVisual();
@@ -79,13 +102,13 @@ module ebi.rpg {
         }
 
         private setVelocity(vx: number, vy: number): void {
-            this.vx_ = AnalogInputController.inputDx;
-            this.vy_ = AnalogInputController.inputDy;
+            this.vx_ = vx;
+            this.vy_ = vy;
         }
 
         private updatePosition(): void {
-            this.sprite_.x += this.vx_;
-            this.sprite_.y += this.vy_;
+            this.x_ += this.vx_;
+            this.y_ += this.vy_;
         }
 
         private updateDir(): void {
@@ -95,7 +118,7 @@ module ebi.rpg {
 
             var t = Math.atan2(this.vy_, this.vx_) / Math.PI; // -1.0 ~ 1.0
             // Match the angle with chipset image format
-            var angle = (0.5 * t + 1.5 - (1 / (2 * this.charaChipset_.dirCount))) % 1.0; // 0.0 ~ 1.0
+            var angle = 1.0 - (0.5 * t + 0.75 - (1 / (2 * this.charaChipset_.dirCount))) % 1.0; // 0.0 ~ 1.0
             this.dir_ = Math.floor(angle * this.charaChipset_.dirCount) % this.charaChipset_.dirCount;
         }
 
@@ -125,9 +148,12 @@ module ebi.rpg {
 
         private updateVisual(): void {
             // Update animation frame
-            this.sprite_.srcX = (this.charaChipset_.indexW * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.sizeX;
+            this.sprite_.srcX = (this.charaChipset_.srcIndex[0] * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.size[0];
             // Update animation dir
-            this.sprite_.srcY = (this.charaChipset_.indexH * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.sizeY;
+            this.sprite_.srcY = (this.charaChipset_.srcIndex[1] * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.size[1];
+
+            this.sprite_.x = this.x_ * this.map_.gridSizeX;
+            this.sprite_.y = this.y_ * this.map_.gridSizeY;
         }
     }
 }
