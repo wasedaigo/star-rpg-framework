@@ -36,7 +36,9 @@ module ebi.game {
             this.srcHeight = image.height;
         }
 
-        public get image(): Image { return this.image_; }
+        public get image(): Image {
+            return this.image_;
+        }
 
         public get x(): number {
             return this.ccSprite_.getPositionX();
@@ -108,7 +110,8 @@ module ebi.game {
         }
 
         private updateSrcRect(): void {
-            this.ccSprite_.setTextureRect(new cc.Rect(this.srcX_, this.srcY_, this.srcWidth_, this.srcHeight_));
+            var rect = new cc.Rect(this.srcX_, this.srcY_, this.srcWidth_, this.srcHeight_);
+            this.ccSprite_.setTextureRect(rect);
         }
 
     }
