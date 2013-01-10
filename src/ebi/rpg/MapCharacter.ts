@@ -1,6 +1,6 @@
 /// <reference path='../game/Game.ts' />
+/// <reference path='../game/ResourcePreloader.ts' />
 /// <reference path='./DatabaseManager.ts' />
-/// <reference path='./ResourceManager.ts' />
 /// <reference path='./Map.ts' />
 /// <reference path='./MapCharacterChipset.ts' />
 /// <reference path='./AnalogInputController.ts' />
@@ -22,7 +22,7 @@ module ebi.rpg {
 
         constructor(id: number, map: Map) {
             this.charaChipset_ = DatabaseManager.getCharaChipsetData(id);
-            var image = ResourceManager.getImage(this.charaChipset_.src);
+            var image = ebi.game.ResourcePreloader.getImage(this.charaChipset_.src);
             this.frameNo_ = this.charaChipset_.defaultFrameNo;
             this.dir_ = 0;
             this.map_ = map;

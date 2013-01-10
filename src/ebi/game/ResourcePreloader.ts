@@ -29,6 +29,10 @@ module ebi.game {
             });
         }
 
+        public static getImage(id: string): Image {
+            return images_[id];
+        }
+
         public static get isLoading(): bool {
             return 0 < loadingCount_;
         }

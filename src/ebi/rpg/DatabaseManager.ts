@@ -1,3 +1,5 @@
+/// <reference path='../game/ResourcePreloader.ts' />
+
 module ebi.rpg {
     export class DatabaseManager {
         public static charaChipsetData = {
@@ -43,15 +45,15 @@ module ebi.rpg {
             chipset.defaultFrameNo = data['defaultFrameNo'];
             chipset.hitRect = data['hitRect'];
             mapCharacterChipsets[id] = chipset;
-            ResourceManager.preloadImage(chipset.src);
+            ebi.game.ResourcePreloader.preloadImage(chipset.src);
         }
 
-        public static unloadCharaChipsetData(id: number): void {
+        /*public static unloadCharaChipsetData(id: number): void {
             if (mapCharacterChipsets[id]) {
-                ResourceManager.unloadImage(mapCharacterChipsets[id].src);
+                ebi.game.ResourcePreloader.unloadImage(mapCharacterChipsets[id].src);
                 delete mapCharacterChipsets[id];
             }
-        }
+        }*/
 
         public static getCharaChipsetData(id: number): MapCharacterChipset {
             return mapCharacterChipsets[id];
