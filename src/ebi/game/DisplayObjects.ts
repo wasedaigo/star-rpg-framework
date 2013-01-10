@@ -26,22 +26,18 @@ module ebi.game {
             return object['_objectId'];
         }
 
-        private static drawables_: Object = {};
+        private static drawablesToAdd_: IDrawable[] = [];
+        private static drawablesToRemove_: IDrawable[] = [];
         private static drawablesToReorder_: IDrawable[] = [];
 
-        public static get drawables(): IDrawable[] {
-            return Object.keys(drawables_).map((idStr: string) => drawables_[idStr]);
+        public static get drawablesToAdd(): IDrawable[] {
+            // TODO: Clone?
+            return drawablesToAdd_;
         }
 
-        public static add(drawable: IDrawable): number {
-            var id = getObjectId(drawable);
-            drawables_[id.toString()] = drawable;
-            return id;
-        }
-
-        public static remove(drawable: IDrawable): void {
-            var id = getObjectId(drawable);
-            delete drawables_[id.toString()];
+        public static get drawablesToRemove(): IDrawable[] {
+            // TODO: Clone?
+            return drawablesToRemove_;
         }
 
         public static get drawablesToReorder(): IDrawable[] {
@@ -49,6 +45,25 @@ module ebi.game {
             return drawablesToReorder_;
         }
 
+        public static add(drawable: IDrawable): number {
+            var id = getObjectId(drawable);
+            drawablesToAdd_.push(drawable);
+            return id;
+        }
+
+        public static clearDrawablesToAdd(): void {
+            drawablesToAdd_.length = 0;
+        }
+
+        public static remove(drawable: IDrawable): void {
+            drawablesToRemove_.push(drawable);
+        }
+
+        public static clearDrawablesToRemove(): void {
+            drawablesToRemove_.length = 0;
+        }
+
+        // TODO: Rename this method
         public static addDrawableToReorder(drawable: IDrawable): void {
             drawablesToReorder_.push(drawable);
         }

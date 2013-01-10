@@ -60,9 +60,23 @@ module ebi.game {
                 scene.addChild(this.ccInputLayer_, 10000000);
             }
             
-            // Add and remove drawables
-            var drawables = ebi.game.DisplayObjects.drawables;
-            Game.addAndRemoveNodes(scene, this.shownDrawables_, drawables);
+            var drawablesToAdd = ebi.game.DisplayObjects.drawablesToAdd;
+            drawablesToAdd.forEach((drawable: IDrawable) => {
+                var node = drawable.innerObject;
+                var tag: number = node.getTag();
+                scene.addChild(node, drawable.z, tag);
+                console.log('Node Added:', tag);
+            });
+            ebi.game.DisplayObjects.clearDrawablesToAdd();
+            
+            var drawablesToRemove = ebi.game.DisplayObjects.drawablesToRemove;
+            drawablesToRemove.forEach((drawable: IDrawable) => {
+                var node = drawable.innerObject;
+                var tag: number = node.getTag();
+                scene.removeChildByTag(tag);
+                console.log('Node Removeed:', tag);
+            });
+            ebi.game.DisplayObjects.clearDrawablesToRemove();
 
             // Reordering drawables
             var drawablesToReorder = ebi.game.DisplayObjects.drawablesToReorder;
@@ -71,28 +85,6 @@ module ebi.game {
                 scene.reorderChild(node, drawable.z);
             });
             ebi.game.DisplayObjects.clearDrawablesToReorder();
-        }
-
-        private static addAndRemoveNodes(scene: cc.Scene, nodesHash: Object, drawables: IDrawable[]): void {
-            var nodesToShow = drawables.map((drawable: IDrawable) => drawable.innerObject);
-            Object.keys(nodesHash).forEach((tagStr: string): void => {
-                var addedNode: cc.Node = nodesHash[tagStr];
-                if (nodesToShow.indexOf(addedNode) === -1) {
-                    var tag: number = parseInt(tagStr, 10);
-                    scene.removeChildByTag(tag);
-                    delete nodesHash[tagStr];
-                    console.log('Node Removed:', tag);
-                }
-            });
-            drawables.forEach((drawable: IDrawable): void => {
-                var node = drawable.innerObject;
-                var tag: number = node.getTag();
-                if (!(tag.toString() in nodesHash)) {
-                    scene.addChild(node, drawable.z, tag);
-                    nodesHash[tag.toString()] = node;
-                    console.log('Node Added:', tag);
-                }
-            });
         }
 
     }
