@@ -58,8 +58,10 @@ module ebi.game {
         private layers_: Object = {};
         private mapSize_: cc.Size;
 
-        // TODO: Make it async
-        public loadMap(id: string) {
+        /*
+         * NOTICE: If the resource is not loaded by ResourcePreloader, this constructor will fail.
+         */
+        constructor(id: string) {
             this.ccTMXTiledMap_ = cc.TMXTiledMap.create(TmxTiledMap.prefix_ + id + '.tmx');
             var layerNames = this.ccTMXTiledMap_.getChildren().filter((node: cc.Node) => {
                 return node instanceof cc.TMXLayer;
