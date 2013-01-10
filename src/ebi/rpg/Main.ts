@@ -1,7 +1,7 @@
 /// <reference path='../game/Game.ts' />
 /// <reference path='../game/Input.ts' />
+/// <reference path='../game/ResourcePreloader.ts' />
 /// <reference path='./DatabaseManager.ts' />
-/// <reference path='./ResourceManager.ts' />
 /// <reference path='./MapCharacter.ts' />
 /// <reference path='./Map.ts' />
 /// <reference path='./MapCamera.ts' />
@@ -26,7 +26,7 @@ module ebi.rpg {
                 init();
                 isInitialized = true;
             }
-            if (!ResourceManager.isLoading()){
+            if (!ebi.game.ResourcePreloader.isLoading) {
                 if (!isPreloadFinishd) {
                     onPreloadFinished();
                     isPreloadFinishd = true;
@@ -39,13 +39,13 @@ module ebi.rpg {
         }
 
         private static init(): void {
-            ResourceManager.preloadTmx("sample");
+            ebi.game.ResourcePreloader.preloadTmx("sample");
             for (var i = 1; i <= 3; i++) {
                 // TODO: unload when the scene/map changes
                 DatabaseManager.loadCharaChipsetData(i);
             }
-            ResourceManager.preloadTmxImage('tile_a');
-            ResourceManager.preloadTmxImage('tile_b');
+            ebi.game.ResourcePreloader.preloadTmxImage('tile_a');
+            ebi.game.ResourcePreloader.preloadTmxImage('tile_b');
         }
 
         private static onPreloadFinished(): void {
