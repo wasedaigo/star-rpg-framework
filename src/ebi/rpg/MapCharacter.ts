@@ -1,5 +1,7 @@
 /// <reference path='../game/Game.ts' />
 /// <reference path='../game/ResourcePreloader.ts' />
+/// <reference path='../game/CollisionSystem.ts' />
+/// <reference path='../game/ICollidable.ts' />
 /// <reference path='./DatabaseManager.ts' />
 /// <reference path='./Map.ts' />
 /// <reference path='./MapCharacterChipset.ts' />
@@ -18,6 +20,7 @@ module ebi.rpg {
         private vx_: number;
         private vy_: number;
         private map_: Map;
+        private collisionRect_: ebi.game.ICollidable;
         public controlable: bool;
 
         constructor(id: number, map: Map) {
@@ -31,20 +34,26 @@ module ebi.rpg {
             this.sprite_.srcY      = 0;
             this.sprite_.srcWidth  = this.charaChipset_.size[0];
             this.sprite_.srcHeight = this.charaChipset_.size[1];
-            this.updateVisual();   
+            this.collisionRect_ = ebi.game.CollisionSystem.createCollisionRect(this.charaChipset_.hitRect);
+            this.updateVisual(); 
         }
 
-        public move(x: number, y: number): void {
-            this.x_ = x / this.map_.gridSizeX;
-            this.y_ = y / this.map_.gridSizeY;
+        public dispose(): void {
+            ebi.game.CollisionSystem.destroyCollisionObject(this.collisionRect_);
+        }
+
+        public setPosition(x: number, y: number): void {
+            this.collisionRect_.setPos(x, y);
+            this.x_ = x;
+            this.y_ = y;
         }
 
         public get screenX(): number {
-            return this.x_ * this.map_.gridSizeX;
+            return this.x_;
         }
 
         public get screenY(): number {
-            return this.y_ * this.map_.gridSizeY;
+            return this.y_;
         }
 
         public update(): void {
@@ -55,12 +64,15 @@ module ebi.rpg {
             this.vx_ = 0;
             this.vy_ = 0;
             if (this.controlable) {
-                this.setVelocity(AnalogInputController.inputDx / this.map_.gridSizeX, AnalogInputController.inputDy / this.map_.gridSizeX);
+                this.setVelocity(AnalogInputController.inputDx, AnalogInputController.inputDy);
+            } else {
+                this.setVelocity(0, 0);
             }
 
             this.updateDir();
 
             // TODO: collision with map, still rough version
+            /*
             if (this.map_) {
                 // Horizontal direction collision
                 var tx = Math.floor(this.x_ + this.vx_);
@@ -77,7 +89,7 @@ module ebi.rpg {
                 if (collisionInfo >= 0) {
                     this.vy_ = 0;
                 }
-            }
+            }*/
 
             // TODO collision with characters
 
@@ -89,7 +101,6 @@ module ebi.rpg {
             // Update character state
             
             this.updateFrame();
-            this.updatePosition();
             this.updateVisual();
         }
 
@@ -104,11 +115,7 @@ module ebi.rpg {
         private setVelocity(vx: number, vy: number): void {
             this.vx_ = vx;
             this.vy_ = vy;
-        }
-
-        private updatePosition(): void {
-            this.x_ += this.vx_;
-            this.y_ += this.vy_;
+            this.collisionRect_.setVelocity(vx * 32, vy * 32);
         }
 
         private updateDir(): void {
@@ -152,8 +159,8 @@ module ebi.rpg {
             // Update animation dir
             this.sprite_.srcY = (this.charaChipset_.srcIndex[1] * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.size[1];
 
-            this.sprite_.x = this.x_ * this.map_.gridSizeX;
-            this.sprite_.y = this.y_ * this.map_.gridSizeY;
+            this.sprite_.x = this.collisionRect_.x;
+            this.sprite_.y = this.collisionRect_.y;
         }
     }
 }

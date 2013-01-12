@@ -1,7 +1,9 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
+/// <reference path='./CollisionSystem.ts' />
 /// <reference path='./Sprite.ts' />
 /// <reference path='./TmxTiledMap.ts' />
 /// <reference path='./Input.ts' />
+/// <reference path='./DisplayObjects.ts' />
 
 module ebi.game {
 
@@ -51,6 +53,8 @@ module ebi.game {
             ebi.game.Input.update();
             this.mainLoop_(game);
 
+            ebi.game.CollisionSystem.update();       
+
             var scene: cc.Scene = this.ccApp_.scene;
             if (!this.ccInputLayer_) {
                 this.ccInputLayer_ = new Cocos2dInputLayer();
@@ -91,6 +95,7 @@ module ebi.game {
 
     var Cocos2dApp: new(MainLoop) => cc.Application = cc.Application.extend({
         scene: null,
+        world: null,
         // 'document' is a kind of a global variable.
         // document['ccConfig'] is defined in cocos2d.js.
         config: document['ccConfig'],
@@ -121,6 +126,7 @@ module ebi.game {
 
             // run
             this.scene = new Cocos2dScene(this.mainLoop);
+
             director.runWithScene(this.scene);
 
             return true;
