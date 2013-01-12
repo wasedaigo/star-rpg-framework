@@ -1,3 +1,4 @@
+/// <reference path='../cp/chipmunk.d.ts' />
 module cc {
 
     var COCOS2D_DEBUG;
@@ -48,6 +49,7 @@ module cc {
         getTag(): number;
         removeChild(child: Node, cleanUp?: bool): void;
         removeChildByTag(tag: number): void;
+        setVisible(isVisible: bool): void;
         reorderChild(child: Node, zOrder: number);
         setAnchorPoint(point: Point): void;
         setPositionX(x: number): void;

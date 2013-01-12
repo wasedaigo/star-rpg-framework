@@ -55,13 +55,13 @@ module ebi.rpg {
             mapCharacters.push(mapCharacter);
 
             var mapCharacter: MapCharacter = new MapCharacter(2, map_);
-            mapCharacter.move(64, 64);
+            mapCharacter.setPosition(64, 64);
             mapCharacter.controlable = true;
             mapCharacters.push(mapCharacter);
             MapCamera.focusTarget = mapCharacter;
 
             var mapCharacter: MapCharacter = new MapCharacter(3, map_);
-            mapCharacter.move(0, 120);
+            mapCharacter.setPosition(0, 120);
             mapCharacters.push(mapCharacter);
         }
     }
