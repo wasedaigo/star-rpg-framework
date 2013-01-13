@@ -21,7 +21,7 @@ module ebi.rpg {
         private vy_: number;
         private map_: Map;
         private collisionRect_: ebi.game.ICollidable;
-        public controlable: bool;
+        private controlable_: bool;
 
         constructor(id: number, map: Map) {
             this.charaChipset_ = DatabaseManager.getCharaChipsetData(id);
@@ -39,7 +39,7 @@ module ebi.rpg {
         }
 
         public dispose(): void {
-            ebi.game.CollisionSystem.destroyCollisionObject(this.collisionRect_);
+            this.collisionRect_.dispose();
         }
 
         public setPosition(x: number, y: number): void {
@@ -56,6 +56,14 @@ module ebi.rpg {
             return this.y_;
         }
 
+        public get controlable(): bool {
+            return this.controlable_;
+        }
+
+        public set controlable(value: bool) {
+            this.controlable_ = value;
+        }
+
         public update(): void {
             // Save previous moving state
             var wasMoving: bool = this.isMoving;
@@ -66,7 +74,7 @@ module ebi.rpg {
             if (this.controlable) {
                 this.setVelocity(AnalogInputController.inputDx, AnalogInputController.inputDy);
             } else {
-                this.setVelocity(0, 0);
+                this.setVelocity(0, 0.1);
             }
 
             this.updateDir();
