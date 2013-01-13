@@ -5,7 +5,9 @@
 module ebi.game {
     // Constant to convert between physics-world position and screen position
     var PTM_RATIO: number = 32;
+    // Right now we are only support single physics-world
     var World: Box2D.Dynamics.b2World = null;
+
     class CollisionObject implements ICollidable {
         public b2Body_: Box2D.Dynamics.b2Body;
         public b2Fixture_: Box2D.Dynamics.b2Fixture;
@@ -52,19 +54,24 @@ module ebi.game {
     class ContactListener extends Box2D.Dynamics.b2ContactListener {
         public static dotSigns: number[] = [1, -1];
 
-        // Do a Orthogonal Projection Mapping
-        private static CalcOrthoVector(projectedVec: Box2D.Common.Math.b2Vec2, projectingVec: Box2D.Common.Math.b2Vec2): Box2D.Common.Math.b2Vec2 {
+        private static CalcCancelingVelocity(normalVec: Box2D.Common.Math.b2Vec2, projectingVec: Box2D.Common.Math.b2Vec2): Box2D.Common.Math.b2Vec2 {
             var projectingVec = projectingVec.Copy();
-            var projectedVec = projectedVec.Copy();
-            projectedVec.Multiply(Box2D.Common.Math.b2Math.Dot(projectedVec, projectingVec));
-            projectingVec.Subtract(projectedVec);
-            return projectingVec;
+            var cancelingVector = normalVec.Copy();
+            cancelingVector.Multiply(Box2D.Common.Math.b2Math.Dot(normalVec, projectingVec));
+            
+            return cancelingVector;
         }
 
+        // In order to have RPG-style character collision, I put some effort here...
+        // Not perfect, but acceptable
         public PreSolve(contact: Box2D.Dynamics.Contacts.b2Contact, oldManifold: Box2D.Collision.b2Manifold): void {
+            // IsTouching are true when two fixtures are overlapping
+            // Overlap of AABB is not related with this
             if (contact.IsTouching()) {
+                // Alias
                 var b2Math = Box2D.Common.Math.b2Math;
 
+                // Get normal vector from the contact point
                 var worldManifold = new Box2D.Collision.b2WorldManifold();
                 contact.GetWorldManifold(worldManifold);
                 var normalVec = worldManifold.m_normal.Copy();
@@ -80,11 +87,17 @@ module ebi.game {
                         return;
                     }
 
-                    // Set velocity to the body to prevent it from overlap
-                    var newVelocity = ContactListener.CalcOrthoVector(normalVec, body.GetLinearVelocity());
-                    body.SetLinearVelocity(
-                        newVelocity
-                    );
+                    // Calculate the velocity to cancel component along normal vector
+                    var vel = body.GetLinearVelocity().Copy();
+                    var cancelingVelocity = ContactListener.CalcCancelingVelocity(normalVec, vel);
+
+                    // Hacky: Move back the object extra, for many good side effect.
+                    // This is totally a magic number, but this works... 
+                    cancelingVelocity.Multiply(1.5);
+
+                    // Move away the vector so that the fixture won't overlap!
+                    vel.Subtract(cancelingVelocity);
+                    body.SetLinearVelocity(vel);
                 })
             }
         }
@@ -94,6 +107,8 @@ module ebi.game {
         private static collidables = {};
 
         public static createCollisionRect(rect: number[]): ICollidable {
+            // TODO: Lazy initialaztion
+            // It would be better to do this in more elegant way
             if (!World) {
                 World = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(0, 0), true);
                 World.SetContinuousPhysics(true);
@@ -107,6 +122,7 @@ module ebi.game {
             var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
             var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
 
+            // Fixture Definition
             var fixDef = new b2FixtureDef();
             fixDef.density = 1;
             fixDef.friction = 0;
@@ -119,13 +135,17 @@ module ebi.game {
             shape.SetAsBox(rect[2] / PTM_RATIO, rect[3] / PTM_RATIO);
             fixDef.shape = shape;
 
+            // Body Definition
             var bodyDef = new Box2D.Dynamics.b2BodyDef();
             bodyDef.type = b2Body.b2_dynamicBody;
             bodyDef.position.Set(rect[0] / PTM_RATIO, rect[1] / PTM_RATIO);
             bodyDef.userData = this;
+
+            // Body
             var body = World.CreateBody(bodyDef);
             //body.SetSleepingAllowed(true);
             body.SetFixedRotation(true);
+
             var fixture = body.CreateFixture(fixDef);
             var collidable = new CollisionObject(body, fixture);
 
@@ -134,6 +154,7 @@ module ebi.game {
 
         public static update(): void {
             if (World) {
+                // timestep delta, velocity iteration, rotation iteration
                 World.Step(0.033, 3, 1);  
             }
         }
