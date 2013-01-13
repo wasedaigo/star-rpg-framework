@@ -93,7 +93,7 @@ module ebi.game {
 
                     // Hacky: Move back the object extra, for many good side effect.
                     // This is totally a magic number, but this works... 
-                    cancelingVelocity.Multiply(1.5);
+                    //cancelingVelocity.Multiply(1.5);
 
                     // Move away the vector so that the fixture won't overlap!
                     vel.Subtract(cancelingVelocity);
