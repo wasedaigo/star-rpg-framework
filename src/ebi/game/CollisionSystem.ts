@@ -51,6 +51,16 @@ module ebi.game {
 
     class ContactListener extends Box2D.Dynamics.b2ContactListener {
         public static dotSigns: number[] = [1, -1];
+
+        // Do a Orthogonal Projection Mapping
+        private static CalcOrthoVector(projectedVec: Box2D.Common.Math.b2Vec2, projectingVec: Box2D.Common.Math.b2Vec2): Box2D.Common.Math.b2Vec2 {
+            var projectingVec = projectingVec.Copy();
+            var projectedVec = projectedVec.Copy();
+            projectedVec.Multiply(Box2D.Common.Math.b2Math.Dot(projectedVec, projectingVec));
+            projectingVec.Subtract(projectedVec);
+            return projectingVec;
+        }
+
         public PreSolve(contact: Box2D.Dynamics.Contacts.b2Contact, oldManifold: Box2D.Collision.b2Manifold): void {
             if (contact.IsTouching()) {
                 var b2Math = Box2D.Common.Math.b2Math;
@@ -70,14 +80,11 @@ module ebi.game {
                         return;
                     }
 
-                    // calculate orthographic projection vector
-                    var velocityVec = body.GetLinearVelocity().Copy();
-                    var orthographicProjectionVec = normalVec.Copy();
-                    orthographicProjectionVec.Multiply(b2Math.Dot(normalVec, velocityVec));
-                    velocityVec.Subtract(orthographicProjectionVec);
-
                     // Set velocity to the body to prevent it from overlap
-                    body.SetLinearVelocity(velocityVec);
+                    var newVelocity = ContactListener.CalcOrthoVector(normalVec, body.GetLinearVelocity());
+                    body.SetLinearVelocity(
+                        newVelocity
+                    );
                 })
             }
         }
