@@ -50,7 +50,6 @@ module ebi.game {
     }
 
     class ContactListener extends Box2D.Dynamics.b2ContactListener {
-        public static dotSigns: number[] = [1, -1];
 
         private static CalcCancelingVelocity(normalVec: Box2D.Common.Math.b2Vec2, projectingVec: Box2D.Common.Math.b2Vec2): Box2D.Common.Math.b2Vec2 {
             var projectingVec = projectingVec.Copy();
@@ -60,45 +59,44 @@ module ebi.game {
             return cancelingVector;
         }
 
+        private static CalcCanceledVelocity(normalVec: Box2D.Common.Math.b2Vec2, velocity: Box2D.Common.Math.b2Vec2): Box2D.Common.Math.b2Vec2 {
+            var vel = velocity.Copy();
+            var cancelingVelocity = ContactListener.CalcCancelingVelocity(normalVec, vel);
+
+            // Move away the vector so that the fixture won't overlap!
+            vel.Subtract(cancelingVelocity);
+
+            return vel;
+        }
+
+        private static GetContactNormal(contact: Box2D.Dynamics.Contacts.b2Contact): Box2D.Common.Math.b2Vec2 {
+            var worldManifold = new Box2D.Collision.b2WorldManifold();
+            contact.GetWorldManifold(worldManifold);
+            return worldManifold.m_normal.Copy();  
+        }
+
         // In order to have RPG-style character collision, I put some effort here...
         // Not perfect, but acceptable. Maybe gotta move to ebi.rpg?
         public PreSolve(contact: Box2D.Dynamics.Contacts.b2Contact, oldManifold: Box2D.Collision.b2Manifold): void {
-
-            // IsTouching are true when two fixtures are overlapping
-            // Overlap of AABB is not related with this
+            // Process only when two fixtures are overlapping
             if (contact.IsTouching()) {
+
+                // Skip physics operation
                 contact.SetEnabled(false);
 
-                // Alias
-                var b2Math = Box2D.Common.Math.b2Math;
+                var contactNormal = ContactListener.GetContactNormal(contact);
 
-                // Get normal vector from the contact point
-                var worldManifold = new Box2D.Collision.b2WorldManifold();
-                contact.GetWorldManifold(worldManifold);
-                var normalVec = worldManifold.m_normal.Copy();
-
-                var bodies: Box2D.Dynamics.b2Body[] = [
-                    contact.GetFixtureA().GetBody(),
-                    contact.GetFixtureB().GetBody()
+                var descs = [
+                    {body: contact.GetFixtureA().GetBody(), sign: 1},
+                    {body: contact.GetFixtureB().GetBody(), sign: -1}
                 ];
-
-                bodies.forEach((body, index)=>{
+                descs.forEach((desc, index)=>{
                     // Skip if bodies are trying to go apart
-                    if (b2Math.Dot(body.GetLinearVelocity(), normalVec) * ContactListener.dotSigns[index] < 0) {
-                        return;
+                    if (Box2D.Common.Math.b2Math.Dot(desc.body.GetLinearVelocity(), contactNormal) * desc.sign >= 0) {
+                        desc.body.SetLinearVelocity(
+                            ContactListener.CalcCanceledVelocity(contactNormal, desc.body.GetLinearVelocity())
+                        );
                     }
-
-                    // Calculate the velocity to cancel component along normal vector
-                    var vel = body.GetLinearVelocity().Copy();
-                    var cancelingVelocity = ContactListener.CalcCancelingVelocity(normalVec, vel);
-
-                    // Hacky: Move back the object extra, for many good side effect.
-                    // This is totally a magic number, but this works... 
-                    //cancelingVelocity.Multiply(1.05);
-
-                    // Move away the vector so that the fixture won't overlap!
-                    vel.Subtract(cancelingVelocity);
-                    body.SetLinearVelocity(vel);
                 })
             }
         }
@@ -107,7 +105,7 @@ module ebi.game {
     export class CollisionSystem {
         private static collidables = {};
 
-        // Right now we are only support single physics-world
+        // Note: Right now we are only support single physics-world
         private static world_: Box2D.Dynamics.b2World = null;
         private static get world(): Box2D.Dynamics.b2World {
             if (!world_) {
