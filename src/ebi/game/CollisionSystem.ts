@@ -8,20 +8,22 @@ module ebi.game {
 
     class CollisionObject implements ICollidable {
         public b2Body_: Box2D.Dynamics.b2Body;
-        public b2Fixture_: Box2D.Dynamics.b2Fixture;
+        public b2Fixtures_: Box2D.Dynamics.b2Fixture[];
         private id_: number;
         private static currentId: number = 0;
 
-        constructor(body: Box2D.Dynamics.b2Body, fixture: Box2D.Dynamics.b2Fixture) {
+        constructor(body: Box2D.Dynamics.b2Body, fixtures: Box2D.Dynamics.b2Fixture[]) {
             this.b2Body_ = body;
-            this.b2Fixture_ = fixture;
+            this.b2Fixtures_ = fixtures;
             this.id_ = CollisionObject.currentId++;
         }
 
         public dispose(): void {
-            this.b2Body_.DestroyFixture(this.b2Fixture_);
+            this.b2Fixtures_.forEach((b2Fixture) => {
+                this.b2Body_.DestroyFixture(b2Fixture);
+            });
             CollisionSystem.world.DestroyBody(this.b2Body_);
-            delete this.b2Fixture_;
+            delete this.b2Fixtures_;
             delete this.b2Body_;  
         }
 
@@ -117,31 +119,34 @@ module ebi.game {
             return world_;
         }
 
-        private static createCollisionObject(x: number, y: number, shape: Box2D.Collision.Shapes.b2Shape): ICollidable {
+        private static createCollisionObject(x: number, y: number, shapes: Box2D.Collision.Shapes.b2Shape[]): ICollidable {
             var b2Vec2 = Box2D.Common.Math.b2Vec2;
             var b2BodyDef = Box2D.Dynamics.b2BodyDef;
             var b2Body = Box2D.Dynamics.b2Body;
             var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
+
+            // Body Definition
+            var bodyDef = new Box2D.Dynamics.b2BodyDef();
+            bodyDef.type = b2Body.b2_dynamicBody;
+            bodyDef.position.Set(x / PTM_RATIO, y / PTM_RATIO);
+
+            // Body
+            var body = world.CreateBody(bodyDef);
+            body.SetFixedRotation(true);
 
             // Fixture Definition
             var fixDef = new b2FixtureDef();
             fixDef.density = 1;
             fixDef.friction = 0;
             fixDef.restitution = 0;
-            fixDef.shape = shape;
 
-            // Body Definition
-            var bodyDef = new Box2D.Dynamics.b2BodyDef();
-            bodyDef.type = b2Body.b2_dynamicBody;
-            bodyDef.position.Set(x / PTM_RATIO, y / PTM_RATIO);
-            bodyDef.userData = this;
-
-            // Body
-            var body = world.CreateBody(bodyDef);
-            body.SetFixedRotation(true);
-
-            var fixture = body.CreateFixture(fixDef);
-            var collidable = new CollisionObject(body, fixture);
+            var fixtures = shapes.map((shape) => {
+                fixDef.shape = shape;
+                return body.CreateFixture(fixDef);
+            });
+            
+            var collidable = new CollisionObject(body, fixtures);
+            body.SetUserData(collidable);
 
             return collidable;
         }
@@ -150,14 +155,14 @@ module ebi.game {
             var shape = new Box2D.Collision.Shapes.b2PolygonShape();
             shape.SetAsBox(width / PTM_RATIO, height / PTM_RATIO);
 
-            return createCollisionObject(x, y, shape);
+            return createCollisionObject(x, y, [shape]);
         }
 
         public static createCollisionCircle(x: number, y: number, radius: number): ICollidable {
             var shape = new Box2D.Collision.Shapes.b2CircleShape();
             shape.SetRadius((radius / PTM_RATIO));
 
-            return createCollisionObject(x, y, shape);
+            return createCollisionObject(x, y, [shape]);
         }
 
         public static update(): void {
