@@ -33,11 +33,10 @@ module ebi.rpg {
             this.sprite_.srcY      = 0;
             this.sprite_.srcWidth  = this.charaChipset_.size[0];
             this.sprite_.srcHeight = this.charaChipset_.size[1];
-            this.collisionRect_ = ebi.collision.CollisionSystem.createCollisionRect(
+            this.collisionRect_ = ebi.collision.CollisionSystem.createCollisionCircle(
                 this.charaChipset_.hitRect[0],
                 this.charaChipset_.hitRect[1],
-                this.charaChipset_.hitRect[2],
-                this.charaChipset_.hitRect[3]
+                this.charaChipset_.hitRect[2]
             );
             this.updateVisual(); 
         }

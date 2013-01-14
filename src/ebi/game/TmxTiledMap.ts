@@ -47,7 +47,6 @@ module ebi.game {
         public dispose(): void {
             DisplayObjects.remove(this);
         }
-
     }
 
     export class TmxTiledMap {
@@ -99,14 +98,14 @@ module ebi.game {
 
         // Get collision at specific location (grid)
         // We are assuming collision layer is defined
-        public getCollisionAt(x: number, y: number): number {
+        public getTileId(x: number, y: number, layerName: string): number {
             // If it is trying to get collision outside of map,
             // it returns collidable flag
-            if (x < 0 || x > this.mapWidth || y < 0 || y > this.mapHeight) {
-                return 0;
+            if (x < 0 || x >= this.mapWidth || y < 0 || y >= this.mapHeight) {
+                return -1;
             }
-            var layer = this.layers_['collision'];
-            var id = layer.getTileIdAt(x, y);
+            var layer = this.layers_[layerName];
+            var id = layer.getTileIdAt(x, this.mapHeight - y - 1);
 
             return id;
         }

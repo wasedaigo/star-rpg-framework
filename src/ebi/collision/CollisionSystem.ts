@@ -80,6 +80,16 @@ module ebi.collision {
         // In order to have RPG-style character collision, I put some effort here...
         // Not perfect, but acceptable. Maybe gotta move to ebi.rpg?
         public PreSolve(contact: Box2D.Dynamics.Contacts.b2Contact, oldManifold: Box2D.Collision.b2Manifold): void {
+            
+            // Do not do anything if either of bodies is a static body (such as wall)
+            var b2Body = Box2D.Dynamics.b2Body;
+            if (
+                contact.GetFixtureA().GetBody().GetType() == b2Body.b2_staticBody || 
+                contact.GetFixtureB().GetBody().GetType() == b2Body.b2_staticBody
+            ) {
+                return;
+            }
+
             // Process only when two fixtures are overlapping
             if (contact.IsTouching()) {
 
@@ -104,6 +114,14 @@ module ebi.collision {
         }
     }
 
+    export class Point {
+        constructor(public x: number, public y: number) {};
+    }
+
+    export class Edge {
+        constructor(public start: Point, public end: Point) {};
+    }
+
     export class CollisionSystem {
         private static collidables = {};
 
@@ -119,7 +137,7 @@ module ebi.collision {
             return world_;
         }
 
-        private static createCollisionObject(x: number, y: number, shapes: Box2D.Collision.Shapes.b2Shape[]): ICollidable {
+        private static createCollisionObject(x: number, y: number, shapes: Box2D.Collision.Shapes.b2Shape[], isStatic: bool): ICollidable {
             var b2Vec2 = Box2D.Common.Math.b2Vec2;
             var b2BodyDef = Box2D.Dynamics.b2BodyDef;
             var b2Body = Box2D.Dynamics.b2Body;
@@ -127,7 +145,11 @@ module ebi.collision {
 
             // Body Definition
             var bodyDef = new Box2D.Dynamics.b2BodyDef();
-            bodyDef.type = b2Body.b2_dynamicBody;
+            if (isStatic) {
+                bodyDef.type = b2Body.b2_staticBody;
+            } else {
+                bodyDef.type = b2Body.b2_dynamicBody;
+            }
             bodyDef.position.Set(x / PTM_RATIO, y / PTM_RATIO);
 
             // Body
@@ -139,30 +161,46 @@ module ebi.collision {
             fixDef.density = 1;
             fixDef.friction = 0;
             fixDef.restitution = 0;
-
             var fixtures = shapes.map((shape) => {
                 fixDef.shape = shape;
-                return body.CreateFixture(fixDef);
+                body.CreateFixture(fixDef);
             });
-            
+
             var collidable = new CollisionObject(body, fixtures);
             body.SetUserData(collidable);
 
             return collidable;
         }
 
+        // Box2D.Collision.Shapes.b2EdgeShape is not working in box2d.js
+        public static createCollisionEdges(x: number, y: number, edges: Edge[]): ICollidable {
+            var b2Vec2 = Box2D.Common.Math.b2Vec2;
+            var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+            var shapes: Box2D.Collision.Shapes.b2Shape[] = [];
+            edges.forEach((edge) => {
+                //Simple way with no fixture.         
+                var polyShape = new b2PolygonShape();
+                var startPoint = new b2Vec2(edge.start.x / PTM_RATIO, edge.start.y / PTM_RATIO);
+                var endPoint = new b2Vec2(edge.end.x / PTM_RATIO, edge.end.y / PTM_RATIO);
+                polyShape.SetAsArray([startPoint, endPoint], 2);
+                shapes.push(polyShape);
+            })
+            return createCollisionObject(x, y, shapes, true);
+        }
+
         public static createCollisionRect(x: number, y: number, width: number, height: number): ICollidable {
             var shape = new Box2D.Collision.Shapes.b2PolygonShape();
             shape.SetAsBox(width / PTM_RATIO, height / PTM_RATIO);
 
-            return createCollisionObject(x, y, [shape]);
+            return createCollisionObject(x, y, [shape], false);
         }
 
         public static createCollisionCircle(x: number, y: number, radius: number): ICollidable {
             var shape = new Box2D.Collision.Shapes.b2CircleShape();
             shape.SetRadius((radius / PTM_RATIO));
+            shape.SetLocalPosition(new Box2D.Common.Math.b2Vec2(0.5 ,0.5));
 
-            return createCollisionObject(x, y, [shape]);
+            return createCollisionObject(x, y, [shape], false);
         }
 
         public static update(): void {

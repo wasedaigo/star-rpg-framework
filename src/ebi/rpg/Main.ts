@@ -46,6 +46,7 @@ module ebi.rpg {
             }
             ebi.game.ResourcePreloader.preloadTmxImage('tile_a');
             ebi.game.ResourcePreloader.preloadTmxImage('tile_b');
+            ebi.game.ResourcePreloader.preloadTmxImage('collision');
         }
 
         private static onPreloadFinished(): void {
@@ -56,7 +57,7 @@ module ebi.rpg {
             mapCharacter.setPosition(128, 64);
 
             var mapCharacter: MapCharacter = new MapCharacter(2, map_);
-            mapCharacter.setPosition(64, 128);
+            mapCharacter.setPosition(128, 128);
             mapCharacter.controlable = true;
             mapCharacters.push(mapCharacter);
             MapCamera.focusTarget = mapCharacter;
