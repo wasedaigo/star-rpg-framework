@@ -63,9 +63,12 @@ module ebi.game {
         // In order to have RPG-style character collision, I put some effort here...
         // Not perfect, but acceptable. Maybe gotta move to ebi.rpg?
         public PreSolve(contact: Box2D.Dynamics.Contacts.b2Contact, oldManifold: Box2D.Collision.b2Manifold): void {
+
             // IsTouching are true when two fixtures are overlapping
             // Overlap of AABB is not related with this
             if (contact.IsTouching()) {
+                contact.SetEnabled(false);
+
                 // Alias
                 var b2Math = Box2D.Common.Math.b2Math;
 
