@@ -34,7 +34,12 @@ module ebi.rpg {
             this.sprite_.srcY      = 0;
             this.sprite_.srcWidth  = this.charaChipset_.size[0];
             this.sprite_.srcHeight = this.charaChipset_.size[1];
-            this.collisionRect_ = ebi.game.CollisionSystem.createCollisionRect(this.charaChipset_.hitRect);
+            this.collisionRect_ = ebi.game.CollisionSystem.createCollisionRect(
+                this.charaChipset_.hitRect[0],
+                this.charaChipset_.hitRect[1],
+                this.charaChipset_.hitRect[2],
+                this.charaChipset_.hitRect[3]
+            );
             this.updateVisual(); 
         }
 
@@ -74,7 +79,7 @@ module ebi.rpg {
             if (this.controlable) {
                 this.setVelocity(AnalogInputController.inputDx, AnalogInputController.inputDy);
             } else {
-                this.setVelocity(0, 0.1);
+                this.setVelocity(0, 0);
             }
 
             this.updateDir();

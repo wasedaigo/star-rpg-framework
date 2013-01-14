@@ -56,7 +56,7 @@ module ebi.rpg {
             mapCharacter.setPosition(128, 64);
 
             var mapCharacter: MapCharacter = new MapCharacter(2, map_);
-            mapCharacter.setPosition(32, 64);
+            mapCharacter.setPosition(64, 64);
             mapCharacter.controlable = true;
             mapCharacters.push(mapCharacter);
             MapCamera.focusTarget = mapCharacter;

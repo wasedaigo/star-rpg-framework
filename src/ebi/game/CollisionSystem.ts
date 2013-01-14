@@ -5,8 +5,6 @@
 module ebi.game {
     // Constant to convert between physics-world position and screen position
     var PTM_RATIO: number = 32;
-    // Right now we are only support single physics-world
-    var World: Box2D.Dynamics.b2World = null;
 
     class CollisionObject implements ICollidable {
         public b2Body_: Box2D.Dynamics.b2Body;
@@ -22,7 +20,7 @@ module ebi.game {
 
         public dispose(): void {
             this.b2Body_.DestroyFixture(this.b2Fixture_);
-            World.DestroyBody(this.b2Body_);
+            CollisionSystem.world.DestroyBody(this.b2Body_);
             delete this.b2Fixture_;
             delete this.b2Body_;  
         }
@@ -83,7 +81,7 @@ module ebi.game {
 
                 bodies.forEach((body, index)=>{
                     // Skip if bodies are trying to go apart
-                    if (b2Math.Dot(body.GetLinearVelocity(), normalVec) * ContactListener.dotSigns[index] <= 0) {
+                    if (b2Math.Dot(body.GetLinearVelocity(), normalVec) * ContactListener.dotSigns[index] < 0) {
                         return;
                     }
 
@@ -93,7 +91,7 @@ module ebi.game {
 
                     // Hacky: Move back the object extra, for many good side effect.
                     // This is totally a magic number, but this works... 
-                    //cancelingVelocity.Multiply(1.5);
+                    //cancelingVelocity.Multiply(1.05);
 
                     // Move away the vector so that the fixture won't overlap!
                     vel.Subtract(cancelingVelocity);
@@ -106,44 +104,39 @@ module ebi.game {
     export class CollisionSystem {
         private static collidables = {};
 
-        public static createCollisionRect(rect: number[]): ICollidable {
-            // TODO: Lazy initialaztion
-            // It would be better to do this in more elegant way
-            if (!World) {
-                World = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(0, 0), true);
-                World.SetContinuousPhysics(true);
+        // Right now we are only support single physics-world
+        private static world_: Box2D.Dynamics.b2World = null;
+        private static get world(): Box2D.Dynamics.b2World {
+            if (!world_) {
+                world_ = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(0, 0), true);
+                world_.SetContinuousPhysics(true);
                 var contactListener = new ContactListener();
-                World.SetContactListener(contactListener);
-            }
+                world_.SetContactListener(contactListener);
+            }    
+            return world_;
+        }
+
+        private static createCollisionObject(x: number, y: number, shape: Box2D.Collision.Shapes.b2Shape): ICollidable {
             var b2Vec2 = Box2D.Common.Math.b2Vec2;
             var b2BodyDef = Box2D.Dynamics.b2BodyDef;
             var b2Body = Box2D.Dynamics.b2Body;
             var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
-            var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
-            var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
 
             // Fixture Definition
             var fixDef = new b2FixtureDef();
             fixDef.density = 1;
             fixDef.friction = 0;
             fixDef.restitution = 0;
-
-            // You can switch to circle collision, if you want
-            //var shape = new b2CircleShape();
-            //shape.SetRadius((rect[2] / PTM_RATIO));
-            var shape = new b2PolygonShape();
-            shape.SetAsBox(rect[2] / PTM_RATIO, rect[3] / PTM_RATIO);
             fixDef.shape = shape;
 
             // Body Definition
             var bodyDef = new Box2D.Dynamics.b2BodyDef();
             bodyDef.type = b2Body.b2_dynamicBody;
-            bodyDef.position.Set(rect[0] / PTM_RATIO, rect[1] / PTM_RATIO);
+            bodyDef.position.Set(x / PTM_RATIO, y / PTM_RATIO);
             bodyDef.userData = this;
 
             // Body
-            var body = World.CreateBody(bodyDef);
-            //body.SetSleepingAllowed(true);
+            var body = world.CreateBody(bodyDef);
             body.SetFixedRotation(true);
 
             var fixture = body.CreateFixture(fixDef);
@@ -152,11 +145,23 @@ module ebi.game {
             return collidable;
         }
 
+        public static createCollisionRect(x: number, y: number, width: number, height: number): ICollidable {
+            var shape = new Box2D.Collision.Shapes.b2PolygonShape();
+            shape.SetAsBox(width / PTM_RATIO, height / PTM_RATIO);
+
+            return createCollisionObject(x, y, shape);
+        }
+
+        public static createCollisionCircle(x: number, y: number, radius: number): ICollidable {
+            var shape = new Box2D.Collision.Shapes.b2CircleShape();
+            shape.SetRadius((radius / PTM_RATIO));
+
+            return createCollisionObject(x, y, shape);
+        }
+
         public static update(): void {
-            if (World) {
-                // timestep delta, velocity iteration, rotation iteration
-                World.Step(0.033, 3, 1);  
-            }
+            // timestep delta, velocity iteration, rotation iteration
+            world.Step(0.033, 3, 1);
         }
     }
 }

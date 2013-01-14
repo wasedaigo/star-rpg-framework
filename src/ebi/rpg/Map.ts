@@ -10,17 +10,6 @@ module ebi.rpg {
             this.tmxTiledMap_.setLayerZ('bottom', 0);
             this.tmxTiledMap_.setLayerZ('middle', 0);
             this.tmxTiledMap_.setLayerZ('top',    1);
-
-
-            // Test for getting collision data
-            /*
-            for (var i = 0; i < map_.mapWidth; i++) {
-                for (var j = 0; j < map_.mapHeight; j++) {
-                    var collision = map_.getCollisionAt(i, j);
-                    console.log(i + "," + j + " = " + collision);
-                }
-            }
-            */
         }
 
         public get gridSizeX(): number {
