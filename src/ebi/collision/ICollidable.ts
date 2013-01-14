@@ -1,7 +1,7 @@
 /// <reference path='../../b2/Box2D.d.ts' />
 /// <reference path='../../cp/chipmunk.d.ts' />
 
-module ebi.game {
+module ebi.collision {
     export interface ICollidable {
     	dispose(): void;
         setPos(x: number, y: number): void;

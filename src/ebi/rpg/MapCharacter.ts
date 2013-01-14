@@ -1,7 +1,6 @@
+/// <reference path='../collision/ICollidable.ts' />
 /// <reference path='../game/Game.ts' />
 /// <reference path='../game/ResourcePreloader.ts' />
-/// <reference path='../game/CollisionSystem.ts' />
-/// <reference path='../game/ICollidable.ts' />
 /// <reference path='./DatabaseManager.ts' />
 /// <reference path='./Map.ts' />
 /// <reference path='./MapCharacterChipset.ts' />
@@ -20,7 +19,7 @@ module ebi.rpg {
         private vx_: number;
         private vy_: number;
         private map_: Map;
-        private collisionRect_: ebi.game.ICollidable;
+        private collisionRect_: ebi.collision.ICollidable;
         private controlable_: bool;
 
         constructor(id: number, map: Map) {
@@ -34,7 +33,7 @@ module ebi.rpg {
             this.sprite_.srcY      = 0;
             this.sprite_.srcWidth  = this.charaChipset_.size[0];
             this.sprite_.srcHeight = this.charaChipset_.size[1];
-            this.collisionRect_ = ebi.game.CollisionSystem.createCollisionRect(
+            this.collisionRect_ = ebi.collision.CollisionSystem.createCollisionRect(
                 this.charaChipset_.hitRect[0],
                 this.charaChipset_.hitRect[1],
                 this.charaChipset_.hitRect[2],

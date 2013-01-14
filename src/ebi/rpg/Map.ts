@@ -2,7 +2,6 @@
 module ebi.rpg {
     export class Map {
         private tmxTiledMap_: ebi.game.TmxTiledMap;
-
         constructor() {
             this.tmxTiledMap_ = new ebi.game.TmxTiledMap('sample');
 
@@ -10,6 +9,11 @@ module ebi.rpg {
             this.tmxTiledMap_.setLayerZ('bottom', 0);
             this.tmxTiledMap_.setLayerZ('middle', 0);
             this.tmxTiledMap_.setLayerZ('top',    1);
+        }
+
+        public dispose(): void {
+            this.tmxTiledMap_.dispose();
+            delete this.tmxTiledMap_;
         }
 
         public get gridSizeX(): number {
