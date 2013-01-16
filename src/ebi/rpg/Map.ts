@@ -22,7 +22,7 @@ module ebi.rpg {
 
             
             var edges = [];
-            var mark = -1;
+            var mark = -1; // What is 'mark'?
 
             // Check horizontal edges
             for (var y = 0; y < mapHeight - 1; y++) {
