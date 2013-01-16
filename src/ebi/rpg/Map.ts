@@ -27,7 +27,7 @@ module ebi.rpg {
                     var data2 = this.tmxTiledMap_.getTileId(x, y + 1, "collision");
                     
                     var hasEdge = Map.hasDown(data1) || Map.hasUp(data2);
-                   if (mark >= 0) {
+                    if (mark >= 0) {
                         if (!hasEdge) {
                             edges.push(this.createHorizontalEdge(mark, x, y + 1));
                             mark = -1;
@@ -51,7 +51,7 @@ module ebi.rpg {
                     var data2 = this.tmxTiledMap_.getTileId(x + 1, y, "collision");
                     
                     var hasEdge = Map.hasRight(data1) || Map.hasLeft(data2);
-                   if (mark >= 0) {
+                    if (mark >= 0) {
                         if (!hasEdge) {
                             edges.push(this.createVerticalEdge(x + 1, mark, y));
                             mark = -1;
