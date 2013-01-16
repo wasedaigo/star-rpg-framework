@@ -8,8 +8,9 @@ module ebi.collision {
     var PTM_RATIO: number = 32;
 
     class CollisionObject implements ICollidable {
-        public b2Body_: Box2D.Dynamics.b2Body;
-        public b2Fixtures_: Box2D.Dynamics.b2Fixture[];
+
+        private b2Body_: Box2D.Dynamics.b2Body;
+        private b2Fixtures_: Box2D.Dynamics.b2Fixture[];
         private id_: number;
         private static currentId: number = 0;
 
