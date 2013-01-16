@@ -53,6 +53,7 @@ module ebi.collision {
         }
     }
 
+    // TODO: Is that OK to inherit the class which is defined in JS??
     class ContactListener extends Box2D.Dynamics.b2ContactListener {
 
         private static CalcCancelingVelocity(normalVec: Box2D.Common.Math.b2Vec2, projectingVec: Box2D.Common.Math.b2Vec2): Box2D.Common.Math.b2Vec2 {
