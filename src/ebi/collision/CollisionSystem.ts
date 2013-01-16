@@ -117,11 +117,40 @@ module ebi.collision {
     }
 
     export class Point {
-        constructor(public x: number, public y: number) {};
+
+        private x_: number = 0;
+        private y_: number = 0;
+
+        constructor(x: number, y: number) {
+            this.x_ = x;
+            this.y_ = y;
+        }
+
+        public get x(): number {
+            return this.x_;
+        }
+        public get y(): number {
+            return this.y_;
+        }
     }
 
     export class Edge {
-        constructor(public start: Point, public end: Point) {};
+
+        private start_: Point;
+        private end_: Point;
+
+        constructor(start: Point, end: Point) {
+            this.start_ = start;
+            this.end_   = end;
+        }
+
+        public get start(): Point {
+            return this.start_;
+        }
+        public get end(): Point {
+            return this.end_;
+        }
+
     }
 
     export class CollisionSystem {
