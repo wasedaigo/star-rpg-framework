@@ -93,22 +93,22 @@ module ebi.rpg {
 
         // Note: We'd like to precompute this data
         private static hasDown(tileId: number): bool {
-            return tileId == 0 || tileId == 1 || tileId == 2 || tileId == 4 || tileId == 5 || tileId == 6 || tileId == 12 || tileId == 14;
+            return [0, 1, 2, 4, 5, 6, 12, 14].some((id) => tileId == id);
         }
 
         // Note: We'd like to precompute this data
         private static hasUp(tileId: number): bool {
-            return tileId == 0 || tileId == 1 || tileId == 2 || tileId == 8 || tileId == 9 || tileId == 10 || tileId == 13 || tileId == 14;
+            return [0, 1, 2, 8, 9, 10, 13, 14].some((id) => tileId == id);
         }
 
         // Note: We'd like to precompute this data
         private static hasLeft(tileId: number): bool {
-            return tileId == 0 || tileId == 1 || tileId == 3 || tileId == 4 || tileId == 5 || tileId == 8 || tileId == 9 || tileId == 11;
+            return [0, 1, 3, 4, 5, 8, 9, 11].some((id) => tileId == id);
         }
 
         // Note: We'd like to precompute this data
         private static hasRight(tileId: number): bool {
-            return tileId == 0 || tileId == 2 || tileId == 4 || tileId == 6 || tileId == 7 || tileId == 8 || tileId == 10 || tileId == 11;
+            return [0, 2, 4, 6, 7, 8, 10, 11].some((id) => tileId == id);
         }
 
         public dispose(): void {
