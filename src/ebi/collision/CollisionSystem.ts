@@ -83,10 +83,10 @@ module ebi.collision {
             
             // Do not do anything if either of bodies is a static body (such as wall)
             var b2Body = Box2D.Dynamics.b2Body;
-            if (
-                contact.GetFixtureA().GetBody().GetType() == b2Body.b2_staticBody || 
-                contact.GetFixtureB().GetBody().GetType() == b2Body.b2_staticBody
-            ) {
+            if (contact.GetFixtureA().GetBody().GetType() == b2Body.b2_staticBody) {
+                return;
+            }
+            if (contact.GetFixtureB().GetBody().GetType() == b2Body.b2_staticBody) {
                 return;
             }
 
