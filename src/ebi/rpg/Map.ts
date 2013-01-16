@@ -1,8 +1,12 @@
 /// <reference path='../collision/CollisionSystem.ts' />
 /// <reference path='../game/TmxTiledMap.ts' />
+
 module ebi.rpg {
+
     export class Map {
+
         private tmxTiledMap_: ebi.game.TmxTiledMap;
+
         constructor() {
             this.tmxTiledMap_ = new ebi.game.TmxTiledMap('sample');
 

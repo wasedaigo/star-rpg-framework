@@ -3,6 +3,7 @@
 
 // We should not use Box2D(or chipmunk) directly outside of CollisionSystem!
 module ebi.collision {
+
     // Constant to convert between physics-world position and screen position
     var PTM_RATIO: number = 32;
 
