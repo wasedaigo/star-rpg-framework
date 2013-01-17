@@ -202,6 +202,7 @@ module ebi.collision {
 
         public static update(): void {
             // timestep delta, velocity iteration, rotation iteration
+            // TODO: why 0.033?
             world.Step(0.033, 3, 1);
         }
     }

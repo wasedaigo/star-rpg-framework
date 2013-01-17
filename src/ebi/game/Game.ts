@@ -1,5 +1,4 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
-/// <reference path='../collision/CollisionSystem.ts' />
 /// <reference path='./Sprite.ts' />
 /// <reference path='./TmxTiledMap.ts' />
 /// <reference path='./Input.ts' />
@@ -52,9 +51,6 @@ module ebi.game {
         private mainLoopWithRendering(game: Game): void {
             ebi.game.Input.update();
             this.mainLoop_(game);
-
-            // TODO: Hey, ebi.game should not refer ebi.collision!!
-            ebi.collision.CollisionSystem.update();       
 
             var scene: cc.Scene = this.ccApp_.scene;
             if (!this.ccInputLayer_) {

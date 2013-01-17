@@ -1,3 +1,4 @@
+/// <reference path='../collision/CollisionSystem.ts' />
 /// <reference path='../game/Game.ts' />
 /// <reference path='../game/Input.ts' />
 /// <reference path='../game/ResourcePreloader.ts' />
@@ -35,6 +36,8 @@ module ebi.rpg {
                 mapCharacters.forEach((mapCharacter) => mapCharacter.update());
                 AnalogInputController.update();
                 MapCamera.update();
+
+                ebi.collision.CollisionSystem.update();
             }
         }
 
