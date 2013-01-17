@@ -3,10 +3,8 @@
 /// <reference path='../game/Input.ts' />
 /// <reference path='../game/ResourcePreloader.ts' />
 /// <reference path='./DatabaseManager.ts' />
-/// <reference path='./MapCharacter.ts' />
-/// <reference path='./Map.ts' />
-/// <reference path='./MapCamera.ts' />
 /// <reference path='./AnalogInputController.ts' />
+/// <reference path='./MapScene.ts' />
 
 module ebi.rpg {
 
@@ -16,11 +14,9 @@ module ebi.rpg {
             ebi.game.Game.run(loop);
         }
         
-        private static sprite: ebi.game.Sprite = null;
-        private static mapCharacters: MapCharacter[] = [];
         private static isInitialized: bool = false;
         private static isPreloadFinishd: bool = false;
-        private static map_: Map = null;
+        private static scene_: Scene = null;
 
         private static loop(): void {
             if (!isInitialized) {
@@ -35,11 +31,12 @@ module ebi.rpg {
                 isPreloadFinishd = true;
             }
 
-            mapCharacters.forEach((mapCharacter) => mapCharacter.update());
             AnalogInputController.update();
-            MapCamera.update();
-
             ebi.collision.CollisionSystem.update();
+
+            if (scene_) {
+                scene_.update();
+            }
         }
 
         private static init(): void {
@@ -54,21 +51,10 @@ module ebi.rpg {
         }
 
         private static onPreloadFinished(): void {
-            map_ = new Map();
-
-            var mapCharacter: MapCharacter = new MapCharacter(1, map_);
-            mapCharacters.push(mapCharacter);
-            mapCharacter.setPosition(128, 64);
-
-            var mapCharacter: MapCharacter = new MapCharacter(2, map_);
-            mapCharacter.setPosition(128, 128);
-            mapCharacter.controlable = true;
-            mapCharacters.push(mapCharacter);
-            MapCamera.focusTarget = mapCharacter;
-
-            var mapCharacter: MapCharacter = new MapCharacter(3, map_);
-            mapCharacter.setPosition(96, 64);
-            mapCharacters.push(mapCharacter);
+            if (!scene_) {
+                scene_ = new MapScene();
+                scene_.init();
+            }
         }
     }
 }
