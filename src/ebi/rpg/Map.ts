@@ -1,4 +1,5 @@
 /// <reference path='../collision/CollisionSystem.ts' />
+/// <reference path='../collision/ICollidable.ts' />
 /// <reference path='../game/TmxTiledMap.ts' />
 
 module ebi.rpg {
@@ -6,7 +7,7 @@ module ebi.rpg {
     export class Map {
 
         private tmxTiledMap_: ebi.game.TmxTiledMap;
-
+        private collision_: ebi.collision.ICollidable;
         constructor() {
             this.tmxTiledMap_ = new ebi.game.TmxTiledMap('sample');
 
@@ -15,14 +16,30 @@ module ebi.rpg {
             this.tmxTiledMap_.setLayerZ('middle', 0);
             this.tmxTiledMap_.setLayerZ('top',    1);
 
+            var edges = this.extractEdges();
+            this.collision_ = ebi.collision.CollisionSystem.createCollisionEdges(0, 0, edges);
+        }
+
+        public dispose(): void {
+            this.tmxTiledMap_.dispose();
+            delete this.tmxTiledMap_;
+            this.collision_.dispose();
+            delete this.collision_;
+        }
+
+        private extractEdges(): ebi.collision.Edge[] {
+            var edges: ebi.collision.Edge[] = [];
+            edges = edges.concat(this.extractHorizontalEdges());
+            edges = edges.concat(this.extractVerticalEdges());
+            return edges;
+        }
+
+        private extractHorizontalEdges(): ebi.collision.Edge[] {
             var mapWidth = this.tmxTiledMap_.mapWidth;
             var mapHeight = this.tmxTiledMap_.mapHeight;
-            var data = new number[](mapWidth * mapHeight);
-            var index = 0;
-
-            
             var edges: ebi.collision.Edge[] = [];
-            var mark = -1; // What is 'mark'?
+
+            var edgeStartPos = -1; // A variable to keep track of edge continuity
 
             // Check horizontal edges
             for (var y = 0; y < mapHeight - 1; y++) {
@@ -31,22 +48,32 @@ module ebi.rpg {
                     var data2 = this.tmxTiledMap_.getTileId(x, y + 1, 'collision');
                     
                     var hasEdge = Map.hasDown(data1) || Map.hasUp(data2);
-                    if (mark >= 0) {
+                    if (edgeStartPos >= 0) {
                         if (!hasEdge) {
-                            edges.push(this.createHorizontalEdge(mark, x, y + 1));
-                            mark = -1;
+                            edges.push(this.createHorizontalEdge(edgeStartPos, x, y + 1));
+                            edgeStartPos = -1;
                         }
                     } else {
                         if (hasEdge) {
-                            mark = x;
+                            edgeStartPos = x;
                         }
                     }
                 }
-                if (mark >= 0) {
-                    edges.push(this.createHorizontalEdge(mark, mapWidth, y + 1));
-                    mark = -1;
+                if (edgeStartPos >= 0) {
+                    edges.push(this.createHorizontalEdge(edgeStartPos, mapWidth, y + 1));
+                    edgeStartPos = -1;
                 }
             }
+
+            return edges;
+        }
+
+        private extractVerticalEdges(): ebi.collision.Edge[] {
+            var mapWidth = this.tmxTiledMap_.mapWidth;
+            var mapHeight = this.tmxTiledMap_.mapHeight;
+            var edges: ebi.collision.Edge[] = [];
+
+            var edgeStartPos = -1; // A variable to keep track of edge continuity
 
             // Check vertical edges
             for (var x = 0; x < mapWidth - 1; x++) {
@@ -55,25 +82,24 @@ module ebi.rpg {
                     var data2 = this.tmxTiledMap_.getTileId(x + 1, y, 'collision');
                     
                     var hasEdge = Map.hasRight(data1) || Map.hasLeft(data2);
-                    if (mark >= 0) {
+                    if (edgeStartPos >= 0) {
                         if (!hasEdge) {
-                            edges.push(this.createVerticalEdge(x + 1, mark, y));
-                            mark = -1;
+                            edges.push(this.createVerticalEdge(x + 1, edgeStartPos, y));
+                            edgeStartPos = -1;
                         }
                     } else {
                         if (hasEdge) {
-                            mark = y;
+                            edgeStartPos = y;
                         }
                     }
                 }
-                if (mark >= 0) {
-                    edges.push(this.createVerticalEdge(x + 1, mark, mapHeight));
-                    mark = -1;
+                if (edgeStartPos >= 0) {
+                    edges.push(this.createVerticalEdge(x + 1, edgeStartPos, mapHeight));
+                    edgeStartPos = -1;
                 }
             }
 
-            // TODO when will this be disposed?
-            ebi.collision.CollisionSystem.createCollisionEdges(0, 0, edges);
+            return edges;
         }
 
         private createHorizontalEdge(startX: number, endX: number, y: number): ebi.collision.Edge {
@@ -114,11 +140,6 @@ module ebi.rpg {
         // Note: We'd like to precompute this data
         private static hasRight(tileId: number): bool {
             return [0, 2, 4, 6, 7, 8, 10, 11].some((id) => tileId == id);
-        }
-
-        public dispose(): void {
-            this.tmxTiledMap_.dispose();
-            delete this.tmxTiledMap_;
         }
 
         public get gridSizeX(): number {
