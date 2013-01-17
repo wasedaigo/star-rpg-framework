@@ -3,6 +3,10 @@
 /// <reference path='./ICollidable.ts' />
 /// <reference path='./Point.ts' />
 
+module Box2D {
+    declare function inherit(cls: any, base: any);
+}
+
 // We should not use Box2D(or chipmunk) directly outside of CollisionSystem!
 module ebi.collision {
 
@@ -55,67 +59,65 @@ module ebi.collision {
         }
     }
 
-    // TODO: Is that OK to inherit the class which is defined in JS??
-    class ContactListener extends Box2D.Dynamics.b2ContactListener {
+    var ContactListener: any = function () {};
+    Box2D.inherit(ContactListener, Box2D.Dynamics.b2ContactListener);
 
-        private static CalcCancelingVelocity(normalVec: Box2D.Common.Math.b2Vec2, projectingVec: Box2D.Common.Math.b2Vec2): Box2D.Common.Math.b2Vec2 {
-            var projectingVec = projectingVec.Copy();
-            var cancelingVector = normalVec.Copy();
-            cancelingVector.Multiply(Box2D.Common.Math.b2Math.Dot(normalVec, projectingVec));
-            
-            return cancelingVector;
+    ContactListener.CalcCancelingVelocity = function (normalVec: Box2D.Common.Math.b2Vec2, projectingVec: Box2D.Common.Math.b2Vec2): Box2D.Common.Math.b2Vec2 {
+        var projectingVec = projectingVec.Copy();
+        var cancelingVector = normalVec.Copy();
+        cancelingVector.Multiply(Box2D.Common.Math.b2Math.Dot(normalVec, projectingVec));
+        return cancelingVector;
+    }
+
+    ContactListener.CalcCanceledVelocity = function (normalVec: Box2D.Common.Math.b2Vec2, velocity: Box2D.Common.Math.b2Vec2): Box2D.Common.Math.b2Vec2 {
+        var vel = velocity.Copy();
+        var cancelingVelocity = ContactListener.CalcCancelingVelocity(normalVec, vel);
+
+        // Move away the vector so that the fixture won't overlap!
+        vel.Subtract(cancelingVelocity);
+
+        return vel;
+    }
+
+    ContactListener.GetContactNormal = function (contact: Box2D.Dynamics.Contacts.b2Contact): Box2D.Common.Math.b2Vec2 {
+        var worldManifold = new Box2D.Collision.b2WorldManifold();
+        contact.GetWorldManifold(worldManifold);
+        return worldManifold.m_normal.Copy();  
+    }
+
+    // In order to have RPG-style character collision, I put some effort here...
+    // Not perfect, but acceptable. Maybe gotta move to ebi.rpg?
+    ContactListener.prototype.PreSolve = function (contact: Box2D.Dynamics.Contacts.b2Contact, oldManifold: Box2D.Collision.b2Manifold): void {
+        
+        // Do not do anything if either of bodies is a static body (such as wall)
+        var b2Body = Box2D.Dynamics.b2Body;
+        if (contact.GetFixtureA().GetBody().GetType() == b2Body.b2_staticBody) {
+            return;
+        }
+        if (contact.GetFixtureB().GetBody().GetType() == b2Body.b2_staticBody) {
+            return;
         }
 
-        private static CalcCanceledVelocity(normalVec: Box2D.Common.Math.b2Vec2, velocity: Box2D.Common.Math.b2Vec2): Box2D.Common.Math.b2Vec2 {
-            var vel = velocity.Copy();
-            var cancelingVelocity = ContactListener.CalcCancelingVelocity(normalVec, vel);
+        // Process only when two fixtures are overlapping
+        if (contact.IsTouching()) {
 
-            // Move away the vector so that the fixture won't overlap!
-            vel.Subtract(cancelingVelocity);
+            // Skip physics operation
+            contact.SetEnabled(false);
 
-            return vel;
-        }
+            var contactNormal = ContactListener.GetContactNormal(contact);
 
-        private static GetContactNormal(contact: Box2D.Dynamics.Contacts.b2Contact): Box2D.Common.Math.b2Vec2 {
-            var worldManifold = new Box2D.Collision.b2WorldManifold();
-            contact.GetWorldManifold(worldManifold);
-            return worldManifold.m_normal.Copy();  
-        }
-
-        // In order to have RPG-style character collision, I put some effort here...
-        // Not perfect, but acceptable. Maybe gotta move to ebi.rpg?
-        public PreSolve(contact: Box2D.Dynamics.Contacts.b2Contact, oldManifold: Box2D.Collision.b2Manifold): void {
-            
-            // Do not do anything if either of bodies is a static body (such as wall)
-            var b2Body = Box2D.Dynamics.b2Body;
-            if (contact.GetFixtureA().GetBody().GetType() == b2Body.b2_staticBody) {
-                return;
-            }
-            if (contact.GetFixtureB().GetBody().GetType() == b2Body.b2_staticBody) {
-                return;
-            }
-
-            // Process only when two fixtures are overlapping
-            if (contact.IsTouching()) {
-
-                // Skip physics operation
-                contact.SetEnabled(false);
-
-                var contactNormal = ContactListener.GetContactNormal(contact);
-
-                var descs = [
-                    {body: contact.GetFixtureA().GetBody(), sign: 1},
-                    {body: contact.GetFixtureB().GetBody(), sign: -1}
-                ];
-                descs.forEach((desc, index)=>{
-                    // Skip if bodies are trying to go apart
-                    if (Box2D.Common.Math.b2Math.Dot(desc.body.GetLinearVelocity(), contactNormal) * desc.sign >= 0) {
-                        desc.body.SetLinearVelocity(
-                            ContactListener.CalcCanceledVelocity(contactNormal, desc.body.GetLinearVelocity())
-                        );
-                    }
-                })
-            }
+            var descs = [
+                {body: contact.GetFixtureA().GetBody(), sign: 1},
+                {body: contact.GetFixtureB().GetBody(), sign: -1}
+            ];
+            descs.forEach((desc, index)=>{
+                // Skip if bodies are trying to go apart
+                if (Box2D.Common.Math.b2Math.Dot(desc.body.GetLinearVelocity(), contactNormal) * desc.sign >= 0) {
+                    desc.body.SetLinearVelocity(
+                        ContactListener.CalcCanceledVelocity(contactNormal, desc.body.GetLinearVelocity())
+                    );
+                }
+            })
         }
     }
 
