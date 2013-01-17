@@ -27,18 +27,19 @@ module ebi.rpg {
                 init();
                 isInitialized = true;
             }
-            if (!ebi.game.ResourcePreloader.isLoading) {
-                if (!isPreloadFinishd) {
-                    onPreloadFinished();
-                    isPreloadFinishd = true;
-                }
-
-                mapCharacters.forEach((mapCharacter) => mapCharacter.update());
-                AnalogInputController.update();
-                MapCamera.update();
-
-                ebi.collision.CollisionSystem.update();
+            if (ebi.game.ResourcePreloader.isLoading) {
+                return;
             }
+            if (!isPreloadFinishd) {
+                onPreloadFinished();
+                isPreloadFinishd = true;
+            }
+
+            mapCharacters.forEach((mapCharacter) => mapCharacter.update());
+            AnalogInputController.update();
+            MapCamera.update();
+
+            ebi.collision.CollisionSystem.update();
         }
 
         private static init(): void {
