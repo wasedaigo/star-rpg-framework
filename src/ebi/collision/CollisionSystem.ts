@@ -41,7 +41,8 @@ module ebi.collision {
 
     // In order to have RPG-style character collision, I put some effort here...
     // Not perfect, but acceptable. Maybe gotta move to ebi.rpg?
-    ContactListener.prototype.PreSolve = function (contact: Box2D.Dynamics.Contacts.b2Contact, oldManifold: Box2D.Collision.b2Manifold): void {
+    ContactListener.prototype.PreSolve = function (contact: Box2D.Dynamics.Contacts.b2Contact,
+                                                   oldManifold: Box2D.Collision.b2Manifold): void {
         
         // Do not do anything if either of bodies is a static body (such as wall)
         var b2Body = Box2D.Dynamics.b2Body;
@@ -90,12 +91,12 @@ module ebi.collision {
 
         // Note: Right now we are only support single physics-world
         private static world_: Box2D.Dynamics.b2World = null;
+
         private static get world(): Box2D.Dynamics.b2World {
             if (!world_) {
                 world_ = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(0, 0), true);
                 world_.SetContinuousPhysics(true);
-                var contactListener = new ContactListener();
-                world_.SetContactListener(contactListener);
+                world_.SetContactListener(new ContactListener());
             }    
             return world_;
         }
@@ -142,9 +143,9 @@ module ebi.collision {
             var shapes: Box2D.Collision.Shapes.b2Shape[] = [];
             edges.forEach((edge) => {
                 //Simple way with no fixture.         
-                var polyShape = new b2PolygonShape();
+                var polyShape  = new b2PolygonShape();
                 var startPoint = new b2Vec2(edge.start.x / PTM_RATIO, edge.start.y / PTM_RATIO);
-                var endPoint = new b2Vec2(edge.end.x / PTM_RATIO, edge.end.y / PTM_RATIO);
+                var endPoint   = new b2Vec2(edge.end.x   / PTM_RATIO, edge.end.y   / PTM_RATIO);
                 polyShape.SetAsArray([startPoint, endPoint], 2);
                 shapes.push(polyShape);
             })
@@ -154,7 +155,6 @@ module ebi.collision {
         public static createCollisionRect(x: number, y: number, width: number, height: number): CollisionObject {
             var shape = new Box2D.Collision.Shapes.b2PolygonShape();
             shape.SetAsBox(width / PTM_RATIO, height / PTM_RATIO);
-
             return createCollisionObject(x, y, [shape], false);
         }
 
@@ -162,7 +162,6 @@ module ebi.collision {
             var shape = new Box2D.Collision.Shapes.b2CircleShape();
             shape.SetRadius((radius / PTM_RATIO));
             shape.SetLocalPosition(new Box2D.Common.Math.b2Vec2(0.5 ,0.5));
-
             return createCollisionObject(x, y, [shape], false);
         }
 
