@@ -21,14 +21,14 @@ module ebi.rpg {
             var index = 0;
 
             
-            var edges = [];
+            var edges: ebi.collision.Edge[] = [];
             var mark = -1; // What is 'mark'?
 
             // Check horizontal edges
             for (var y = 0; y < mapHeight - 1; y++) {
                 for (var x = 0; x < mapWidth; x++) {
-                    var data1 = this.tmxTiledMap_.getTileId(x, y, "collision");
-                    var data2 = this.tmxTiledMap_.getTileId(x, y + 1, "collision");
+                    var data1 = this.tmxTiledMap_.getTileId(x, y, 'collision');
+                    var data2 = this.tmxTiledMap_.getTileId(x, y + 1, 'collision');
                     
                     var hasEdge = Map.hasDown(data1) || Map.hasUp(data2);
                     if (mark >= 0) {
@@ -51,8 +51,8 @@ module ebi.rpg {
             // Check vertical edges
             for (var x = 0; x < mapWidth - 1; x++) {
                 for (var y = 0; y < mapHeight; y++) {
-                    var data1 = this.tmxTiledMap_.getTileId(x, y, "collision");
-                    var data2 = this.tmxTiledMap_.getTileId(x + 1, y, "collision");
+                    var data1 = this.tmxTiledMap_.getTileId(x, y, 'collision');
+                    var data2 = this.tmxTiledMap_.getTileId(x + 1, y, 'collision');
                     
                     var hasEdge = Map.hasRight(data1) || Map.hasLeft(data2);
                     if (mark >= 0) {
@@ -72,6 +72,7 @@ module ebi.rpg {
                 }
             }
 
+            // TODO when will this be disposed?
             ebi.collision.CollisionSystem.createCollisionEdges(0, 0, edges);
         }
 

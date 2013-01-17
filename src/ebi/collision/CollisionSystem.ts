@@ -1,5 +1,7 @@
 /// <reference path='../../b2/Box2D.d.ts' />
+/// <reference path='./Edge.ts' />
 /// <reference path='./ICollidable.ts' />
+/// <reference path='./Point.ts' />
 
 // We should not use Box2D(or chipmunk) directly outside of CollisionSystem!
 module ebi.collision {
@@ -115,43 +117,6 @@ module ebi.collision {
                 })
             }
         }
-    }
-
-    export class Point {
-
-        private x_: number = 0;
-        private y_: number = 0;
-
-        constructor(x: number, y: number) {
-            this.x_ = x;
-            this.y_ = y;
-        }
-
-        public get x(): number {
-            return this.x_;
-        }
-        public get y(): number {
-            return this.y_;
-        }
-    }
-
-    export class Edge {
-
-        private start_: Point;
-        private end_: Point;
-
-        constructor(start: Point, end: Point) {
-            this.start_ = start;
-            this.end_   = end;
-        }
-
-        public get start(): Point {
-            return this.start_;
-        }
-        public get end(): Point {
-            return this.end_;
-        }
-
     }
 
     export class CollisionSystem {
