@@ -53,6 +53,7 @@ module ebi.game {
             ebi.game.Input.update();
             this.mainLoop_(game);
 
+            // TODO: Hey, ebi.game should not refer ebi.collision!!
             ebi.collision.CollisionSystem.update();       
 
             var scene: cc.Scene = this.ccApp_.scene;

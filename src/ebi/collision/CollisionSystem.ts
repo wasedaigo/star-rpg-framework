@@ -120,7 +120,7 @@ module ebi.collision {
     }
 
     export class CollisionSystem {
-        private static collidables = {};
+        //private static collidables = {};
 
         // Note: Right now we are only support single physics-world
         private static world_: Box2D.Dynamics.b2World = null;
