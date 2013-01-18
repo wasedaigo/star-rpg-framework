@@ -47,16 +47,14 @@ module ebi.rpg {
 
         public setPosition(x: number, y: number): void {
             this.collisionRect_.setPos(x, y);
-            this.x_ = x;
-            this.y_ = y;
         }
 
         public get screenX(): number {
-            return this.x_;
+            return this.collisionRect_.x;
         }
 
         public get screenY(): number {
-            return this.y_;
+            return this.collisionRect_.y;
         }
 
         public get controlable(): bool {
@@ -87,7 +85,7 @@ module ebi.rpg {
             if (this.map_) {
                 // Horizontal direction collision
                 var tx = Math.floor(this.x_ + this.vx_);
-                var ty = (this.map_.mapHeight - 1) - Math.floor(this.y_);
+                var ty = (this.map_.yCount - 1) - Math.floor(this.y_);
                 var collisionInfo = this.map_.getCollisionAt(tx, ty);
                 if (collisionInfo >= 0) {
                     this.vx_ = 0;
@@ -95,7 +93,7 @@ module ebi.rpg {
 
                 // Vertical direction collision
                 var tx = Math.floor(this.x_);
-                var ty = (this.map_.mapHeight - 1) - Math.floor(this.y_ + this.vy_);
+                var ty = (this.map_.yCount - 1) - Math.floor(this.y_ + this.vy_);
                 var collisionInfo = this.map_.getCollisionAt(tx, ty);
                 if (collisionInfo >= 0) {
                     this.vy_ = 0;

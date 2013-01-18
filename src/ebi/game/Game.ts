@@ -1,4 +1,5 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
+/// <reference path='./Camera.ts' />
 /// <reference path='./Sprite.ts' />
 /// <reference path='./TmxTiledMap.ts' />
 /// <reference path='./Input.ts' />
@@ -19,7 +20,6 @@ module ebi.game {
         private mainLoop_: MainLoop;
         private ccApp_: any; // temporary
         private ccInputLayer_: any; // temporary
-
         private shownDrawables_: Object = {};
 
         constructor(mainLoop: MainLoop) {
@@ -60,7 +60,11 @@ module ebi.game {
                 // TODO: Replace the magic number
                 scene.addChild(this.ccInputLayer_, 10000000);
             }
-            
+
+            scene.setPositionX(ebi.game.Camera.x);
+            scene.setPositionY(ebi.game.Camera.y);
+            // Implement scaling and rotating of camera
+
             var drawablesToAdd = ebi.game.DisplayObjects.drawablesToAdd;
             drawablesToAdd.forEach((drawable: IDrawable) => {
                 var node = drawable.innerObject;
@@ -92,7 +96,6 @@ module ebi.game {
 
     var Cocos2dApp: new(MainLoop) => cc.Application = cc.Application.extend({
         scene: null,
-        world: null,
         // 'document' is a kind of a global variable.
         // document['ccConfig'] is defined in cocos2d.js.
         config: document['ccConfig'],

@@ -8,10 +8,12 @@ module ebi.rpg {
     export class MapScene extends Scene {
 
         private map_: Map = null;
+        private camera_: MapCamera = null;
         private mapCharacters_: MapCharacter[] = [];
 
         public init(): void {
             this.map_ = new Map();
+            this.camera_ = new MapCamera(this.map_);
 
             var mapCharacter: MapCharacter = new MapCharacter(1, this.map_);
             this.mapCharacters_.push(mapCharacter);
@@ -20,8 +22,8 @@ module ebi.rpg {
             var mapCharacter: MapCharacter = new MapCharacter(2, this.map_);
             mapCharacter.setPosition(128, 128);
             mapCharacter.controlable = true;
+            this.camera_.focusTarget = mapCharacter;
             this.mapCharacters_.push(mapCharacter);
-            MapCamera.focusTarget = mapCharacter;
 
             var mapCharacter: MapCharacter = new MapCharacter(3, this.map_);
             mapCharacter.setPosition(96, 64);
@@ -29,7 +31,7 @@ module ebi.rpg {
         }
 
         public update(): void {
-            MapCamera.update();
+            this.camera_.update();
             this.mapCharacters_.forEach((mapCharacter) => mapCharacter.update());
         }
 

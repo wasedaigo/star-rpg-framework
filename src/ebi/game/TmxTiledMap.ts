@@ -88,11 +88,11 @@ module ebi.game {
             return this.ccTMXTiledMap_;
         }
 
-        public get mapWidth(): number {
+        public get xCount(): number {
             return this.mapSize_.width;
         }
 
-        public get mapHeight(): number {
+        public get yCount(): number {
             return this.mapSize_.height;
         }
 
@@ -101,11 +101,11 @@ module ebi.game {
         public getTileId(x: number, y: number, layerName: string): number {
             // If it is trying to get collision outside of map,
             // it returns collidable flag
-            if (x < 0 || x >= this.mapWidth || y < 0 || y >= this.mapHeight) {
+            if (x < 0 || x >= this.xCount || y < 0 || y >= this.yCount) {
                 return -1;
             }
             var layer = this.layers_[layerName];
-            var id = layer.getTileIdAt(x, this.mapHeight - y - 1);
+            var id = layer.getTileIdAt(x, this.yCount - y - 1);
 
             return id;
         }

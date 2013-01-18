@@ -15,6 +15,7 @@ module ebi.rpg {
             this.tmxTiledMap_.setLayerZ('bottom', 0);
             this.tmxTiledMap_.setLayerZ('middle', 0);
             this.tmxTiledMap_.setLayerZ('top',    1);
+            this.tmxTiledMap_.setLayerZ('collision',    1);
 
             var edges = this.extractEdges();
             this.collision_ = ebi.collision.CollisionSystem.createCollisionEdges(0, 0, edges);
@@ -31,19 +32,35 @@ module ebi.rpg {
             var edges: ebi.collision.Edge[] = [];
             edges = edges.concat(this.extractHorizontalEdges());
             edges = edges.concat(this.extractVerticalEdges());
+            edges = edges.concat(this.extractBorderEdges());
+            return edges;
+        }
+
+        private extractBorderEdges(): ebi.collision.Edge[] {
+            var edges: ebi.collision.Edge[] = [];
+
+            // Down
+            edges.push(this.createHorizontalEdge(0, this.xCount, this.yCount));
+            // Up
+            edges.push(this.createHorizontalEdge(0, this.xCount, 0));
+            // Left
+            edges.push(this.createVerticalEdge(0, 0, this.yCount));
+            // Right
+            edges.push(this.createVerticalEdge(this.xCount, 0, this.yCount));
+
             return edges;
         }
 
         private extractHorizontalEdges(): ebi.collision.Edge[] {
-            var mapWidth = this.tmxTiledMap_.mapWidth;
-            var mapHeight = this.tmxTiledMap_.mapHeight;
+            var xCount = this.tmxTiledMap_.xCount;
+            var yCount = this.tmxTiledMap_.yCount;
             var edges: ebi.collision.Edge[] = [];
 
             var edgeStartPos = -1; // A variable to keep track of edge continuity
 
             // Check horizontal edges
-            for (var y = 0; y < mapHeight - 1; y++) {
-                for (var x = 0; x < mapWidth; x++) {
+            for (var y = 0; y < yCount - 1; y++) {
+                for (var x = 0; x < xCount; x++) {
                     var data1 = this.tmxTiledMap_.getTileId(x, y, 'collision');
                     var data2 = this.tmxTiledMap_.getTileId(x, y + 1, 'collision');
                     
@@ -60,7 +77,7 @@ module ebi.rpg {
                     }
                 }
                 if (edgeStartPos >= 0) {
-                    edges.push(this.createHorizontalEdge(edgeStartPos, mapWidth, y + 1));
+                    edges.push(this.createHorizontalEdge(edgeStartPos, xCount, y + 1));
                     edgeStartPos = -1;
                 }
             }
@@ -69,15 +86,15 @@ module ebi.rpg {
         }
 
         private extractVerticalEdges(): ebi.collision.Edge[] {
-            var mapWidth = this.tmxTiledMap_.mapWidth;
-            var mapHeight = this.tmxTiledMap_.mapHeight;
+            var xCount = this.tmxTiledMap_.xCount;
+            var yCount = this.tmxTiledMap_.yCount;
             var edges: ebi.collision.Edge[] = [];
 
             var edgeStartPos = -1; // A variable to keep track of edge continuity
 
             // Check vertical edges
-            for (var x = 0; x < mapWidth - 1; x++) {
-                for (var y = 0; y < mapHeight; y++) {
+            for (var x = 0; x < xCount - 1; x++) {
+                for (var y = 0; y < yCount; y++) {
                     var data1 = this.tmxTiledMap_.getTileId(x, y, 'collision');
                     var data2 = this.tmxTiledMap_.getTileId(x + 1, y, 'collision');
                     
@@ -94,7 +111,7 @@ module ebi.rpg {
                     }
                 }
                 if (edgeStartPos >= 0) {
-                    edges.push(this.createVerticalEdge(x + 1, edgeStartPos, mapHeight));
+                    edges.push(this.createVerticalEdge(x + 1, edgeStartPos, yCount));
                     edgeStartPos = -1;
                 }
             }
@@ -150,12 +167,20 @@ module ebi.rpg {
             return 32;
         }
 
-        public get mapWidth(): number {
-            return this.tmxTiledMap_.mapWidth;
+        public get xCount(): number {
+            return this.tmxTiledMap_.xCount;
         }
 
-        public get mapHeight(): number {
-            return this.tmxTiledMap_.mapHeight;
+        public get yCount(): number {
+            return this.tmxTiledMap_.yCount;
+        }
+
+        public get width(): number {
+            return this.xCount * this.gridSizeX;
+        }
+
+        public get height(): number {
+            return this.yCount * this.gridSizeY;
         }
     }
 }
