@@ -61,9 +61,11 @@ module ebi.game {
                 scene.addChild(this.ccInputLayer_, 10000000);
             }
 
+            scene.setScaleX(ebi.game.Camera.scaleX);
+            scene.setScaleY(ebi.game.Camera.scaleY);
             scene.setPositionX(ebi.game.Camera.x);
             scene.setPositionY(ebi.game.Camera.y);
-            // Implement scaling and rotating of camera
+            // Implement scaling
 
             var drawablesToAdd = ebi.game.DisplayObjects.drawablesToAdd;
             drawablesToAdd.forEach((drawable: IDrawable) => {

@@ -54,6 +54,8 @@ module cc {
         setAnchorPoint(point: Point): void;
         setPositionX(x: number): void;
         setPositionY(y: number): void;
+        setScaleX(x: number): void;
+        setScaleY(y: number): void;
         setTag(tag: number): void;
     }
     class Point {

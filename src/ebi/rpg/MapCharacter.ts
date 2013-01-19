@@ -49,6 +49,14 @@ module ebi.rpg {
             this.collisionRect_.setPos(x, y);
         }
 
+        public get width(): number {
+            return this.sprite_.srcWidth;
+        }
+
+        public get height(): number {
+            return this.sprite_.srcHeight;
+        }
+
         public get screenX(): number {
             return this.collisionRect_.x;
         }
