@@ -1,9 +1,9 @@
 /// <reference path='../collision/CollisionSystem.ts' />
 /// <reference path='../game/Game.ts' />
-/// <reference path='../game/Input.ts' />
 /// <reference path='../game/ResourcePreloader.ts' />
 /// <reference path='./DatabaseManager.ts' />
 /// <reference path='./AnalogInputController.ts' />
+/// <reference path='./AnalogInputIndicator.ts' />
 /// <reference path='./MapScene.ts' />
 
 module ebi.rpg {
@@ -48,6 +48,9 @@ module ebi.rpg {
             ebi.game.ResourcePreloader.preloadTmxImage('tile_a');
             ebi.game.ResourcePreloader.preloadTmxImage('tile_b');
             ebi.game.ResourcePreloader.preloadTmxImage('collision');
+
+            // TODO organize a way to preload assets
+            AnalogInputIndicator.preload();
         }
 
         private static onPreloadFinished(): void {

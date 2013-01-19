@@ -11,8 +11,8 @@ module ebi.rpg {
 
         constructor(map: Map) {
             this.map_ = map;
-            game.Camera.scaleX = 1.5;
-            game.Camera.scaleY = 1.5;
+            game.Camera.scaleX = 1;
+            game.Camera.scaleY = 1;
         }
 
         public update(): void {

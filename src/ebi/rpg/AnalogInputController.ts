@@ -54,5 +54,17 @@ module ebi.rpg {
         public static get hasInput(): bool {
             return inputDx_ != 0 || inputDy_ != 0;
         }
+
+        public static get isTouched(): bool {
+            return ebi.game.Input.isTouched;
+        }
+
+        public static get touchX(): number {
+            return touchStartLocationX_;
+        }
+
+        public static get touchY(): number {
+            return touchStartLocationY_;
+        }
     }
 }

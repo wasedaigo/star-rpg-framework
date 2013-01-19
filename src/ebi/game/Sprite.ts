@@ -101,6 +101,10 @@ module ebi.game {
             this.updateSrcRect();
         }
 
+        public setVisible(isVisible: bool): void {
+            this.ccSprite_.setVisible(isVisible);
+        }
+
         public dispose(): void {
             DisplayObjects.remove(this);
         }
