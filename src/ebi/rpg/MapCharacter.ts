@@ -21,6 +21,7 @@ module ebi.rpg {
         private map_: Map;
         private collisionObject_: ebi.collision.CollisionObject;
         private controlable_: bool;
+        private speed_: number;
 
         constructor(id: number, map: Map) {
             this.charaChipset_ = DatabaseManager.getCharaChipsetData(id);
@@ -28,6 +29,7 @@ module ebi.rpg {
             this.frameNo_ = this.charaChipset_.defaultFrameNo;
             this.dir_ = 0;
             this.map_ = map;
+            this.speed_ = 3;
             this.sprite_ = new ebi.game.Sprite(image);
             this.sprite_.srcX      = 0;
             this.sprite_.srcY      = 0;
@@ -81,34 +83,12 @@ module ebi.rpg {
             this.vx_ = 0;
             this.vy_ = 0;
             if (this.controlable) {
-                this.setVelocity(AnalogInputController.inputDx, AnalogInputController.inputDy);
+                this.setVelocity(this.speed_ * AnalogInputController.inputDx, this.speed_ * AnalogInputController.inputDy);
             } else {
                 this.setVelocity(0, 0);
             }
 
             this.updateDir();
-
-            // TODO: collision with map, still rough version
-            /*
-            if (this.map_) {
-                // Horizontal direction collision
-                var tx = Math.floor(this.x_ + this.vx_);
-                var ty = (this.map_.yCount - 1) - Math.floor(this.y_);
-                var collisionInfo = this.map_.getCollisionAt(tx, ty);
-                if (collisionInfo >= 0) {
-                    this.vx_ = 0;
-                }
-
-                // Vertical direction collision
-                var tx = Math.floor(this.x_);
-                var ty = (this.map_.yCount - 1) - Math.floor(this.y_ + this.vy_);
-                var collisionInfo = this.map_.getCollisionAt(tx, ty);
-                if (collisionInfo >= 0) {
-                    this.vy_ = 0;
-                }
-            }*/
-
-            // TODO collision with characters
 
             // Detect move stop event
             if (!this.isMoving && wasMoving) {
