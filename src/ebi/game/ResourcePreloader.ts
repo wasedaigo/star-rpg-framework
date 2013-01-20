@@ -6,6 +6,7 @@ module ebi.game {
     export class ResourcePreloader {
 
         private static images_: {[id: string]: Image;} = {};
+        private static json_ = {};
         private static loadingCount_: number = 0;
 
         public static preloadImage(id: string): void {
@@ -31,6 +32,45 @@ module ebi.game {
 
         public static getImage(id: string): Image {
             return images_[id];
+        }
+
+        // Hack to preload fixed data
+        public static preloadJson(path: string): void {
+            json_[path] = {
+                "1": [
+                    [ //"pages": 
+                        [
+                            [//"status": 
+                                1, //"visible": true,
+                                255, //"alpha": 255,
+                                6, //"dir": 6,
+                                1, //"frame_no": 1,
+                                1, //"chip_id": "TimeOver_chara",
+                                5, //"wait": 5,
+                                1, //"speed": 1,
+                                1, //"layer": 1,
+                                1, //"route_repeat": true,
+                                0, //"route_skip": false
+                                0, //"dir_fix": false,
+                                0, //"stay_anime": false,
+                                1, //"move_anime": true,
+                                0, //"pass_event": false,
+                                0, //"pass_character": false,
+                                0, //"pass_tile": false
+                            ],
+                            [], //"conditions": [],
+                            [0, 0], //"triggers": [["checked", 0]],
+                            [], //"commands": [],
+                            [] //"route": [],
+                        ]
+                    ],
+                    [7, 6]//"pos": [7, 6]
+                ]
+            };
+        }
+
+        public static getJson(path: string): Image {
+            return json_[path];
         }
 
         public static get isLoading(): bool {

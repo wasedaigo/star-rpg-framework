@@ -1,4 +1,5 @@
 /// <reference path='./Scene.ts' />
+/// <reference path='./EventDataLoader.ts' />
 /// <reference path='./Map.ts' />
 /// <reference path='./MapCamera.ts' />
 /// <reference path='./MapCharacter.ts' />
@@ -12,6 +13,7 @@ module ebi.rpg {
         private camera_: MapCamera = null;
         private mapCharacters_: MapCharacter[] = [];
         private analogInputIndicator_: AnalogInputIndicator = null;
+        private eventDataDictionary_: {[key : string]: ebi.rpg.EventData;};
 
         public init(): void {
             this.map_ = new Map();
@@ -32,6 +34,8 @@ module ebi.rpg {
             this.mapCharacters_.push(mapCharacter);
 
             this.analogInputIndicator_ = new AnalogInputIndicator();
+
+            this.eventDataDictionary_ = ebi.rpg.EventDataLoader.loadEventData(0);
         }
 
         public update(): void {
