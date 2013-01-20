@@ -1,6 +1,6 @@
 /// <reference path='../../b2/Box2D.d.ts' />
+/// <reference path='./CollisionObject.ts' />
 /// <reference path='./Edge.ts' />
-/// <reference path='./ICollidable.ts' />
 /// <reference path='./Point.ts' />
 
 module Box2D {
@@ -12,52 +12,6 @@ module ebi.collision {
 
     // Constant to convert between physics-world position and screen position
     var PTM_RATIO: number = 32;
-
-    class CollisionObject implements ICollidable {
-
-        private b2Body_: Box2D.Dynamics.b2Body;
-        private b2Fixtures_: Box2D.Dynamics.b2Fixture[];
-        private id_: number;
-        private static currentId: number = 0;
-
-        constructor(body: Box2D.Dynamics.b2Body, fixtures: Box2D.Dynamics.b2Fixture[]) {
-            this.b2Body_ = body;
-            this.b2Fixtures_ = fixtures;
-            this.id_ = CollisionObject.currentId++;
-        }
-
-        public dispose(): void {
-            this.b2Fixtures_.forEach((b2Fixture) => {
-                this.b2Body_.DestroyFixture(b2Fixture);
-            });
-            CollisionSystem.world.DestroyBody(this.b2Body_);
-            delete this.b2Fixtures_;
-            delete this.b2Body_;  
-        }
-
-        public setPos(x: number, y: number): void {
-            var b2Vec2 = Box2D.Common.Math.b2Vec2;
-            this.b2Body_.SetPosition(new b2Vec2(x / PTM_RATIO, y / PTM_RATIO));
-        }
-
-        public setVelocity(vx: number, vy: number): void {
-            var b2Vec2 = Box2D.Common.Math.b2Vec2;
-            this.b2Body_.SetLinearVelocity(new b2Vec2(0, 0));
-            this.b2Body_.ApplyImpulse(new b2Vec2(vx / PTM_RATIO, vy / PTM_RATIO), new b2Vec2(0, 0));
-        }
-
-        public get x(): number {
-            return this.b2Body_.GetPosition().x * PTM_RATIO;
-        }
-
-        public get y(): number {
-            return this.b2Body_.GetPosition().y * PTM_RATIO;
-        }
-
-        public get id(): number {
-            return this.id_;
-        }
-    }
 
     var ContactListener: any = function () {};
     Box2D.inherit(ContactListener, Box2D.Dynamics.b2ContactListener);
@@ -106,18 +60,28 @@ module ebi.collision {
 
             var contactNormal = ContactListener.GetContactNormal(contact);
 
-            var descs = [
-                {body: contact.GetFixtureA().GetBody(), sign: 1},
-                {body: contact.GetFixtureB().GetBody(), sign: -1}
-            ];
-            descs.forEach((desc, index)=>{
-                // Skip if bodies are trying to go apart
-                if (Box2D.Common.Math.b2Math.Dot(desc.body.GetLinearVelocity(), contactNormal) * desc.sign >= 0) {
-                    desc.body.SetLinearVelocity(
-                        ContactListener.CalcCanceledVelocity(contactNormal, desc.body.GetLinearVelocity())
-                    );
-                }
-            })
+            var bodyA = contact.GetFixtureA().GetBody();
+            var bodyB = contact.GetFixtureB().GetBody();
+            var objectA = bodyA.GetUserData();
+            var objectB = bodyB.GetUserData();
+
+            // Process Object A
+            if (Box2D.Common.Math.b2Math.Dot(bodyA.GetLinearVelocity(), contactNormal) > 0) {
+                objectA.addTouchingObject(objectB);
+                objectB.addTouchedObject(objectA);
+                bodyA.SetLinearVelocity(
+                    ContactListener.CalcCanceledVelocity(contactNormal, bodyA.GetLinearVelocity())
+                );
+            }
+
+            // Process Object B
+            if (Box2D.Common.Math.b2Math.Dot(bodyB.GetLinearVelocity(), contactNormal) < 0) {
+                objectB.addTouchingObject(objectA);
+                objectA.addTouchedObject(objectB);
+                bodyB.SetLinearVelocity(
+                    ContactListener.CalcCanceledVelocity(contactNormal, bodyB.GetLinearVelocity())
+                );
+            }
         }
     }
 
@@ -136,7 +100,7 @@ module ebi.collision {
             return world_;
         }
 
-        private static createCollisionObject(x: number, y: number, shapes: Box2D.Collision.Shapes.b2Shape[], isStatic: bool): ICollidable {
+        private static createCollisionObject(x: number, y: number, shapes: Box2D.Collision.Shapes.b2Shape[], isStatic: bool): CollisionObject {
             var b2Vec2 = Box2D.Common.Math.b2Vec2;
             var b2BodyDef = Box2D.Dynamics.b2BodyDef;
             var b2Body = Box2D.Dynamics.b2Body;
@@ -165,14 +129,14 @@ module ebi.collision {
                 body.CreateFixture(fixDef);
             });
 
-            var collidable = new CollisionObject(body, fixtures);
-            body.SetUserData(collidable);
+            var collisionObject = new CollisionObject(body, fixtures);
+            body.SetUserData(collisionObject);
 
-            return collidable;
+            return collisionObject;
         }
 
         // Box2D.Collision.Shapes.b2EdgeShape is not working in box2d.js
-        public static createCollisionEdges(x: number, y: number, edges: Edge[]): ICollidable {
+        public static createCollisionEdges(x: number, y: number, edges: Edge[]): CollisionObject {
             var b2Vec2 = Box2D.Common.Math.b2Vec2;
             var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
             var shapes: Box2D.Collision.Shapes.b2Shape[] = [];
@@ -187,14 +151,14 @@ module ebi.collision {
             return createCollisionObject(x, y, shapes, true);
         }
 
-        public static createCollisionRect(x: number, y: number, width: number, height: number): ICollidable {
+        public static createCollisionRect(x: number, y: number, width: number, height: number): CollisionObject {
             var shape = new Box2D.Collision.Shapes.b2PolygonShape();
             shape.SetAsBox(width / PTM_RATIO, height / PTM_RATIO);
 
             return createCollisionObject(x, y, [shape], false);
         }
 
-        public static createCollisionCircle(x: number, y: number, radius: number): ICollidable {
+        public static createCollisionCircle(x: number, y: number, radius: number): CollisionObject {
             var shape = new Box2D.Collision.Shapes.b2CircleShape();
             shape.SetRadius((radius / PTM_RATIO));
             shape.SetLocalPosition(new Box2D.Common.Math.b2Vec2(0.5 ,0.5));
@@ -203,9 +167,12 @@ module ebi.collision {
         }
 
         public static update(): void {
+            // Reset some data such as touching info before simulation
+            CollisionObject.resetAll();
+
+            var ms = 1 / 60; // aim for 60 FPS
             // timestep delta, velocity iteration, rotation iteration
-            // TODO: why 0.033?
-            world.Step(0.033, 3, 1);
+            world.Step(ms, 3, 1);
         }
     }
 }

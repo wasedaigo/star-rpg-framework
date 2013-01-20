@@ -1,4 +1,4 @@
-/// <reference path='../collision/ICollidable.ts' />
+/// <reference path='../collision/CollisionObject.ts' />
 /// <reference path='../game/Game.ts' />
 /// <reference path='../game/ResourcePreloader.ts' />
 /// <reference path='./DatabaseManager.ts' />
@@ -19,7 +19,7 @@ module ebi.rpg {
         private vx_: number;
         private vy_: number;
         private map_: Map;
-        private collisionRect_: ebi.collision.ICollidable;
+        private collisionObject_: ebi.collision.CollisionObject;
         private controlable_: bool;
 
         constructor(id: number, map: Map) {
@@ -33,7 +33,7 @@ module ebi.rpg {
             this.sprite_.srcY      = 0;
             this.sprite_.srcWidth  = this.charaChipset_.size[0];
             this.sprite_.srcHeight = this.charaChipset_.size[1];
-            this.collisionRect_ = ebi.collision.CollisionSystem.createCollisionCircle(
+            this.collisionObject_ = ebi.collision.CollisionSystem.createCollisionCircle(
                 this.charaChipset_.hitRect[0],
                 this.charaChipset_.hitRect[1],
                 this.charaChipset_.hitRect[2]
@@ -42,11 +42,11 @@ module ebi.rpg {
         }
 
         public dispose(): void {
-            this.collisionRect_.dispose();
+            this.collisionObject_.dispose();
         }
 
         public setPosition(x: number, y: number): void {
-            this.collisionRect_.setPos(x, y);
+            this.collisionObject_.setPos(x, y);
         }
 
         public get width(): number {
@@ -58,11 +58,11 @@ module ebi.rpg {
         }
 
         public get screenX(): number {
-            return this.collisionRect_.x;
+            return this.collisionObject_.x;
         }
 
         public get screenY(): number {
-            return this.collisionRect_.y;
+            return this.collisionObject_.y;
         }
 
         public get controlable(): bool {
@@ -132,7 +132,7 @@ module ebi.rpg {
         private setVelocity(vx: number, vy: number): void {
             this.vx_ = vx;
             this.vy_ = vy;
-            this.collisionRect_.setVelocity(vx * 32, vy * 32);
+            this.collisionObject_.setVelocity(vx * 32, vy * 32);
         }
 
         private updateDir(): void {
@@ -176,8 +176,8 @@ module ebi.rpg {
             // Update animation dir
             this.sprite_.srcY = (this.charaChipset_.srcIndex[1] * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.size[1];
 
-            this.sprite_.x = this.collisionRect_.x;
-            this.sprite_.y = this.collisionRect_.y;
+            this.sprite_.x = this.collisionObject_.x;
+            this.sprite_.y = this.collisionObject_.y;
         }
     }
 }
