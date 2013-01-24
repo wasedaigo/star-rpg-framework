@@ -112,7 +112,7 @@ module ebi.rpg {
         private setVelocity(vx: number, vy: number): void {
             this.vx_ = vx;
             this.vy_ = vy;
-            this.collisionObject_.setVelocity(vx * 32, vy * 32);
+            this.collisionObject_.setVelocity(vx, vy);
         }
 
         private updateDir(): void {

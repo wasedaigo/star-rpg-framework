@@ -40,7 +40,7 @@ module ebi.collision {
         public setVelocity(vx: number, vy: number): void {
             var b2Vec2 = Box2D.Common.Math.b2Vec2;
             this.b2Body_.SetLinearVelocity(new b2Vec2(0, 0));
-            this.b2Body_.ApplyImpulse(new b2Vec2(vx / PTM_RATIO, vy / PTM_RATIO), new b2Vec2(0, 0));
+            this.b2Body_.ApplyImpulse(new b2Vec2(vx, vy), new b2Vec2(0, 0));
         }
 
         public get x(): number {
