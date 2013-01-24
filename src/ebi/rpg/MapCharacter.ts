@@ -80,8 +80,6 @@ module ebi.rpg {
             var wasMoving: bool = this.isMoving;
 
             // Setup velocity
-            this.vx_ = 0;
-            this.vy_ = 0;
             if (this.controlable) {
                 this.setVelocity(this.speed_ * AnalogInputController.inputDx, this.speed_ * AnalogInputController.inputDy);
             } else {
