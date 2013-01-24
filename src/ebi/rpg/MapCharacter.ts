@@ -16,8 +16,8 @@ module ebi.rpg {
         private charaChipset_: MapCharacterChipset;
         private x_: number = 0;
         private y_: number = 0;
-        private vx_: number;
-        private vy_: number;
+        private vx_: number = 0;
+        private vy_: number = 0;
         private map_: Map;
         private collisionObject_: ebi.collision.CollisionObject;
         private controlable_: bool;
