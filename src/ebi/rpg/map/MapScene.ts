@@ -1,5 +1,6 @@
 /// <reference path='../core/Scene.ts' />
 /// <reference path='../event/EventDataLoader.ts' />
+/// <reference path='../ui/ActionButton.ts' />
 /// <reference path='../ui/AnalogInputIndicator.ts' />
 /// <reference path='../ui/MessageWindow.ts' />
 /// <reference path='./Map.ts' />
@@ -13,6 +14,8 @@ module ebi.rpg.map {
         private camera_: MapCamera = null;
         private mapCharacters_: MapCharacter[] = [];
         private analogInputIndicator_: rpg.ui.AnalogInputIndicator = null;
+        private actionButton_: rpg.ui.ActionButton = null;
+
         private eventDataDictionary_: {[key : string]: rpg.event.EventData;};
 
         public init(): void {
@@ -37,6 +40,9 @@ module ebi.rpg.map {
             this.mapCharacters_.push(mapCharacter);
 
             this.analogInputIndicator_ = new rpg.ui.AnalogInputIndicator();
+            this.actionButton_ = new rpg.ui.ActionButton();
+            this.actionButton_.x = 240;
+            this.actionButton_.y = 20;
 
             this.eventDataDictionary_ = rpg.event.EventDataLoader.loadEventData(0);
             var messageWindow = new rpg.ui.MessageWindow([100, 50]);
@@ -49,6 +55,7 @@ module ebi.rpg.map {
             this.camera_.update();
             this.mapCharacters_.forEach((mapCharacter) => mapCharacter.update());
             this.analogInputIndicator_.update();
+            this.actionButton_.update();
         }
 
     }

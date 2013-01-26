@@ -2,6 +2,7 @@
 module ebi.rpg.ui {
     export class AnalogInputIndicator
      {
+        private static Z: number = 1000;
         private static StickRadius: number = 12;
         private static BarImage: string = "system/analog_base";
         private static StickImage: string = "system/analog_stick";
@@ -11,6 +12,8 @@ module ebi.rpg.ui {
         constructor() {
             this.base_ = new ebi.game.Sprite(ebi.game.ResourcePreloader.getImage(AnalogInputIndicator.BarImage));
             this.stick_ = new ebi.game.Sprite(ebi.game.ResourcePreloader.getImage(AnalogInputIndicator.StickImage));
+            this.base_.z = AnalogInputIndicator.Z;
+            this.stick_.z = AnalogInputIndicator.Z;
         }
 
         public update(): void {
@@ -28,11 +31,6 @@ module ebi.rpg.ui {
                 this.base_.setVisible(false);
                 this.stick_.setVisible(false);
             }
-        }
-
-        public static preload(): void {
-            ebi.game.ResourcePreloader.preloadImage(AnalogInputIndicator.BarImage);
-            ebi.game.ResourcePreloader.preloadImage(AnalogInputIndicator.StickImage);
         }
     }
 }
