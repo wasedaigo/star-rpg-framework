@@ -1,6 +1,7 @@
 /// <reference path='../core/Scene.ts' />
 /// <reference path='../event/EventDataLoader.ts' />
 /// <reference path='../ui/AnalogInputIndicator.ts' />
+/// <reference path='../ui/MessageWindow.ts' />
 /// <reference path='./Map.ts' />
 /// <reference path='./MapCamera.ts' />
 /// <reference path='./MapCharacter.ts' />
@@ -8,7 +9,6 @@
 module ebi.rpg.map {
 
     export class MapScene extends rpg.core.Scene {
-
         private map_: Map = null;
         private camera_: MapCamera = null;
         private mapCharacters_: MapCharacter[] = [];
@@ -36,6 +36,10 @@ module ebi.rpg.map {
             this.analogInputIndicator_ = new rpg.ui.AnalogInputIndicator();
 
             this.eventDataDictionary_ = rpg.event.EventDataLoader.loadEventData(0);
+            var messageWindow = new rpg.ui.MessageWindow([100, 50]);
+            messageWindow.x = 100;
+            messageWindow.y = 200;
+            messageWindow.showText("私は\nだいごです");
         }
 
         public update(): void {

@@ -50,6 +50,7 @@ module ebi.rpg {
             ebi.game.ResourcePreloader.preloadTmxImage('tile_b');
             ebi.game.ResourcePreloader.preloadTmxImage('collision');
             ebi.game.ResourcePreloader.preloadJson("data/event0.json");
+            ebi.game.ResourcePreloader.preloadImage("system/normal_baloon_frame");
 
             // TODO organize a way to preload assets
             ui.AnalogInputIndicator.preload();

@@ -73,6 +73,9 @@ module cc {
         origin: Point;
         size: Size;
     }
+    class Color3B {
+        constructor(r: number, g: number, b: number);
+    }
     class SAXParser {
         static getInstance(): SAXParser;
         preloadPlist(path: string): void;
@@ -84,6 +87,19 @@ module cc {
         static createWithTexture(texture: cc.Image, rect: cc.Rect): cc.Sprite;
         setTextureRect(rect: cc.Rect): void;
         getTextureRect(): cc.Rect;
+        getContentSize(): Size;
+    }
+    class LabelTTF extends Sprite {
+        static createWithTexture(texture: cc.Image, rect: cc.Rect): cc.Sprite;
+        getDimensions(): cc.Size;
+        setDimensions(value: cc.Size);
+        getFontSize(): number;
+        setFontSize(size: number);
+        getFontName(): string;
+        setFontName(name :string);
+        setString(text: string);
+        getString(): string;
+        setColor(color: Color3B): void;
     }
     class TextureCache {
         static getInstance(): TextureCache;

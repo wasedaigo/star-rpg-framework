@@ -1,5 +1,6 @@
 /// <reference path='../../cc/cocos2d.d.ts' />
 /// <reference path='./Image.ts' />
+/// <reference path='../util.ts' />
 
 module ebi.game {
 
@@ -31,6 +32,7 @@ module ebi.game {
         }
 
         public static getImage(id: string): Image {
+            ebi.assert(!!images_[id]);
             return images_[id];
         }
 

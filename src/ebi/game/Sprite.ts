@@ -101,6 +101,24 @@ module ebi.game {
             this.updateSrcRect();
         }
 
+        // content width
+        public get width(): number {
+            return this.ccSprite_.getContentSize().width;
+        }
+        public set width(value: number) {
+            var scaleX = value / this.ccSprite_.getContentSize().width;
+            this.ccSprite_.setScaleX(scaleX);
+        }
+
+        // content height
+        public get height(): number {
+            return this.ccSprite_.getContentSize().height;
+        }
+        public set height(value: number) {
+            var scaleY = value / this.ccSprite_.getContentSize().height;
+            this.ccSprite_.setScaleY(scaleY);
+        }
+
         public setVisible(isVisible: bool): void {
             this.ccSprite_.setVisible(isVisible);
         }

@@ -9,15 +9,17 @@ module ebi.game {
             // The 2nd arguemnt should not be null (nor false) to call the callback.
             ccCache.addImageAsync(path, true, () => {
                 var ccImage = ccCache.textureForKey(path);
-                callback(new Image(ccImage));
+                callback(new Image(ccImage, path));
             });
         }
 
         private ccImage_: cc.Image;
+        private path_: string;
 
         // This should be private.
-        constructor(ccImage: cc.Image) {
+        constructor(ccImage: cc.Image, path: string) {
             this.ccImage_ = ccImage;
+            this.path_ = path;
         }
 
         public get width(): number {
@@ -26,6 +28,10 @@ module ebi.game {
 
         public get height(): number {
             return this.ccImage_.height;
+        }
+
+        public get path(): string {
+            return this.path_;
         }
 
         /*
