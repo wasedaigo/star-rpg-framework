@@ -41,6 +41,7 @@ module ebi.rpg.map {
                 this.charaChipset_.hitRect[1],
                 this.charaChipset_.hitRect[2]
             );
+            this.collisionObject_.setCategory(1);
             this.updateVisual(); 
         }
 
@@ -50,6 +51,18 @@ module ebi.rpg.map {
 
         public setPosition(x: number, y: number): void {
             this.collisionObject_.setPos(x, y);
+        }
+
+        public set ignoreTile(ignore: bool) {
+            this.collisionObject_.setIgnoreCategory(0, ignore);
+        }
+
+        public set ignoreCharacter(ignore: bool) {
+            this.collisionObject_.setIgnoreCategory(1, ignore);
+        }
+       
+        public set ignoreTrigger(ignore: bool) {
+            this.collisionObject_.ignoreTrigger = ignore;
         }
 
         public get width(): number {

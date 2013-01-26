@@ -19,6 +19,7 @@ module ebi.rpg.map {
 
             var edges = this.extractEdges();
             this.collision_ = ebi.collision.CollisionSystem.createCollisionEdges(0, 0, edges);
+            this.collision_.setCategory(0);
         }
 
         public dispose(): void {

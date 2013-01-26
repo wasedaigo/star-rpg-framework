@@ -6,10 +6,12 @@ module ebi.collision {
     var PTM_RATIO: number = 32;
 
     export class CollisionObject {
-
         private b2Body_: Box2D.Dynamics.b2Body;
         private b2Fixtures_: Box2D.Dynamics.b2Fixture[];
         private id_: number;
+        private ignoreTrigger_: bool = false;
+        private ignoreBits_: number = 0;
+        private categoryBits_: number = 0;
         private touchingObjects_: Object[] = [];
         private touchedObjects_: Object[] = [];
         private static currentId: number = 0;
@@ -61,6 +63,36 @@ module ebi.collision {
 
         public addTouchedObject(obj: Object): void {
             this.touchedObjects_.push(obj);
+        }
+
+        public get ignoreTrigger(): bool {
+            return this.ignoreTrigger_;
+        }
+
+        public set ignoreTrigger(value: bool) {
+            this.ignoreTrigger_ = value;
+        }
+
+        public get ignoreBits(): number {
+            return this.ignoreBits_;
+        }
+
+        public get categoryBits(): number {
+            return this.categoryBits_;
+        }
+
+        public setCategory(index: number): void {
+            this.categoryBits_ = (1 << index);
+        }
+
+        public setIgnoreCategory(index: number, value: bool): void {
+            var mask = (1 << index);
+            if (value) {
+                this.ignoreBits_ = this.ignoreBits_ | mask;
+            } else {
+                this.ignoreBits_ = (this.ignoreBits_ & (~mask));
+            }
+            
         }
 
         public reset(): void {

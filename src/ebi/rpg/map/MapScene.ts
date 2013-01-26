@@ -21,13 +21,16 @@ module ebi.rpg.map {
 
             var mapCharacter: MapCharacter = new MapCharacter(1, this.map_);
             this.mapCharacters_.push(mapCharacter);
-            mapCharacter.setPosition(128, 64);
+            mapCharacter.setPosition(132, 64);
 
             var mapCharacter: MapCharacter = new MapCharacter(2, this.map_);
             mapCharacter.setPosition(128, 128);
             mapCharacter.controlable = true;
             this.camera_.focusTarget = mapCharacter;
             this.mapCharacters_.push(mapCharacter);
+            mapCharacter.ignoreTile = false;
+            mapCharacter.ignoreCharacter = false;
+            mapCharacter.ignoreTrigger = false;
 
             var mapCharacter: MapCharacter = new MapCharacter(3, this.map_);
             mapCharacter.setPosition(96, 64);

@@ -42,34 +42,46 @@ module ebi.collision {
     // In order to have RPG-style character collision, I put some effort here...
     // Not perfect, but acceptable. Maybe gotta move to ebi.rpg?
     ContactListener.prototype.PreSolve = function (contact: Box2D.Dynamics.Contacts.b2Contact,
-                                                   oldManifold: Box2D.Collision.b2Manifold): void {
-        
-        // Do not do anything if either of bodies is a static body (such as wall)
+                                                   oldManifold: Box2D.Collision.b2Manifold): void {  
+        var fixtureA = contact.GetFixtureA();
+        var fixtureB = contact.GetFixtureB();
+        var bodyA = fixtureA.GetBody();
+        var bodyB = fixtureB.GetBody();
+        var objectA = bodyA.GetUserData();
+        var objectB = bodyB.GetUserData();
+
+        var ignoreTrigger = objectA.ignoreTrigger | objectB.ignoreTrigger;
+        var ignoreCollision = ((objectA.categoryBits & objectB.ignoreCollisionBits) === objectA.categoryBits ||
+            (objectB.categoryBits & objectA.ignoreCollisionBits) === objectB.categoryBits);
+
         var b2Body = Box2D.Dynamics.b2Body;
-        if (contact.GetFixtureA().GetBody().GetType() == b2Body.b2_staticBody) {
+        if (bodyA.GetType() == b2Body.b2_staticBody) {
+            contact.SetSensor(ignoreCollision);
             return;
         }
-        if (contact.GetFixtureB().GetBody().GetType() == b2Body.b2_staticBody) {
+        if (bodyB.GetType() == b2Body.b2_staticBody) {
+            contact.SetSensor(ignoreCollision);
             return;
         }
 
         // Process only when two fixtures are overlapping
         if (contact.IsTouching()) {
-
             // Skip physics operation
             contact.SetEnabled(false);
-
+            // Do not do anything if either of bodies is a static body (such as wall)
             var contactNormal = ContactListener.GetContactNormal(contact);
-
-            var bodyA = contact.GetFixtureA().GetBody();
-            var bodyB = contact.GetFixtureB().GetBody();
-            var objectA = bodyA.GetUserData();
-            var objectB = bodyB.GetUserData();
 
             // Process Object A
             if (Box2D.Common.Math.b2Math.Dot(bodyA.GetLinearVelocity(), contactNormal) > 0) {
-                objectA.addTouchingObject(objectB);
-                objectB.addTouchedObject(objectA);
+                if (ignoreTrigger) {
+                    objectA.addTouchingObject(objectB);
+                    objectB.addTouchedObject(objectA);
+                }
+                if (ignoreCollision) {
+                    contact.SetSensor(true);
+                    return;
+                }
+                
                 bodyA.SetLinearVelocity(
                     ContactListener.CalcCanceledVelocity(contactNormal, bodyA.GetLinearVelocity())
                 );
@@ -77,8 +89,15 @@ module ebi.collision {
 
             // Process Object B
             if (Box2D.Common.Math.b2Math.Dot(bodyB.GetLinearVelocity(), contactNormal) < 0) {
-                objectB.addTouchingObject(objectA);
-                objectA.addTouchedObject(objectB);
+                if (ignoreTrigger) {
+                    objectB.addTouchingObject(objectA);
+                    objectA.addTouchedObject(objectB);
+                }
+                if (ignoreCollision) {
+                    contact.SetSensor(true);
+                    return;
+                }
+
                 bodyB.SetLinearVelocity(
                     ContactListener.CalcCanceledVelocity(contactNormal, bodyB.GetLinearVelocity())
                 );
