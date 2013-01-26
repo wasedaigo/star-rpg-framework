@@ -1,4 +1,4 @@
-module ebi.rpg {
+module ebi.rpg.core {
 
     export class Scene {
 

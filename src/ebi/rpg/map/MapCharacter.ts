@@ -1,12 +1,13 @@
-/// <reference path='../collision/CollisionObject.ts' />
-/// <reference path='../game/Game.ts' />
-/// <reference path='../game/ResourcePreloader.ts' />
-/// <reference path='./DatabaseManager.ts' />
-/// <reference path='./Map.ts' />
-/// <reference path='./MapCharacterChipset.ts' />
-/// <reference path='./AnalogInputController.ts' />
+/// <reference path='../../collision/CollisionObject.ts' />
+/// <reference path='../../collision/CollisionSystem.ts' />
+/// <reference path='../../game/Game.ts' />
+/// <reference path='../../game/ResourcePreloader.ts' />
+/// <reference path='../core/DatabaseManager.ts' />
+/// <reference path='../map/Map.ts' />
+/// <reference path='../map/MapCharacterChipset.ts' />
+/// <reference path='../ui/AnalogInputController.ts' />
 
-module ebi.rpg {
+module ebi.rpg.map {
     export class MapCharacter {
         private switchFrameDir_: number = 1;
         private frameNo_: number = 1;
@@ -24,7 +25,7 @@ module ebi.rpg {
         private speed_: number;
 
         constructor(id: number, map: Map) {
-            this.charaChipset_ = DatabaseManager.getCharaChipsetData(id);
+            this.charaChipset_ = core.DatabaseManager.getCharaChipsetData(id);
             var image = ebi.game.ResourcePreloader.getImage(this.charaChipset_.src);
             this.frameNo_ = this.charaChipset_.defaultFrameNo;
             this.dir_ = 0;
@@ -81,7 +82,7 @@ module ebi.rpg {
 
             // Setup velocity
             if (this.controlable) {
-                this.setVelocity(this.speed_ * AnalogInputController.inputDx, this.speed_ * AnalogInputController.inputDy);
+                this.setVelocity(this.speed_ * ui.AnalogInputController.inputDx, this.speed_ * ui.AnalogInputController.inputDy);
             } else {
                 this.setVelocity(0, 0);
             }

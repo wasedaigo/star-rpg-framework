@@ -1,19 +1,19 @@
-/// <reference path='./Scene.ts' />
-/// <reference path='./EventDataLoader.ts' />
+/// <reference path='../core/Scene.ts' />
+/// <reference path='../event/EventDataLoader.ts' />
+/// <reference path='../ui/AnalogInputIndicator.ts' />
 /// <reference path='./Map.ts' />
 /// <reference path='./MapCamera.ts' />
 /// <reference path='./MapCharacter.ts' />
-/// <reference path='./AnalogInputIndicator.ts' />
 
-module ebi.rpg {
+module ebi.rpg.map {
 
-    export class MapScene extends Scene {
+    export class MapScene extends rpg.core.Scene {
 
         private map_: Map = null;
         private camera_: MapCamera = null;
         private mapCharacters_: MapCharacter[] = [];
-        private analogInputIndicator_: AnalogInputIndicator = null;
-        private eventDataDictionary_: {[key : string]: ebi.rpg.EventData;};
+        private analogInputIndicator_: rpg.ui.AnalogInputIndicator = null;
+        private eventDataDictionary_: {[key : string]: rpg.event.EventData;};
 
         public init(): void {
             this.map_ = new Map();
@@ -33,9 +33,9 @@ module ebi.rpg {
             mapCharacter.setPosition(96, 64);
             this.mapCharacters_.push(mapCharacter);
 
-            this.analogInputIndicator_ = new AnalogInputIndicator();
+            this.analogInputIndicator_ = new rpg.ui.AnalogInputIndicator();
 
-            this.eventDataDictionary_ = ebi.rpg.EventDataLoader.loadEventData(0);
+            this.eventDataDictionary_ = rpg.event.EventDataLoader.loadEventData(0);
         }
 
         public update(): void {

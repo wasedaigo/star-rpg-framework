@@ -1,5 +1,5 @@
 /// <reference path='./AnalogInputController.ts' />
-module ebi.rpg {
+module ebi.rpg.ui {
     export class AnalogInputIndicator
      {
         private static StickRadius: number = 12;

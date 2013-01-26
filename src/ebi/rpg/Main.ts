@@ -1,10 +1,11 @@
 /// <reference path='../collision/CollisionSystem.ts' />
 /// <reference path='../game/Game.ts' />
 /// <reference path='../game/ResourcePreloader.ts' />
-/// <reference path='./DatabaseManager.ts' />
-/// <reference path='./AnalogInputController.ts' />
-/// <reference path='./AnalogInputIndicator.ts' />
-/// <reference path='./MapScene.ts' />
+/// <reference path='./core/DatabaseManager.ts' />
+/// <reference path='./core/Scene.ts' />
+/// <reference path='./ui/AnalogInputController.ts' />
+/// <reference path='./ui/AnalogInputIndicator.ts' />
+/// <reference path='./map/MapScene.ts' />
 
 module ebi.rpg {
 
@@ -16,7 +17,7 @@ module ebi.rpg {
         
         private static isInitialized: bool = false;
         private static isPreloadFinishd: bool = false;
-        private static scene_: Scene = null;
+        private static scene_: core.Scene = null;
 
         private static loop(): void {
             if (!isInitialized) {
@@ -31,7 +32,7 @@ module ebi.rpg {
                 isPreloadFinishd = true;
             }
 
-            AnalogInputController.update();
+            ui.AnalogInputController.update();
             ebi.collision.CollisionSystem.update();
 
             if (scene_) {
@@ -43,7 +44,7 @@ module ebi.rpg {
             ebi.game.ResourcePreloader.preloadTmx("sample");
             for (var i = 1; i <= 3; i++) {
                 // TODO: unload when the scene/map changes
-                DatabaseManager.loadCharaChipsetData(i);
+                core.DatabaseManager.loadCharaChipsetData(i);
             }
             ebi.game.ResourcePreloader.preloadTmxImage('tile_a');
             ebi.game.ResourcePreloader.preloadTmxImage('tile_b');
@@ -51,12 +52,12 @@ module ebi.rpg {
             ebi.game.ResourcePreloader.preloadJson("data/event0.json");
 
             // TODO organize a way to preload assets
-            AnalogInputIndicator.preload();
+            ui.AnalogInputIndicator.preload();
         }
 
         private static onPreloadFinished(): void {
             if (!scene_) {
-                scene_ = new MapScene();
+                scene_ = new map.MapScene();
                 scene_.init();
             }
         }

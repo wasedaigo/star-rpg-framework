@@ -1,6 +1,6 @@
-/// <reference path='../game/ResourcePreloader.ts' />
+/// <reference path='../../game/ResourcePreloader.ts' />
 
-module ebi.rpg {
+module ebi.rpg.event {
     export interface EventStatusData {
         visible: bool;
         alpha: number;
@@ -34,15 +34,15 @@ module ebi.rpg {
     }
 
     export class EventDataLoader {
-        public static loadEventData(mapId: number): {[key : string]: ebi.rpg.EventData;} {
+        public static loadEventData(mapId: number): {[key : string]: ebi.rpg.event.EventData;} {
             var json = ebi.game.ResourcePreloader.getJson('data/event0.json');
-            var events: {[key : string]: ebi.rpg.EventData;} = {};
+            var events: {[key : string]: ebi.rpg.event.EventData;} = {};
             for (var eventId in json) {
-                var eventPages: ebi.rpg.EventPageData[] = [];
+                var eventPages: ebi.rpg.event.EventPageData[] = [];
                 var rawPages = json[eventId][0];
                 rawPages.forEach((rawPage) => {
                     var rawStatus = rawPage[0];
-                    var status: ebi.rpg.EventStatusData = {
+                    var status: ebi.rpg.event.EventStatusData = {
                         visible: (rawStatus[0] == 1),
                         alpha: rawStatus[1],
                         dir: rawStatus[2],

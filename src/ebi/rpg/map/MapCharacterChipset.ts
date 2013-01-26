@@ -1,4 +1,4 @@
-module ebi.rpg {
+module ebi.rpg.map {
     export class MapCharacterChipset {
         public src: string;
         public srcIndex: number[];

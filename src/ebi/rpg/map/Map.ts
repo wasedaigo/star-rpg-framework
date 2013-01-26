@@ -2,7 +2,7 @@
 /// <reference path='../collision/CollisionObject.ts' />
 /// <reference path='../game/TmxTiledMap.ts' />
 
-module ebi.rpg {
+module ebi.rpg.map {
 
     export class Map {
 

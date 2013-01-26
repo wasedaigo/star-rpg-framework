@@ -1,4 +1,4 @@
-module ebi.rpg {
+module ebi.rpg.ui {
     export class AnalogInputController {
         private static MinInputValue: number = 8; // Logical Pixels
         private static MaxInputValue: number = 48; // Logical Pixels

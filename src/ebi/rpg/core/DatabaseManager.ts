@@ -1,6 +1,6 @@
-/// <reference path='../game/ResourcePreloader.ts' />
+/// <reference path='../../game/ResourcePreloader.ts' />
 
-module ebi.rpg {
+module ebi.rpg.core {
     export class DatabaseManager {
         public static charaChipsetData = {
             "1": {
@@ -36,7 +36,7 @@ module ebi.rpg {
 
         public static loadCharaChipsetData(id: number): void {
             var data = charaChipsetData[id.toString()];
-            var chipset = new MapCharacterChipset();
+            var chipset = new map.MapCharacterChipset();
             chipset.src = data['src'];
             chipset.srcIndex = data['srcIndex'];
             chipset.size = data['size'];
@@ -55,7 +55,7 @@ module ebi.rpg {
             }
         }*/
 
-        public static getCharaChipsetData(id: number): MapCharacterChipset {
+        public static getCharaChipsetData(id: number): map.MapCharacterChipset {
             return mapCharacterChipsets[id];
         }
     }
