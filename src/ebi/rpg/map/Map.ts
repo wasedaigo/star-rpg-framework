@@ -6,6 +6,9 @@ module ebi.rpg.map {
 
     export class Map {
 
+        private scrollX_: number = 0;
+        private scrollY_: number = 0;
+
         private tmxTiledMap_: ebi.game.TmxTiledMap;
         private collision_: ebi.collision.CollisionObject;
         constructor() {
@@ -182,6 +185,24 @@ module ebi.rpg.map {
 
         public get height(): number {
             return this.yCount * this.gridSizeY;
+        }
+
+        public get scrollX(): number {
+            return this.scrollX_;
+        }
+
+        public set scrollX(value: number) {
+            this.scrollX_ = value;
+            this.tmxTiledMap_.x = value;
+        }
+
+        public get scrollY(): number {
+            return this.scrollY_;
+        }
+
+        public set scrollY(value: number) {
+            this.scrollY_ = value;
+            this.tmxTiledMap_.y = value;
         }
     }
 }

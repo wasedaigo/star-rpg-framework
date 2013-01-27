@@ -17,6 +17,22 @@ module ebi.game {
             this.z = 0;
         }
 
+        public set x(value: number) {
+            this.ccTMXLayer_.setPositionX(value);
+        }
+
+        public get x(): number {
+            return this.ccTMXLayer_.getPositionX();
+        }  
+
+        public set y(value: number) {
+            this.ccTMXLayer_.setPositionY(value);
+        }
+
+        public get y(): number {
+            return this.ccTMXLayer_.getPositionY();
+        } 
+
         public get z(): number {
             return this.z_;
         }
@@ -76,6 +92,20 @@ module ebi.game {
             this.mapSize_ = this.ccTMXTiledMap_.getMapSize();
         }
 
+        public set x(value: number) {
+            Object.keys(this.layers_).forEach((layerName) => {
+                var layer = this.layers_[layerName];
+                layer.x = value;
+            });
+        }
+
+        public set y(value: number) {
+            Object.keys(this.layers_).forEach((layerName) => {
+                var layer = this.layers_[layerName];
+                layer.y = value;
+            });
+        }      
+
         public setLayerZ(layerName: string, z: number) {
             this.layers_[layerName].z = z;
         }
@@ -111,8 +141,7 @@ module ebi.game {
         }
         
         public dispose(): void {
-            var keys = Object.keys(this.layers_);
-            keys.forEach((layerName) => {
+            Object.keys(this.layers_).forEach((layerName) => {
                 var layer = this.layers_[layerName];
                 layer.dispose();
                 delete this.layers_[layerName];

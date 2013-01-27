@@ -4,6 +4,7 @@
 /// <reference path='../../game/ResourcePreloader.ts' />
 /// <reference path='../core/DatabaseManager.ts' />
 /// <reference path='../map/Map.ts' />
+/// <reference path='../map/MapSprite.ts' />
 /// <reference path='../map/MapCharacterChipset.ts' />
 /// <reference path='../ui/AnalogInputController.ts' />
 
@@ -13,10 +14,8 @@ module ebi.rpg.map {
         private frameNo_: number = 1;
         private dir_: number = 0;
         private timer_: number = 0;
-        private sprite_: ebi.game.Sprite = null;
+        private mapSprite_: MapSprite = null;
         private charaChipset_: MapCharacterChipset;
-        private x_: number = 0;
-        private y_: number = 0;
         private vx_: number = 0;
         private vy_: number = 0;
         private map_: Map;
@@ -31,11 +30,11 @@ module ebi.rpg.map {
             this.dir_ = 0;
             this.map_ = map;
             this.speed_ = 3;
-            this.sprite_ = new ebi.game.Sprite(image);
-            this.sprite_.srcX      = 0;
-            this.sprite_.srcY      = 0;
-            this.sprite_.srcWidth  = this.charaChipset_.size[0];
-            this.sprite_.srcHeight = this.charaChipset_.size[1];
+            this.mapSprite_ = new ebi.rpg.map.MapSprite(image, map);
+            this.mapSprite_.srcX      = 0;
+            this.mapSprite_.srcY      = 0;
+            this.mapSprite_.srcWidth  = this.charaChipset_.size[0];
+            this.mapSprite_.srcHeight = this.charaChipset_.size[1];
             this.collisionObject_ = ebi.collision.CollisionSystem.createCollisionRect(
                 this.charaChipset_.hitRect[0],
                 this.charaChipset_.hitRect[1],
@@ -67,11 +66,11 @@ module ebi.rpg.map {
         }
 
         public get width(): number {
-            return this.sprite_.srcWidth;
+            return this.mapSprite_.srcWidth;
         }
 
         public get height(): number {
-            return this.sprite_.srcHeight;
+            return this.mapSprite_.srcHeight;
         }
 
         public get screenX(): number {
@@ -165,12 +164,12 @@ module ebi.rpg.map {
 
         private updateVisual(): void {
             // Update animation frame
-            this.sprite_.srcX = (this.charaChipset_.srcIndex[0] * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.size[0];
+            this.mapSprite_.srcX = (this.charaChipset_.srcIndex[0] * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.size[0];
             // Update animation dir
-            this.sprite_.srcY = (this.charaChipset_.srcIndex[1] * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.size[1];
+            this.mapSprite_.srcY = (this.charaChipset_.srcIndex[1] * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.size[1];
 
-            this.sprite_.x = this.collisionObject_.x;
-            this.sprite_.y = this.collisionObject_.y;
+            this.mapSprite_.x = this.collisionObject_.x;
+            this.mapSprite_.y = this.collisionObject_.y;
         }
     }
 }

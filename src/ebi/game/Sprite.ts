@@ -28,12 +28,10 @@ module ebi.game {
             this.ccSprite_ = cc.Sprite.createWithTexture(image.innerImage, rect);
             this.ccSprite_.setAnchorPoint(new cc.Point(0, 0));
             this.ccSprite_.setTag(id);
-            this.x = 0;
-            this.y = 0;
-            this.srcX = 0;
-            this.srcY = 0;
-            this.srcWidth = image.width;
-            this.srcHeight = image.height;
+            this.srcX_ = 0;
+            this.srcY_ = 0;
+            this.srcWidth_ = image.width;
+            this.srcHeight_ = image.height;
         }
 
         public get image(): Image {
@@ -47,10 +45,20 @@ module ebi.game {
             this.ccSprite_.setPositionX(newX);
         }
 
+        // This is workaround for TypeScript issue not being able to call baseclass accessor
+        public setX(newX: number) {
+            this.ccSprite_.setPositionX(newX);
+        }
+
         public get y(): number {
             return this.ccSprite_.getPositionY();
         }
         public set y(newY: number) {
+            this.ccSprite_.setPositionY(newY);
+        }
+
+        // This is workaround for TypeScript issue not being able to call baseclass accessor
+        public setY(newY: number) {
             this.ccSprite_.setPositionY(newY);
         }
 

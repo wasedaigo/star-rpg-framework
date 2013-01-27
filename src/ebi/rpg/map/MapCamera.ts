@@ -1,6 +1,5 @@
 /// <reference path='./Map.ts' />
 /// <reference path='./MapCharacter.ts' />
-/// <reference path='../game/Camera.ts' />
 
 module ebi.rpg.map {
     export class MapCamera {
@@ -11,19 +10,15 @@ module ebi.rpg.map {
 
         constructor(map: Map) {
             this.map_ = map;
-            ebi.game.Camera.scaleX = 1;
-            ebi.game.Camera.scaleY = 1;
         }
 
         public update(): void {
             if (this.focusTarget) {
-
-
                 //TODO magic number, we need to get logical screen width
-                var halfScreenWidth = 160 / ebi.game.Camera.scaleX;
+                var halfScreenWidth = 160;
 
                 //TODO magic number, we need to get logical screen height
-                var halfScreenHeight = 240 / ebi.game.Camera.scaleY; 
+                var halfScreenHeight = 240; 
                 
                 var sx = halfScreenWidth;
                 var sy = halfScreenHeight;
@@ -36,8 +31,8 @@ module ebi.rpg.map {
                 var ty = this.focusTarget.screenY + this.focusTarget.height / 2;
                 this.focusY_ = Math.min(Math.max(sy, ty), ey);
 
-                ebi.game.Camera.x = (halfScreenWidth - this.focusX_) * ebi.game.Camera.scaleX; 
-                ebi.game.Camera.y = (halfScreenHeight - this.focusY_) * ebi.game.Camera.scaleY; 
+                this.map_.scrollX = (halfScreenWidth - this.focusX_); 
+                this.map_.scrollY = (halfScreenHeight - this.focusY_); 
             }
         }
 
