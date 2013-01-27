@@ -173,7 +173,7 @@ module ebi.collision {
 
         public static createCollisionRect(x: number, y: number, width: number, height: number): CollisionObject {
             var shape = new Box2D.Collision.Shapes.b2PolygonShape();
-            shape.SetAsBox(width / PTM_RATIO, height / PTM_RATIO);
+            shape.SetAsOrientedBox(width / PTM_RATIO, height / PTM_RATIO, new Box2D.Common.Math.b2Vec2(0.5 ,0.45));
             return createCollisionObject(x, y, [shape], false);
         }
 
