@@ -23,9 +23,7 @@ http://blogs.msdn.com/b/interoperability/archive/2012/10/01/sublime-text-vi-emac
 
 how to build
 ============
-```sh
-$ ./script/build.sh
-```
+make build
 
 project management
 ==================
