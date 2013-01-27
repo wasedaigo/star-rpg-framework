@@ -5,6 +5,7 @@ module ebi.game {
 
     class TmxLayer implements IDrawable {
 
+        private ccNode_: cc.Node;
         private ccTMXLayer_: cc.TMXLayer;
         private z_: number = 0;
         private firstGid_: number = 0;
@@ -15,22 +16,27 @@ module ebi.game {
             this.ccTMXLayer_.setTag(id);
             this.firstGid_ = this.ccTMXLayer_.getTileSet().firstGid;
             this.z = 0;
+
+            // Hack: 
+            // Somehow directly changing the position of ccTmxLayer is pretty heavy!!
+            this.ccNode_ = new cc.Node();
+            this.ccNode_.addChild(this.ccTMXLayer_);
         }
 
         public set x(value: number) {
-            this.ccTMXLayer_.setPositionX(value);
+            this.ccNode_.setPositionX(value);
         }
 
         public get x(): number {
-            return this.ccTMXLayer_.getPositionX();
+            return this.ccNode_.getPositionX();
         }  
 
         public set y(value: number) {
-            this.ccTMXLayer_.setPositionY(value);
+            this.ccNode_.setPositionY(value);
         }
 
         public get y(): number {
-            return this.ccTMXLayer_.getPositionY();
+            return this.ccNode_.getPositionY();
         } 
 
         public get z(): number {
@@ -45,7 +51,7 @@ module ebi.game {
         }
         
         public get innerObject(): cc.Node {
-            return this.ccTMXLayer_;
+            return this.ccNode_;
         }
 
         public getTileIdAt(x: number, y: number): number {
@@ -94,15 +100,13 @@ module ebi.game {
 
         public set x(value: number) {
             Object.keys(this.layers_).forEach((layerName) => {
-                var layer = this.layers_[layerName];
-                layer.x = value;
+                this.layers_[layerName].x = value;
             });
         }
 
         public set y(value: number) {
             Object.keys(this.layers_).forEach((layerName) => {
-                var layer = this.layers_[layerName];
-                layer.y = value;
+                this.layers_[layerName].y = value;
             });
         }      
 
