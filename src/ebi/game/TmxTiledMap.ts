@@ -21,9 +21,9 @@ module ebi.game {
             return this.z_;
         }
 
-        public set z(z) {
-            if (this.z_ !== z) {
-                this.z_ = z;
+        public set z(tz: number) {
+            if (this.z_ !== tz) {
+                this.z_ = tz;
                 DisplayObjects.addDrawableToReorder(this);
             }
         }

@@ -43,24 +43,24 @@ module ebi.game {
         public get x(): number {
             return this.ccSprite_.getPositionX();
         }
-        public set x(x: number) {
-            this.ccSprite_.setPositionX(x);
+        public set x(newX: number) {
+            this.ccSprite_.setPositionX(newX);
         }
 
         public get y(): number {
-            return this.ccSprite_.getPositionY();;
+            return this.ccSprite_.getPositionY();
         }
-        public set y(y: number) {
-            this.ccSprite_.setPositionY(y);
+        public set y(newY: number) {
+            this.ccSprite_.setPositionY(newY);
         }
 
         public get z(): number {
             return this.z_;
         }
 
-        public set z(z) {
-            if (this.z_ !== z) {
-                this.z_ = z;
+        public set z(newZ: number) {
+            if (this.z_ !== newZ) {
+                this.z_ = newZ;
                 DisplayObjects.addDrawableToReorder(this);
             }
         }

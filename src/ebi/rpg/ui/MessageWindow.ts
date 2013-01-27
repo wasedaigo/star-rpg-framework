@@ -35,7 +35,7 @@ module ebi.rpg.ui {
 
         public set x(value :number) {
             var dx = value - this.x_;
-            this.frameSprites_.forEach((sprite) => sprite.x += dx;);
+            this.frameSprites_.forEach((sprite) => sprite.x += dx);
             this.text_.x += dx;
             this.x_ = value;
 
@@ -47,7 +47,7 @@ module ebi.rpg.ui {
 
         public set y(value :number) {
             var dy = value - this.y_;
-            this.frameSprites_.forEach((sprite) => sprite.y += dy;);
+            this.frameSprites_.forEach((sprite) => sprite.y += dy);
             this.text_.y += dy;
             this.y_ = value;
         }

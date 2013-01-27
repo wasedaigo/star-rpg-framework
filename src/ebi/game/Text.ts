@@ -29,22 +29,22 @@ module ebi.game {
         public get text(): string {
             return this.ccLabelTTF_.getString();
         }
-        public set text(text: string) {
-            this.ccLabelTTF_.setString(text);
+        public set text(newText: string) {
+            this.ccLabelTTF_.setString(newText);
         }
 
         public get x(): number {
             return this.ccLabelTTF_.getPositionX();
         }
-        public set x(x: number) {
-            this.ccLabelTTF_.setPositionX(x);
+        public set x(newX: number) {
+            this.ccLabelTTF_.setPositionX(newX);
         }
 
         public get y(): number {
             return this.ccLabelTTF_.getPositionY();;
         }
-        public set y(y: number) {
-            this.ccLabelTTF_.setPositionY(y);
+        public set y(newY: number) {
+            this.ccLabelTTF_.setPositionY(newY);
         }
 
         // content width
@@ -67,9 +67,9 @@ module ebi.game {
             return this.z_;
         }
 
-        public set z(z) {
-            if (this.z_ !== z) {
-                this.z_ = z;
+        public set z(newZ: number) {
+            if (this.z_ !== newZ) {
+                this.z_ = newZ;
                 DisplayObjects.addDrawableToReorder(this);
             }
         }
