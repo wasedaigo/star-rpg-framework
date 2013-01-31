@@ -24,7 +24,7 @@ module ebi.rpg.ui {
             this.stick_.x = AnalogInputController.touchX - this.stick_.srcWidth / 2 + dx;
             this.stick_.y = AnalogInputController.touchY - this.stick_.srcHeight / 2 + dy;
 
-            if (AnalogInputController.isTouched) {
+            if (AnalogInputController.isAnalogControlMode) {
                 this.base_.setVisible(true);
                 this.stick_.setVisible(true);
             } else {

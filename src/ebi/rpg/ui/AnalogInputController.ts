@@ -3,6 +3,7 @@ module ebi.rpg.ui {
         private static MinInputValue: number = 8; // Logical Pixels
         private static MaxInputValue: number = 48; // Logical Pixels
 
+        private static isAnalogControlMode_: bool = false;
         private static touchStartLocationX_: number;
         private static touchStartLocationY_: number;
         private static inputDx_: number; // 0.0 ~ 1.0
@@ -37,9 +38,17 @@ module ebi.rpg.ui {
                 var dy: number = ebi.game.Input.touchY - touchStartLocationY_;
 
                 if ((dx * dx + dy * dy) > MinInputValue * MinInputValue) {
+                    isAnalogControlMode_ = true;
                     inputDx_ = roundValue(dx, 0, MaxInputValue) / MaxInputValue;
                     inputDy_ = roundValue(dy, 0, MaxInputValue) / MaxInputValue;          
                 }
+            }
+
+            if (ebi.game.Input.isTouchFinished) {
+                if(!isAnalogControlMode_) {
+                    // Trigger Check Action
+                }
+                isAnalogControlMode_ = false;
             }
         }
 
@@ -55,8 +64,8 @@ module ebi.rpg.ui {
             return inputDx_ != 0 || inputDy_ != 0;
         }
 
-        public static get isTouched(): bool {
-            return ebi.game.Input.isTouched;
+        public static get isAnalogControlMode(): bool {
+            return isAnalogControlMode_;
         }
 
         public static get touchX(): number {

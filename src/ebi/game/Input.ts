@@ -8,6 +8,7 @@ module ebi.game {
     export class Input {
         private static isTouched_: bool      = false;
         private static isNewlyTouched_: bool = false;
+        private static isTouchFinished_: bool = false;
         private static touchX_: number       = 0;
         private static touchY_: number       = 0;
         private static lastAction_: string   = ''; // TODO: This should be an enum
@@ -18,6 +19,10 @@ module ebi.game {
 
         public static get isNewlyTouched(): bool {
             return isNewlyTouched_;
+        }
+
+        public static get isTouchFinished(): bool {
+            return isTouchFinished_;
         }
 
         public static get touchX(): number {
@@ -46,13 +51,20 @@ module ebi.game {
             touchY_     = touchY;
             lastAction_ = 'touchEnded';
             isTouched_  = false;
+            isTouchFinished_ = true;
         }
 
         public static update(): void {
             // Set the flag if the screen was taped at this frame
             isNewlyTouched_ = false;
-            if (lastAction_ === 'touchBegan') {
-                isNewlyTouched_ = true;
+            isTouchFinished_ = false;
+            switch(lastAction_) {
+                case 'touchBegan':
+                    isNewlyTouched_ = true;
+                break;
+                case 'touchEnded':
+                    isTouchFinished_ = true;
+                break;
             }
             lastAction_ = '';
         }
