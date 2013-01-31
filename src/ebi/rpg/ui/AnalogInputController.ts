@@ -8,6 +8,7 @@ module ebi.rpg.ui {
         private static touchStartLocationY_: number;
         private static inputDx_: number; // 0.0 ~ 1.0
         private static inputDy_: number; // 0.0 ~ 1.0
+        private static isChecked_: bool;
 
         // value less than min will be invalid
         // value more than max will be rounded to max
@@ -26,6 +27,7 @@ module ebi.rpg.ui {
         }
 
         public static update(): void {
+            isChecked_ = false;
             inputDx_ = 0;
             inputDy_ = 0;
             if (ebi.game.Input.isNewlyTouched) {
@@ -46,7 +48,7 @@ module ebi.rpg.ui {
 
             if (ebi.game.Input.isTouchFinished) {
                 if(!isAnalogControlMode_) {
-                    // Trigger Check Action
+                    isChecked_ = true;
                 }
                 isAnalogControlMode_ = false;
             }
@@ -60,8 +62,8 @@ module ebi.rpg.ui {
             return inputDy_;
         }
 
-        public static get hasInput(): bool {
-            return inputDx_ != 0 || inputDy_ != 0;
+        public static get isChecked(): bool {
+            return isChecked_;
         }
 
         public static get isAnalogControlMode(): bool {
