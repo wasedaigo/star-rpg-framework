@@ -6,6 +6,7 @@ module ebi.rpg.ui {
         private static Z: number = 1000;
         private static NormalBaloonImage: string = "system/normal_baloon_frame";
         private frameSprites_: ebi.game.Sprite[];
+        private arrowSprite_: ebi.game.Sprite;
         private text_: ebi.game.Text;
 
         private x_: number = 0;
@@ -16,6 +17,15 @@ module ebi.rpg.ui {
             for (var i = 0; i < 9; i++) {
                 this.frameSprites_[i] = new ebi.game.Sprite(ebi.game.ResourcePreloader.getImage(MessageWindow.NormalBaloonImage));
             }
+            this.arrowSprite_ = new ebi.game.Sprite(ebi.game.ResourcePreloader.getImage(MessageWindow.NormalBaloonImage));
+            this.arrowSprite_.srcX = 12;
+            this.arrowSprite_.srcY = 6;
+            this.arrowSprite_.srcWidth = 6;  
+            this.arrowSprite_.srcHeight = 6; 
+            this.arrowSprite_.width = 6; 
+            this.arrowSprite_.height = 6; 
+            this.arrowSprite_.z = MessageWindow.Z + 0.00001;
+
             this.text_ = new ebi.game.Text();
             this.construct(size);
         }
@@ -37,6 +47,7 @@ module ebi.rpg.ui {
             var dx = value - this.x_;
             this.frameSprites_.forEach((sprite) => sprite.x += dx);
             this.text_.x += dx;
+            this.arrowSprite_.x += dx; 
             this.x_ = value;
 
         }
@@ -49,6 +60,7 @@ module ebi.rpg.ui {
             var dy = value - this.y_;
             this.frameSprites_.forEach((sprite) => sprite.y += dy);
             this.text_.y += dy;
+            this.arrowSprite_.y += dy;
             this.y_ = value;
         }
 
@@ -98,6 +110,10 @@ module ebi.rpg.ui {
                 sprite.height    = patchInfoDst[i][3];
                 sprite.z         = MessageWindow.Z;
             }
+
+            this.arrowSprite_.x = bw + tw / 2;
+            //TODO: Sprite class should implement setter/getter for anchor
+            this.arrowSprite_.y = -6 + 2;
 
             // Update content text
             this.text_.width = tw;
