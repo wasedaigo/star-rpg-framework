@@ -1,38 +1,6 @@
-/// <reference path='../../game/ResourcePreloader.ts' />
+/// <reference path='./EventData.ts' />
 
 module ebi.rpg.event {
-    export interface EventStatusData {
-        visible: bool;
-        alpha: number;
-        dir: number;
-        frameNo: number;
-        chipId: number;
-        wait: number;
-        speed: number;
-        layer: number;
-        routeRepeat: bool;
-        routeSkip: bool;
-        dirFix: bool;
-        stayAnime: bool;
-        moveAnime: bool;
-        passEvent: bool;
-        passCharacter: bool;
-        passTile: bool;
-    }
-
-    export interface EventPageData {
-        status: EventStatusData;
-        conditions: any[];
-        triggers: any[];
-        commands: any[];
-        route: any[];
-    }
-
-    export interface EventData {
-        pages: EventPageData[];
-        pos: number[];
-    }
-
     export class EventDataLoader {
         public static loadEventData(mapId: number): {[key : string]: ebi.rpg.event.EventData;} {
             var json = ebi.game.ResourcePreloader.getJson('data/event0.json');
@@ -78,7 +46,8 @@ module ebi.rpg.event {
                 var pos = json[eventId][1];
                 var eventData: EventData = {
                     pages: eventPages,
-                    pos: pos
+                    x: pos[0],
+                    y: pos[1]
                 };
                 events[eventId] = eventData;
             }
