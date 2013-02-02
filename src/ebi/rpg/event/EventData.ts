@@ -4,7 +4,7 @@ module ebi.rpg.event {
         alpha: number;
         dir: number;
         frameNo: number;
-        chipId: number;
+        chipsetId: number;
         wait: number;
         speed: number;
         layer: number;

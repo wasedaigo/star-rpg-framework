@@ -23,8 +23,8 @@ module ebi.rpg.map {
         private controlable_: bool;
         private speed_: number;
 
-        constructor(id: number, map: Map) {
-            this.charaChipset_ = core.DatabaseManager.getCharaChipsetData(id);
+        constructor(chipsetId: number, map: Map) {
+            this.charaChipset_ = core.DatabaseManager.getCharaChipsetData(chipsetId);
             var image = ebi.game.ResourcePreloader.getImage(this.charaChipset_.src);
             this.frameNo_ = this.charaChipset_.defaultFrameNo;
             this.dir_ = 0;

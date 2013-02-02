@@ -47,7 +47,7 @@ module ebi.game {
                                 255, //"alpha": 255,
                                 6, //"dir": 6,
                                 1, //"frame_no": 1,
-                                1, //"chip_id": "TimeOver_chara",
+                                1, //"chipset_id": "TimeOver_chara",
                                 5, //"wait": 5,
                                 1, //"speed": 1,
                                 1, //"layer": 1,

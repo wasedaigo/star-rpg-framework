@@ -15,7 +15,7 @@ module ebi.rpg.event {
                         alpha: rawStatus[1],
                         dir: rawStatus[2],
                         frameNo: rawStatus[3],
-                        chipId: rawStatus[4],
+                        chipsetId: rawStatus[4],
                         wait: rawStatus[5],
                         speed: rawStatus[6],
                         layer: rawStatus[7],
