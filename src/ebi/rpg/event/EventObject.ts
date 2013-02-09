@@ -38,9 +38,5 @@ module ebi.rpg.event {
                 this.mapCharacter_.controlable = true;
             }
         }
-
-        private setPage(pageNo: number): void {
-
-        }
     }
 }
