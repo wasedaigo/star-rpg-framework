@@ -17,7 +17,7 @@ module ebi.rpg.event {
             this.mapCharacter_.ignoreTile = true;
             this.mapCharacter_.ignoreCharacter = true;
             this.mapCharacter_.ignoreTrigger = true;
-            this.mapCharacter_.controlable = true;   
+            this.mapCharacter_.controlable = (eventData.id === 0);   
         }
 
         public get mapCharacter(): ebi.rpg.map.MapCharacter {
@@ -59,7 +59,6 @@ module ebi.rpg.event {
                 this.mapCharacter_.ignoreTile = false;
                 this.mapCharacter_.ignoreCharacter = false;
                 this.mapCharacter_.ignoreTrigger = false;
-                this.mapCharacter_.controlable = true;
             }
         }
     }

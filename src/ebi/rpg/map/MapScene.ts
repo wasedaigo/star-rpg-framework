@@ -26,8 +26,11 @@ module ebi.rpg.map {
                 var eventData = this.eventDataDictionary_[key];
                 var eo = new ebi.rpg.event.EventObject(this.map_, eventData);
                 this.eventObjects_.push(eo);
-                this.camera_.focusTarget = eo.mapCharacter;
             }
+
+            this.camera_.focusTarget = this.eventObjects_[0].mapCharacter;
+
+
 /*
             var mapCharacter: MapCharacter = new MapCharacter(1, this.map_);
             this.mapCharacters_.push(mapCharacter);
