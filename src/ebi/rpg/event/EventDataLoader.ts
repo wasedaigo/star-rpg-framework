@@ -60,7 +60,7 @@ module ebi.rpg.event {
         }
 
         public static loadEventDataDictionary(mapId: number): {[key : string]: ebi.rpg.event.EventData;} {
-            var json = ebi.game.ResourcePreloader.getJson('data/event0.json');
+            var json = ebi.game.ResourcePreloader.getJson('data/event' + mapId + '.json');
             var events: {[key : string]: ebi.rpg.event.EventData;} = {};
             for (var eventIdKey in json) {
                 events[eventIdKey] = loadEventData(parseInt(eventIdKey), json[eventIdKey]);
