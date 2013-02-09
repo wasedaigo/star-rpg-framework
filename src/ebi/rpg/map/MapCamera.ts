@@ -1,3 +1,4 @@
+/// <reference path='../Const.ts' />
 /// <reference path='./Map.ts' />
 /// <reference path='./MapCharacter.ts' />
 
@@ -15,10 +16,10 @@ module ebi.rpg.map {
         public update(): void {
             if (this.focusTarget) {
                 //TODO magic number, we need to get logical screen width
-                var halfScreenWidth = 160;
+                var halfScreenWidth = ebi.Const.ScreenWidth / 2;
 
                 //TODO magic number, we need to get logical screen height
-                var halfScreenHeight = 240; 
+                var halfScreenHeight = ebi.Const.ScreenHeight / 2;
                 
                 var sx = halfScreenWidth;
                 var sy = halfScreenHeight;

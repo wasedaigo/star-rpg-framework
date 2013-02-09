@@ -41,15 +41,13 @@ module ebi.rpg {
         }
 
         private static init(): void {
+            core.DatabaseManager.init();
             ebi.game.ResourcePreloader.preloadTmx("sample");
-            for (var i = 1; i <= 3; i++) {
-                // TODO: unload when the scene/map changes
-                core.DatabaseManager.loadCharaChipsetData(i);
-            }
             ebi.game.ResourcePreloader.preloadTmxImage('tile_a');
             ebi.game.ResourcePreloader.preloadTmxImage('tile_b');
             ebi.game.ResourcePreloader.preloadTmxImage('collision');
             ebi.game.ResourcePreloader.preloadJson("data/event0.json");
+            ebi.game.ResourcePreloader.preloadImage("characters/chara01");
             ebi.game.ResourcePreloader.preloadImage("system/normal_baloon_frame");
             ebi.game.ResourcePreloader.preloadImage("system/check_btn_on");
             ebi.game.ResourcePreloader.preloadImage("system/check_btn_off");

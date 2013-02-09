@@ -1,3 +1,4 @@
+/// <reference path='../Const.ts' />
 /// <reference path='../../game/ResourcePreloader.ts' />
 
 module ebi.rpg.core {
@@ -32,31 +33,40 @@ module ebi.rpg.core {
             },     
         };
 
+        private static defaultChipset: map.MapCharacterChipset = null;
         private static mapCharacterChipsets: {} = {};
+        public static init(): void {
+            // Setup default chipset (Which has no image)
+            defaultChipset = new map.MapCharacterChipset();
+            defaultChipset.src = null;
+            defaultChipset.srcIndex = [0, 0];
+            defaultChipset.size = [ebi.Const.GridWidth, ebi.Const.GridHeight];
+            defaultChipset.dirCount = 1;
+            defaultChipset.frameCount = 1;
+            defaultChipset.defaultFrameNo = 0;
+            defaultChipset.hitRect = [0, 0, ebi.Const.GridWidth, ebi.Const.GridHeight]
 
-        public static loadCharaChipsetData(id: number): void {
-            var data = charaChipsetData[id.toString()];
-            var chipset = new map.MapCharacterChipset();
-            chipset.src = data['src'];
-            chipset.srcIndex = data['srcIndex'];
-            chipset.size = data['size'];
-            chipset.dirCount = data['dirCount'];
-            chipset.frameCount = data['frameCount'];
-            chipset.defaultFrameNo = data['defaultFrameNo'];
-            chipset.hitRect = data['hitRect'];
-            mapCharacterChipsets[id] = chipset;
-            ebi.game.ResourcePreloader.preloadImage(chipset.src);
+            for (var i in charaChipsetData) {
+                var data = charaChipsetData[i];
+                var chipset = new map.MapCharacterChipset();
+                chipset.src = data['src'];
+                chipset.srcIndex = data['srcIndex'];
+                chipset.size = data['size'];
+                chipset.dirCount = data['dirCount'];
+                chipset.frameCount = data['frameCount'];
+                chipset.defaultFrameNo = data['defaultFrameNo'];
+                chipset.hitRect = data['hitRect'];
+                mapCharacterChipsets[parseInt(i)] = chipset;
+            }
         }
 
-        /*public static unloadCharaChipsetData(id: number): void {
-            if (mapCharacterChipsets[id]) {
-                ebi.game.ResourcePreloader.unloadImage(mapCharacterChipsets[id].src);
-                delete mapCharacterChipsets[id];
-            }
-        }*/
-
         public static getCharaChipsetData(id: number): map.MapCharacterChipset {
-            return mapCharacterChipsets[id];
+            var chipset = mapCharacterChipsets[id];
+            if (chipset) {
+                return chipset;
+            } else {
+                return defaultChipset;
+            }
         }
     }
 }

@@ -32,7 +32,7 @@ module ebi.game {
         }
 
         public static getImage(id: string): Image {
-            ebi.assert(!!images_[id]);
+            ebi.assert(!!images_[id], "no valid id: " + id);
             return images_[id];
         }
 

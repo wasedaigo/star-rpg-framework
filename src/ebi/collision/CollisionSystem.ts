@@ -51,8 +51,8 @@ module ebi.collision {
         var objectB = bodyB.GetUserData();
 
         var ignoreTrigger = objectA.ignoreTrigger | objectB.ignoreTrigger;
-        var ignoreCollision = ((objectA.categoryBits & objectB.ignoreCollisionBits) === objectA.categoryBits ||
-            (objectB.categoryBits & objectA.ignoreCollisionBits) === objectB.categoryBits);
+        var ignoreCollision = ((objectA.categoryBits & objectB.ignoreBits) === objectA.categoryBits ||
+            (objectB.categoryBits & objectA.ignoreBits) === objectB.categoryBits);
 
         var b2Body = Box2D.Dynamics.b2Body;
         if (bodyA.GetType() == b2Body.b2_staticBody) {

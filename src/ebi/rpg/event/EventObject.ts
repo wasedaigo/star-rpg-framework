@@ -11,7 +11,12 @@ module ebi.rpg.event {
             this.eventData_ = eventData;
             this.map_ = map;
             // Setup Default MapCharacter (Invisible / Non-Interactive)
-            this.setPageIndex(0);
+            this.mapCharacter_ = new ebi.rpg.map.MapCharacter(0, this.map_);
+            this.mapCharacter_.setPosition(this.eventData_.x, this.eventData_.y);
+            this.mapCharacter_.ignoreTile = true;
+            this.mapCharacter_.ignoreCharacter = true;
+            this.mapCharacter_.ignoreTrigger = true;
+            this.mapCharacter_.controlable = true;
         }
 
         public get mapCharacter(): ebi.rpg.map.MapCharacter {

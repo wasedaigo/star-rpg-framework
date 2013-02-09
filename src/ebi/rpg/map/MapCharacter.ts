@@ -11,7 +11,7 @@
 module ebi.rpg.map {
     export class MapCharacter {
         private switchFrameDir_: number = 1;
-        private frameNo_: number = 1;
+        private frameNo_: number = 0;
         private dir_: number = 0;
         private timer_: number = 0;
         private mapSprite_: MapSprite = null;
@@ -25,23 +25,31 @@ module ebi.rpg.map {
 
         constructor(chipsetId: number, map: Map) {
             this.charaChipset_ = core.DatabaseManager.getCharaChipsetData(chipsetId);
-            var image = ebi.game.ResourcePreloader.getImage(this.charaChipset_.src);
+            
             this.frameNo_ = this.charaChipset_.defaultFrameNo;
             this.dir_ = 0;
             this.map_ = map;
             this.speed_ = 3;
-            this.mapSprite_ = new ebi.rpg.map.MapSprite(image, map);
-            this.mapSprite_.srcX      = 0;
-            this.mapSprite_.srcY      = 0;
-            this.mapSprite_.srcWidth  = this.charaChipset_.size[0];
-            this.mapSprite_.srcHeight = this.charaChipset_.size[1];
+
+            if (this.charaChipset_.src) {
+                var image = ebi.game.ResourcePreloader.getImage(this.charaChipset_.src);
+                this.mapSprite_ = new ebi.rpg.map.MapSprite(image, map);
+                this.mapSprite_.srcX      = 0;
+                this.mapSprite_.srcY      = 0;
+                this.mapSprite_.srcWidth  = this.charaChipset_.size[0];
+                this.mapSprite_.srcHeight = this.charaChipset_.size[1];
+            }
+
+            // Setup collision object
+            // Even for non-colliding character, 
+            //we need this to manipulte its position
             this.collisionObject_ = ebi.collision.CollisionSystem.createCollisionRect(
                 this.charaChipset_.hitRect[0],
                 this.charaChipset_.hitRect[1],
                 this.charaChipset_.hitRect[2] - 1,
                 this.charaChipset_.hitRect[3] - 1
             );
-            this.collisionObject_.setCategory(1);
+            this.collisionObject_.setCategory(ebi.collision.Category.Character);
             this.updateVisual(); 
         }
 
@@ -66,11 +74,11 @@ module ebi.rpg.map {
         }
 
         public get width(): number {
-            return this.mapSprite_.srcWidth;
+            return this.charaChipset_.size[0];
         }
 
         public get height(): number {
-            return this.mapSprite_.srcHeight;
+            return this.charaChipset_.size[1];
         }
 
         public get screenX(): number {
@@ -87,6 +95,14 @@ module ebi.rpg.map {
 
         public set controlable(value: bool) {
             this.controlable_ = value;
+        }
+
+        public get speed(): number {
+            return this.speed_;
+        }
+
+        public set speed(value: number) {
+            this.speed_ = value;
         }
 
         public update(): void {
@@ -148,13 +164,13 @@ module ebi.rpg.map {
                 this.timer_ = 0;
                 this.frameNo_ += this.switchFrameDir_;
 
-                // ----> switching the animation to the right
+                // switching the animation frame to the right
                 if (this.frameNo_ >= this.charaChipset_.frameCount - 1) {
                     this.frameNo_ = this.charaChipset_.frameCount - 1;
                     this.switchFrameDir_ = -1;
                 }
 
-                // <---- switching the animation to the left
+                // switching the animation frame to the left
                 if (this.frameNo_ <= 0) {
                     this.frameNo_ = 0;
                     this.switchFrameDir_ = 1;
@@ -163,13 +179,15 @@ module ebi.rpg.map {
         }
 
         private updateVisual(): void {
-            // Update animation frame
-            this.mapSprite_.srcX = (this.charaChipset_.srcIndex[0] * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.size[0];
-            // Update animation dir
-            this.mapSprite_.srcY = (this.charaChipset_.srcIndex[1] * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.size[1];
+            if (this.mapSprite_) {
+                // Update animation frame
+                this.mapSprite_.srcX = (this.charaChipset_.srcIndex[0] * this.charaChipset_.frameCount + this.frameNo_) * this.charaChipset_.size[0];
+                // Update animation dir
+                this.mapSprite_.srcY = (this.charaChipset_.srcIndex[1] * this.charaChipset_.dirCount + this.dir_) * this.charaChipset_.size[1];
 
-            this.mapSprite_.x = this.collisionObject_.x;
-            this.mapSprite_.y = this.collisionObject_.y;
+                this.mapSprite_.x = this.collisionObject_.x;
+                this.mapSprite_.y = this.collisionObject_.y;
+            }
         }
     }
 }
