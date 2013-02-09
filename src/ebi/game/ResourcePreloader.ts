@@ -61,7 +61,7 @@ module ebi.game {
                                 0, //"pass_tile": false
                             ],
                             [], //"conditions": [],
-                            [0, 0], //"triggers": [["checked", 0]],
+                            [["checked", "0"]], //"triggers": [["checked", 0]],
                             [], //"commands": [],
                             [] //"route": [],
                         ]

@@ -12,7 +12,7 @@ module ebi.rpg.event {
             this.eventData_ = eventData;
             this.map_ = map;
             // Setup Default MapCharacter (Invisible / Non-Interactive)
-            this.mapCharacter_ = new ebi.rpg.map.MapCharacter(0, this.map_);
+            this.mapCharacter_ = new ebi.rpg.map.MapCharacter(eventData.id, this.map_);
             this.mapCharacter_.setPosition(this.eventData_.x, this.eventData_.y);
             this.mapCharacter_.ignoreTile = true;
             this.mapCharacter_.ignoreCharacter = true;
@@ -55,7 +55,7 @@ module ebi.rpg.event {
         private setPageIndex(index: number): void {
             if (this.pageIndex_ != index) {
                 this.pageIndex_ = index;
-                this.mapCharacter_.chipsetId = this.eventData_.pages[0].status.chipsetId;
+                this.mapCharacter_.chipsetId = this.eventData_.pages[index].status.chipsetId;
                 this.mapCharacter_.ignoreTile = false;
                 this.mapCharacter_.ignoreCharacter = false;
                 this.mapCharacter_.ignoreTrigger = false;

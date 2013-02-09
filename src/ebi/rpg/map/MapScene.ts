@@ -21,7 +21,7 @@ module ebi.rpg.map {
             this.map_ = new Map();
             this.camera_ = new MapCamera(this.map_);
 
-            this.eventDataDictionary_ = rpg.event.EventDataLoader.loadEventData(0);
+            this.eventDataDictionary_ = rpg.event.EventDataLoader.loadEventDataDictionary(0);
             for (var key in this.eventDataDictionary_) {
                 var eventData = this.eventDataDictionary_[key];
                 var eo = new ebi.rpg.event.EventObject(this.map_, eventData);
