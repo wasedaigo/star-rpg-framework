@@ -54,11 +54,11 @@ module ebi.rpg.map {
         }
 
         public set ignoreTile(ignore: bool) {
-            this.collisionObject_.setIgnoreCategory(0, ignore);
+            this.collisionObject_.setIgnoreCategory(ebi.collision.Category.Tile, ignore);
         }
 
         public set ignoreCharacter(ignore: bool) {
-            this.collisionObject_.setIgnoreCategory(1, ignore);
+            this.collisionObject_.setIgnoreCategory(ebi.collision.Category.Character, ignore);
         }
        
         public set ignoreTrigger(ignore: bool) {

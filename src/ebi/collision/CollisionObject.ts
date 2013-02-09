@@ -5,7 +5,14 @@ module ebi.collision {
     // Constant to convert between physics-world position and screen position
     var PTM_RATIO: number = 32;
 
+    export enum Category {
+        Tile = 0,
+        Character,
+    }
+
     export class CollisionObject {
+
+
         private b2Body_: Box2D.Dynamics.b2Body;
         private b2Fixtures_: Box2D.Dynamics.b2Fixture[];
         private id_: number;
