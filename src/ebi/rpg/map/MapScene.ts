@@ -59,7 +59,9 @@ module ebi.rpg.map {
 
         public update(): void {
             this.camera_.update();
-            this.eventObjects_.forEach((eo) => eo.update());
+            this.eventObjects_.forEach((eo) => eo.updatePage());
+            this.eventObjects_.forEach((eo) => eo.updateCommand());
+            this.eventObjects_.forEach((eo) => eo.updateMapCharacter());
             this.analogInputIndicator_.update();
         }
 

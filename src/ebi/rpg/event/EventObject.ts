@@ -1,5 +1,6 @@
 /// <reference path='../map/Map.ts' />
 /// <reference path='./EventData.ts' />
+/// <reference path='./ConditionChecker.ts' />
 
 module ebi.rpg.event {
     export class EventObject {
@@ -16,16 +17,39 @@ module ebi.rpg.event {
             this.mapCharacter_.ignoreTile = true;
             this.mapCharacter_.ignoreCharacter = true;
             this.mapCharacter_.ignoreTrigger = true;
-            this.mapCharacter_.controlable = true;
-            this.setPageIndex(0);
+            this.mapCharacter_.controlable = true;   
         }
 
         public get mapCharacter(): ebi.rpg.map.MapCharacter {
             return this.mapCharacter_;
         }
 
-        public update(): void {
+        public updatePage(): void {
+            var index = this.getActiveTopPageIndex();
+            this.setPageIndex(index);
+        }
+
+        public updateCommand(): void {
+
+        }
+
+        public updateMapCharacter(): void {
             this.mapCharacter_.update();
+        }
+
+        private getActiveTopPageIndex(): number {
+            var pageIndex = -1;
+            var pages = this.eventData_.pages;
+            var len = pages.length;
+            for (var i = len - 1; i >= 0; i--) {
+                var page = pages[i];
+                if (ConditionChecker.checkConditions(page.conditions)) {
+                    pageIndex = i;
+                    break;
+                }
+            }
+
+            return pageIndex;
         }
 
         private setPageIndex(index: number): void {
