@@ -14,6 +14,7 @@ module ebi.rpg.map {
         private frameNo_: number = 0;
         private dir_: number = 0;
         private timer_: number = 0;
+        private chipsetId_: number;
         private mapSprite_: MapSprite = null;
         private charaChipset_: MapCharacterChipset;
         private vx_: number = 0;
@@ -23,22 +24,31 @@ module ebi.rpg.map {
         private controlable_: bool;
         private speed_: number;
 
-        constructor(chipsetId: number, map: Map) {
-            this.charaChipset_ = core.DatabaseManager.getCharaChipsetData(chipsetId);
-            
-            this.frameNo_ = this.charaChipset_.defaultFrameNo;
-            this.dir_ = 0;
-            this.map_ = map;
-            this.speed_ = 3;
+        private setImage(src :string): void {
+            if (this.mapSprite_) {
+                this.mapSprite_.dispose();
+                this.mapSprite_ = null;
+            }
 
-            if (this.charaChipset_.src) {
-                var image = ebi.game.ResourcePreloader.getImage(this.charaChipset_.src);
-                this.mapSprite_ = new ebi.rpg.map.MapSprite(image, map);
-                this.mapSprite_.srcX      = 0;
-                this.mapSprite_.srcY      = 0;
+            if (src) {
+                var image = ebi.game.ResourcePreloader.getImage(src);
+                this.mapSprite_ = new ebi.rpg.map.MapSprite(image, this.map_);
+                this.mapSprite_.srcX = 0;
+                this.mapSprite_.srcY = 0;
                 this.mapSprite_.srcWidth  = this.charaChipset_.size[0];
                 this.mapSprite_.srcHeight = this.charaChipset_.size[1];
             }
+        }
+
+        constructor(chipsetId: number, map: Map) {
+            this.chipsetId_ = chipsetId;
+            this.map_ = map;
+
+            this.charaChipset_ = core.DatabaseManager.getCharaChipsetData(chipsetId);
+            this.frameNo_ = this.charaChipset_.defaultFrameNo;
+            this.dir_ = 0;
+            this.speed_ = 3;
+            this.setImage(this.charaChipset_.src);
 
             // Setup collision object
             // Even for non-colliding character, 
@@ -103,6 +113,18 @@ module ebi.rpg.map {
 
         public set speed(value: number) {
             this.speed_ = value;
+        }
+
+        public get chipsetId(): number {
+            return this.chipsetId_;
+        }
+
+        public set chipsetId(id: number) {
+            if (this.chipsetId_ != id) {
+                this.chipsetId_ = id;
+                this.charaChipset_ = core.DatabaseManager.getCharaChipsetData(id);
+                this.setImage(this.charaChipset_.src);
+            }
         }
 
         public update(): void {

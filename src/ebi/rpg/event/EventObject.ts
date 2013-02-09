@@ -17,6 +17,7 @@ module ebi.rpg.event {
             this.mapCharacter_.ignoreCharacter = true;
             this.mapCharacter_.ignoreTrigger = true;
             this.mapCharacter_.controlable = true;
+            this.setPageIndex(0);
         }
 
         public get mapCharacter(): ebi.rpg.map.MapCharacter {
@@ -30,8 +31,10 @@ module ebi.rpg.event {
         private setPageIndex(index: number): void {
             if (this.pageIndex_ != index) {
                 this.pageIndex_ = index;
-                this.mapCharacter_ = new ebi.rpg.map.MapCharacter(this.eventData_.pages[0].status.chipsetId, this.map_);
-                this.mapCharacter_.setPosition(this.eventData_.x, this.eventData_.y);
+                this.mapCharacter_.chipsetId = this.eventData_.pages[0].status.chipsetId;
+                this.mapCharacter_.ignoreTile = false;
+                this.mapCharacter_.ignoreCharacter = false;
+                this.mapCharacter_.ignoreTrigger = false;
                 this.mapCharacter_.controlable = true;
             }
         }
