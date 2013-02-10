@@ -10,22 +10,6 @@ module ebi.rpg.ui {
         private static inputDy_: number; // 0.0 ~ 1.0
         private static isChecked_: bool;
 
-        // value less than min will be invalid
-        // value more than max will be rounded to max
-        // This function handles both positive/negative case
-        private static roundValue(value, min, max): number {
-
-            if (value > 0) {
-                value = value < min ? 0: value;
-                value = value > max ? max: value;
-            } else {
-                value = value > min ? 0: value;
-                value = value < -max ? -max: value;
-            }
-
-            return value;
-        }
-
         public static update(): void {
             isChecked_ = false;
             inputDx_ = 0;
@@ -41,8 +25,8 @@ module ebi.rpg.ui {
 
                 if ((dx * dx + dy * dy) > MinInputValue * MinInputValue) {
                     isAnalogControlMode_ = true;
-                    inputDx_ = roundValue(dx, 0, MaxInputValue) / MaxInputValue;
-                    inputDy_ = roundValue(dy, 0, MaxInputValue) / MaxInputValue;          
+                    inputDx_ = ebi.cropValue(dx, 0, MaxInputValue) / MaxInputValue;
+                    inputDy_ = ebi.cropValue(dy, 0, MaxInputValue) / MaxInputValue;          
                 }
             }
 
