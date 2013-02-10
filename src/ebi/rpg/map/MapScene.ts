@@ -44,17 +44,12 @@ module ebi.rpg.map {
 
             // Update EventPage, such as checking existing condition
             for (var key in core.GameState.eventObjects) {
-                core.GameState.eventObjects[key].updatePage();
+                core.GameState.eventObjects[key].update();
             }
 
-            // Update EventPage, such as checking existing condition
+            // Reset its state
             for (var key in core.GameState.eventObjects) {
-                core.GameState.eventObjects[key].updateCommand();
-            }
-
-            // Update EventPage, such as checking existing condition
-            for (var key in core.GameState.eventObjects) {
-                core.GameState.eventObjects[key].updateMapCharacter();
+                core.GameState.eventObjects[key].reset();
             }
 
             if (ui.AnalogInputController.isChecked) {

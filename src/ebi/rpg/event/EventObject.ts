@@ -8,6 +8,8 @@ module ebi.rpg.event {
         private mapCharacter_: map.MapCharacter;
         private pageIndex_: number = -1;
         private eventData_: EventData;
+        private checkedEventId_: number = -1;
+        private touchedEventId_: number = -1;
 
         constructor(eventData: EventData) {
             this.eventData_ = eventData;
@@ -28,25 +30,33 @@ module ebi.rpg.event {
             return this.eventData_.id;
         }
 
-        public updatePage(): void {
+        public get checkedEventId(): number {
+            return this.checkedEventId_;
+        }
+
+        public get touchedEventId(): number {
+            return this.touchedEventId_;
+        }
+
+        public update(): void {
             var index = this.getActiveTopPageIndex();
             this.setPageIndex(index);
-        }
-
-        public updateCommand(): void {
-
-        }
-
-        public updateMapCharacter(): void {
             this.mapCharacter_.update();
+        }
+
+        public reset(): void {
+            this.touchedEventId_ = -1;
+            this.checkedEventId_ = -1;
         }
 
         public check(eventId: number): void {
             console.log("Event(" + this.eventId + ") is checked by Event(" + eventId + ")");
+            this.checkedEventId_ = eventId;
         }
 
         public touch(eventId: number): void {
             console.log("Event(" + this.eventId + ") is touched by Event(" + eventId + ")");
+            this.touchedEventId_ = eventId;
         }
 
         private getActiveTopPageIndex(): number {
