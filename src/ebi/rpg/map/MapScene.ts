@@ -8,30 +8,28 @@
 /// <reference path='./MapCamera.ts' />
 /// <reference path='./MapCharacter.ts' />
 /// <reference path='./MapSensor.ts' />
+/// <reference path='../core/GameState.ts' />
 
 module ebi.rpg.map {
 
     export class MapScene extends rpg.core.Scene {
-        private map_: Map;
-        private mapSensor_: MapSensor;
-        private camera_: MapCamera;
-        private eventObjects_: event.EventObject[] = [];
         private analogInputIndicator_: ui.AnalogInputIndicator = null;
 
-        private eventDataDictionary_: {[key : string]: rpg.event.EventData;};
-
         public init(): void {
-            this.map_ = new Map();
-            this.camera_ = new MapCamera(this.map_);
-            this.mapSensor_ = new MapSensor();
+            core.GameState.map = new Map();
+            core.GameState.camera = new MapCamera(core.GameState.map);
+            core.GameState.mapSensor = new MapSensor();
+            var eventObjects = [];
 
-            this.eventDataDictionary_ = rpg.event.EventDataLoader.loadEventDataDictionary(0);
-            for (var key in this.eventDataDictionary_) {
-                var eventData = this.eventDataDictionary_[key];
-                var eo = new event.EventObject(this.map_, eventData);
-                this.eventObjects_.push(eo);
+            var eventDataDictionary = rpg.event.EventDataLoader.loadEventDataDictionary(0);
+            for (var key in eventDataDictionary) {
+                var eventData = eventDataDictionary[key];
+                var eo = new event.EventObject(eventData);
+                eventObjects.push(eo);
             }
-            this.camera_.focusTarget = this.playerEvent.mapCharacter;
+            core.GameState.eventObjects = eventObjects;
+
+            core.GameState.camera.focusTarget = this.playerEvent.mapCharacter;
 
             // Initialize UI
             this.analogInputIndicator_ = new ui.AnalogInputIndicator();
@@ -43,18 +41,18 @@ module ebi.rpg.map {
         }
 
         public update(): void {
-            this.camera_.update();
-            this.eventObjects_.forEach((eo) => eo.updatePage());
-            this.eventObjects_.forEach((eo) => eo.updateCommand());
-            this.eventObjects_.forEach((eo) => eo.updateMapCharacter());
-            this.analogInputIndicator_.update();
+            core.GameState.camera.update();
+            core.GameState.eventObjects.forEach((eo) => eo.updatePage());
+            core.GameState.eventObjects.forEach((eo) => eo.updateCommand());
+            core.GameState.eventObjects.forEach((eo) => eo.updateMapCharacter());
             if (ui.AnalogInputController.isChecked) {
-                this.mapSensor_.check(this.playerEvent);
+                core.GameState.mapSensor.check(this.playerEvent);
             }
+            this.analogInputIndicator_.update();
         }
 
         private get playerEvent(): event.EventObject {
-            return this.eventObjects_[0];
+            return core.GameState.eventObjects[0];
         }
 
     }

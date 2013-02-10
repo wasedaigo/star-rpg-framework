@@ -1,19 +1,17 @@
+/// <reference path='../core/GameState.ts' />
 /// <reference path='../map/Map.ts' />
 /// <reference path='../map/MapCharacter.ts' />
 /// <reference path='./EventData.ts' />
-/// <reference path='./ConditionChecker.ts' />
 
 module ebi.rpg.event {
     export class EventObject {
-        private map_: map.Map;
         private mapCharacter_: map.MapCharacter;
         private pageIndex_: number = -1;
         private eventData_: EventData;
-        constructor(map: map.Map, eventData: EventData) {
+        constructor(eventData: EventData) {
             this.eventData_ = eventData;
-            this.map_ = map;
             // Setup Default MapCharacter (Invisible / Non-Interactive)
-            this.mapCharacter_ = new rpg.map.MapCharacter(eventData.id, this.map_);
+            this.mapCharacter_ = new rpg.map.MapCharacter(eventData.id, core.GameState.map);
             this.mapCharacter_.setPosition(eventData.x, eventData.y);
             this.mapCharacter_.ignoreTile = true;
             this.mapCharacter_.ignoreCharacter = true;
@@ -48,7 +46,7 @@ module ebi.rpg.event {
             var len = pages.length;
             for (var i = len - 1; i >= 0; i--) {
                 var page = pages[i];
-                if (ConditionChecker.checkConditions(page.conditions)) {
+                if (core.GameState.checkConditions(page.conditions)) {
                     pageIndex = i;
                     break;
                 }
