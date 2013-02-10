@@ -38,95 +38,9 @@ module ebi.game {
 
         // Hack to preload fixed data
         public static preloadJson(path: string): void {
-            json_[path] = {
-                "0": [
-                    [ //"pages": 
-                        [
-                            [//"status": 
-                                1, //"visible": true,
-                                255, //"alpha": 255,
-                                0, //"dir": 6,
-                                1, //"frame_no": 1,
-                                1, //"chipset_id": "TimeOver_chara",
-                                5, //"wait": 5,
-                                1, //"speed": 1,
-                                1, //"layer": 1,
-                                1, //"route_repeat": true,
-                                0, //"route_skip": false
-                                0, //"dir_fix": false,
-                                0, //"stay_anime": false,
-                                1, //"move_anime": true,
-                                0, //"pass_event": false,
-                                0, //"pass_character": false,
-                                0, //"pass_tile": false
-                            ],
-                            [], //"conditions": [],
-                            [["checked", "0"]], //"triggers": [["checked", 0]],
-                            [["message", "My name is Daigo?"]], //"commands": [],
-                            [] //"route": [],
-                        ]
-                    ],
-                    [132, 96]//"pos": [7, 6]
-                ],
-                "1": [
-                    [ //"pages": 
-                        [
-                            [//"status": 
-                                1, //"visible": true,
-                                255, //"alpha": 255,
-                                1, //"dir": 6,
-                                1, //"frame_no": 1,
-                                1, //"chipset_id": "TimeOver_chara",
-                                5, //"wait": 5,
-                                1, //"speed": 1,
-                                1, //"layer": 1,
-                                1, //"route_repeat": true,
-                                0, //"route_skip": false
-                                0, //"dir_fix": false,
-                                0, //"stay_anime": false,
-                                1, //"move_anime": true,
-                                0, //"pass_event": false,
-                                0, //"pass_character": false,
-                                0, //"pass_tile": false
-                            ],
-                            [], //"conditions": [],
-                            [["checked", "0"]], //"triggers": [["checked", 0]],
-                            [], //"commands": [],
-                            [] //"route": [],
-                        ]
-                    ],
-                    [132, 64]//"pos": [7, 6]
-                ],
-                "2": [
-                    [ //"pages": 
-                        [
-                            [//"status": 
-                                1, //"visible": true,
-                                255, //"alpha": 255,
-                                2, //"dir": 6,
-                                1, //"frame_no": 1,
-                                1, //"chipset_id": "TimeOver_chara",
-                                5, //"wait": 5,
-                                1, //"speed": 1,
-                                1, //"layer": 1,
-                                1, //"route_repeat": true,
-                                0, //"route_skip": false
-                                0, //"dir_fix": false,
-                                0, //"stay_anime": false,
-                                1, //"move_anime": true,
-                                0, //"pass_event": false,
-                                0, //"pass_character": false,
-                                0, //"pass_tile": false
-                            ],
-                            [], //"conditions": [],
-                            [["checked", "0"]], //"triggers": [["checked", 0]],
-                            [], //"commands": [],
-                            [] //"route": [],
-                        ]
-                    ],
-                    [364, 104]//"pos": [7, 6]
-                ]
-            };
+            var utils = new cc.FileUtils();
+            var test = utils.getFileData("res/data/event0.json");
+            json_[path] = JSON.parse(test);
         }
 
         public static getJson(path: string): Image {

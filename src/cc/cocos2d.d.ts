@@ -121,4 +121,7 @@ module cc {
     class TMXTilesetInfo extends Node {
         firstGid: number;
     }
+    class FileUtils {
+        getFileData(path: string, mode?: string, size?: number): any;
+    }
 }

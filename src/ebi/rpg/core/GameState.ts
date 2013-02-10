@@ -6,6 +6,7 @@
 
 module ebi.rpg.core {
     export class GameState {
+        public static switches: {} = {};
         public static map: map.Map;
         public static mapSensor: map.MapSensor;
         public static camera: map.MapCamera;

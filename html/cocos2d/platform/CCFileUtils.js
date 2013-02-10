@@ -133,7 +133,7 @@ cc.FileUtils = cc.Class.extend({
         if (this._fileDataCache.hasOwnProperty(fileName))
             return this._fileDataCache[fileName];
 
-        return this._loadBinaryFileData(fileName);
+        return this._loadString(fileName);
     },
 
     _getXMLHttpRequest:function () {
@@ -175,6 +175,31 @@ cc.FileUtils = cc.Class.extend({
             };
         }
         xhr.send(null);
+    },
+
+    //HACK: We have to change this later!
+    _loadString:function (fileUrl) {
+        var req = this._getXMLHttpRequest();
+        req.open('GET', fileUrl, false);
+        var arrayInfo = null;
+        if (/msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent)) {
+            req.setRequestHeader("Accept-Charset", "x-user-defined");
+            req.send(null);
+            if (req.status != 200)
+                return null;
+
+            var fileContents = cc._convertResponseBodyToText(req.responseBody);
+            this._fileDataCache[fileUrl] = fileContents;
+        } else {
+            if (req.overrideMimeType)
+                req.overrideMimeType('text\/plain; charset=x-user-defined');
+            req.send(null);
+            if (req.status != 200)
+                return null;
+
+            this._fileDataCache[fileUrl] = req.responseText;
+        }
+        return this._fileDataCache[fileUrl];
     },
 
     _loadBinaryFileData:function (fileUrl) {
