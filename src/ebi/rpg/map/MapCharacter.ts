@@ -41,7 +41,7 @@ module ebi.rpg.map {
             }
         }
 
-        constructor(eventId: number, map: Map) {
+        constructor(eo: event.EventObject, map: Map) {
             this.map_ = map;
             // Initializing chipset through accessor
             this.chipsetId = 0;
@@ -68,7 +68,7 @@ module ebi.rpg.map {
                 );
             }
             this.collisionObject_.category = ebi.rpg.map.collision.Category.Character;
-            this.collisionObject_.data = eventId;
+            this.collisionObject_.data = eo;
             this.updateVisual(); 
         }
 

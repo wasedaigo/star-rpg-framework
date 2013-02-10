@@ -9,7 +9,7 @@ module ebi.rpg.core {
         public static map: map.Map;
         public static mapSensor: map.MapSensor;
         public static camera: map.MapCamera;
-        public static eventObjects: event.EventObject[];
+        public static eventObjects: {[key : string]: ebi.rpg.event.EventObject;};
 
         private static checkCondition(condition: Object[]): bool {
         	var result = false;

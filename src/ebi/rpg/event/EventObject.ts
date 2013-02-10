@@ -8,10 +8,11 @@ module ebi.rpg.event {
         private mapCharacter_: map.MapCharacter;
         private pageIndex_: number = -1;
         private eventData_: EventData;
+
         constructor(eventData: EventData) {
             this.eventData_ = eventData;
             // Setup Default MapCharacter (Invisible / Non-Interactive)
-            this.mapCharacter_ = new rpg.map.MapCharacter(eventData.id, core.GameState.map);
+            this.mapCharacter_ = new rpg.map.MapCharacter(this, core.GameState.map);
             this.mapCharacter_.setPosition(eventData.x, eventData.y);
             this.mapCharacter_.ignoreTile = true;
             this.mapCharacter_.ignoreCharacter = true;
@@ -38,6 +39,10 @@ module ebi.rpg.event {
 
         public updateMapCharacter(): void {
             this.mapCharacter_.update();
+        }
+
+        public check(eventId: number): void {
+            console.log("Event(" + this.eventId + ") is checked by Event(" + eventId + ")");
         }
 
         private getActiveTopPageIndex(): number {

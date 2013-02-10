@@ -19,13 +19,12 @@ module ebi.rpg.map {
             core.GameState.map = new Map();
             core.GameState.camera = new MapCamera(core.GameState.map);
             core.GameState.mapSensor = new MapSensor();
-            var eventObjects = [];
-
+            var eventObjects = {};
             var eventDataDictionary = rpg.event.EventDataLoader.loadEventDataDictionary(0);
             for (var key in eventDataDictionary) {
                 var eventData = eventDataDictionary[key];
                 var eo = new event.EventObject(eventData);
-                eventObjects.push(eo);
+                eventObjects[eventData.id] = eo;
             }
             core.GameState.eventObjects = eventObjects;
 
@@ -42,9 +41,22 @@ module ebi.rpg.map {
 
         public update(): void {
             core.GameState.camera.update();
-            core.GameState.eventObjects.forEach((eo) => eo.updatePage());
-            core.GameState.eventObjects.forEach((eo) => eo.updateCommand());
-            core.GameState.eventObjects.forEach((eo) => eo.updateMapCharacter());
+
+            // Update EventPage, such as checking existing condition
+            for (var key in core.GameState.eventObjects) {
+                core.GameState.eventObjects[key].updatePage();
+            }
+
+            // Update EventPage, such as checking existing condition
+            for (var key in core.GameState.eventObjects) {
+                core.GameState.eventObjects[key].updateCommand();
+            }
+
+            // Update EventPage, such as checking existing condition
+            for (var key in core.GameState.eventObjects) {
+                core.GameState.eventObjects[key].updateMapCharacter();
+            }
+
             if (ui.AnalogInputController.isChecked) {
                 core.GameState.mapSensor.check(this.playerEvent);
             }
@@ -52,7 +64,7 @@ module ebi.rpg.map {
         }
 
         private get playerEvent(): event.EventObject {
-            return core.GameState.eventObjects[0];
+            return core.GameState.eventObjects["0"];
         }
 
     }

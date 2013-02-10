@@ -1,4 +1,5 @@
 /// <reference path='../../../../b2/Box2D.d.ts' />
+/// <reference path='../Event/EventObject.ts' />
 /// <reference path='./CollisionObject.ts' />
 /// <reference path='./Edge.ts' />
 /// <reference path='./Point.ts' />
@@ -49,20 +50,18 @@ module ebi.rpg.map.collision {
 
         // Check "check" event
         if (objectA.isCharacterSensor && objectB.isCharacter) {
-            if (objectA.data != objectB.data) {
-                if (typeof objectB.data === "number") {
-                    var eventId: number = objectB.data;
-                    console.log("Checking a Character! = " + eventId);
-                }
+            var targetEventId: number = objectA.data;
+            var event: event.EventObject = objectB.data;
+            if (targetEventId != event.eventId) {
+                event.check(targetEventId);
             }
         }
 
         if (objectB.isCharacterSensor && objectA.isCharacter) {
-            if (objectA.data != objectB.data) {
-                if (typeof objectA.data === "number") {
-                    var eventId: number = objectA.data;
-                    console.log("Checking a Character! = " + eventId);
-                }
+            var targetEventId: number = objectB.data;
+            var event: event.EventObject = objectA.data;
+            if (targetEventId != event.eventId) {
+                event.check(targetEventId);
             }
         }
     }
