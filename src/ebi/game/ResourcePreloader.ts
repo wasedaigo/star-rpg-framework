@@ -62,7 +62,7 @@ module ebi.game {
                             ],
                             [], //"conditions": [],
                             [["checked", "0"]], //"triggers": [["checked", 0]],
-                            [], //"commands": [],
+                            [["message", "My name is Daigo?"]], //"commands": [],
                             [] //"route": [],
                         ]
                     ],

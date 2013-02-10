@@ -12,22 +12,23 @@ module ebi.collision {
 
     export class CollisionObject {
 
-
         private b2Body_: Box2D.Dynamics.b2Body;
         private b2Fixtures_: Box2D.Dynamics.b2Fixture[];
         private id_: number;
         private ignoreTrigger_: bool = false;
         private ignoreBits_: number = 0;
+        private life_: number = 0;
         private categoryBits_: number = 0;
         private touchingObjects_: Object[] = [];
         private touchedObjects_: Object[] = [];
         private static currentId: number = 0;
         private static collisionObjects = {};
 
-        constructor(body: Box2D.Dynamics.b2Body, fixtures: Box2D.Dynamics.b2Fixture[]) {
+        constructor(body: Box2D.Dynamics.b2Body, fixtures: Box2D.Dynamics.b2Fixture[], life?: number = 0) {
             this.b2Body_ = body;
             this.b2Fixtures_ = fixtures;
             this.id_ = CollisionObject.currentId++;
+            this.life_ = life;
             CollisionObject.collisionObjects[this.id_] = this;
         }
 
@@ -39,6 +40,7 @@ module ebi.collision {
             delete CollisionObject.collisionObjects[this.id_];
             delete this.b2Fixtures_;
             delete this.b2Body_;  
+            delete this.id_;
         }
 
         public setPos(x: number, y: number): void {
@@ -107,9 +109,21 @@ module ebi.collision {
             this.touchedObjects_ = [];
         }
 
-        public static resetAll(): void {
+        public tickLife(): void {
+            // if life is set as 0 in the beginning, we do not dispose it automatically
+            if (this.life_ > 0) {
+                this.life_--;
+                if (this.life_ == 0) {
+                    this.dispose();
+                }
+            }
+        }
+
+        public static update(): void {
             for (var id in CollisionObject.collisionObjects) {
-                CollisionObject.collisionObjects[id].reset();
+                var co = CollisionObject.collisionObjects[id];
+                co.reset();
+                co.tickLife();
             }
         }
     }

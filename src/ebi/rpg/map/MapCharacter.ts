@@ -14,7 +14,8 @@ module ebi.rpg.map {
         private frameNo_: number = 0;
         private dir_: number = 0;
         private timer_: number = 0;
-        private chipsetId_: number;
+        private chipsetId_: number = -1;
+        private eventId_: number;
         private mapSprite_: MapSprite = null;
         private charaChipset_: MapCharacterChipset;
         private vx_: number = 0;
@@ -40,15 +41,14 @@ module ebi.rpg.map {
             }
         }
 
-        constructor(chipsetId: number, map: Map) {
-            this.chipsetId_ = chipsetId;
+        constructor(eventId: number, map: Map) {
             this.map_ = map;
-
-            this.charaChipset_ = core.DatabaseManager.getCharaChipsetData(chipsetId);
-            this.frameNo_ = this.charaChipset_.defaultFrameNo;
+            // Initializing chipset through accessor
+            this.chipsetId = 0;
             this.dir_ = 0;
             this.speed_ = 3;
-            this.setImage(this.charaChipset_.src);
+            this.frameNo_ = this.charaChipset_.defaultFrameNo;
+            this.eventId_ = eventId;
 
             // Setup collision object
             // Even for non-colliding character, 
@@ -60,6 +60,7 @@ module ebi.rpg.map {
                 this.charaChipset_.hitRect[3] - 1
             );
             this.collisionObject_.setCategory(ebi.collision.Category.Character);
+
             this.updateVisual(); 
         }
 
