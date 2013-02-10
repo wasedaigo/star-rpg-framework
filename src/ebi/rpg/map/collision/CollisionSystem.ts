@@ -39,6 +39,34 @@ module ebi.rpg.map.collision {
         return worldManifold.m_normal.Copy();  
     }
 
+    ContactListener.prototype.BeginContact = function (contact: Box2D.Dynamics.Contacts.b2Contact): void {
+        var fixtureA = contact.GetFixtureA();
+        var fixtureB = contact.GetFixtureB();
+        var bodyA = fixtureA.GetBody();
+        var bodyB = fixtureB.GetBody();
+        var objectA = bodyA.GetUserData();
+        var objectB = bodyB.GetUserData();
+
+        // Check "check" event
+        if (objectA.isCharacterSensor && objectB.isCharacter) {
+            if (objectA.data != objectB.data) {
+                if (typeof objectB.data === "number") {
+                    var eventId: number = objectB.data;
+                    console.log("Checking a Character! = " + eventId);
+                }
+            }
+        }
+
+        if (objectB.isCharacterSensor && objectA.isCharacter) {
+            if (objectA.data != objectB.data) {
+                if (typeof objectA.data === "number") {
+                    var eventId: number = objectA.data;
+                    console.log("Checking a Character! = " + eventId);
+                }
+            }
+        }
+    }
+
     // In order to have RPG-style character collision, I put some effort here...
     // Not perfect, but acceptable. Maybe gotta move to ebi.rpg?
     ContactListener.prototype.PreSolve = function (contact: Box2D.Dynamics.Contacts.b2Contact,
@@ -147,7 +175,7 @@ module ebi.rpg.map.collision {
             fixDef.isSensor = isSensor;
             var fixtures = shapes.map((shape) => {
                 fixDef.shape = shape;
-                body.CreateFixture(fixDef);
+                return body.CreateFixture(fixDef);
             });
 
             var collisionObject = new CollisionObject(body, fixtures, life);
@@ -187,11 +215,13 @@ module ebi.rpg.map.collision {
 
         public static update(): void {
             // Reset some data such as touching info before simulation
-            CollisionObject.update();
+            CollisionObject.beforeStep();
 
             var ms = 1 / 60; // aim for 60 FPS
             // timestep delta, velocity iteration, rotation iteration
             world.Step(ms, 3, 1);
+
+            CollisionObject.afterStep();
         }
     }
 }

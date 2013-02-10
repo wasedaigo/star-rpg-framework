@@ -22,7 +22,7 @@ module ebi.rpg.map {
 
             var edges = this.extractEdges();
             this.collision_ = collision.CollisionSystem.createCollisionEdges(0, 0, edges);
-            this.collision_.setCategory(collision.Category.Tile);
+            this.collision_.category = collision.Category.Tile;
         }
 
         public dispose(): void {

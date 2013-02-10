@@ -13,9 +13,9 @@ module ebi.rpg.map {
         private switchFrameDir_: number = 1;
         private frameNo_: number = 0;
         private dir_: number = 0;
+        private angle_: number = 0;
         private timer_: number = 0;
         private chipsetId_: number = -1;
-        private eventId_: number;
         private mapSprite_: MapSprite = null;
         private charaChipset_: MapCharacterChipset;
         private vx_: number = 0;
@@ -48,19 +48,27 @@ module ebi.rpg.map {
             this.dir_ = 0;
             this.speed_ = 3;
             this.frameNo_ = this.charaChipset_.defaultFrameNo;
-            this.eventId_ = eventId;
 
             // Setup collision object
             // Even for non-colliding character, 
             //we need this to manipulte its position
-            this.collisionObject_ = ebi.rpg.map.collision.CollisionSystem.createCollisionRect(
-                this.charaChipset_.hitRect[0],
-                this.charaChipset_.hitRect[1],
-                this.charaChipset_.hitRect[2] - 1,
-                this.charaChipset_.hitRect[3] - 1
-            );
-            this.collisionObject_.setCategory(ebi.rpg.map.collision.Category.Character);
-
+            var circleCollision = false;
+            if (circleCollision) {
+                this.collisionObject_ = ebi.rpg.map.collision.CollisionSystem.createCollisionCircle(
+                    this.charaChipset_.hitRect[0],
+                    this.charaChipset_.hitRect[1],
+                    this.charaChipset_.hitRect[2]
+                );
+            } else {
+                this.collisionObject_ = ebi.rpg.map.collision.CollisionSystem.createCollisionRect(
+                    this.charaChipset_.hitRect[0],
+                    this.charaChipset_.hitRect[1],
+                    this.charaChipset_.hitRect[2] - 1,
+                    this.charaChipset_.hitRect[3] - 1
+                );
+            }
+            this.collisionObject_.category = ebi.rpg.map.collision.Category.Character;
+            this.collisionObject_.data = eventId;
             this.updateVisual(); 
         }
 
@@ -84,20 +92,34 @@ module ebi.rpg.map {
             this.collisionObject_.ignoreTrigger = ignore;
         }
 
-        public get width(): number {
-            return this.charaChipset_.size[0];
-        }
-
-        public get height(): number {
-            return this.charaChipset_.size[1];
-        }
-
         public get screenX(): number {
             return this.collisionObject_.x;
         }
 
         public get screenY(): number {
             return this.collisionObject_.y;
+        }
+        
+        public get width(): number {
+            return this.charaChipset_.hitRect[2];
+        }
+
+        public get height(): number {
+            return this.charaChipset_.hitRect[3];
+        }
+
+        public get senseX(): number {
+            var tDir = (this.charaChipset_.dirCount - this.dir_ + 1) % this.charaChipset_.dirCount;
+            var angle = (2 * Math.PI / this.charaChipset_.dirCount) * tDir;
+            var halfWidth = this.charaChipset_.hitRect[2] * 0.5;
+            return this.screenX + Math.cos(angle) * halfWidth;
+        }
+
+        public get senseY(): number {
+            var tDir = (this.charaChipset_.dirCount - this.dir_ + 1) % this.charaChipset_.dirCount;
+            var angle = (2 * Math.PI / this.charaChipset_.dirCount) * tDir;
+            var halfHeight = this.charaChipset_.hitRect[3] * 0.5;
+            return this.screenY + Math.sin(angle) * halfHeight;
         }
 
         public get controlable(): bool {

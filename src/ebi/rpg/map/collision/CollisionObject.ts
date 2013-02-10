@@ -6,8 +6,10 @@ module ebi.rpg.map.collision {
     var PTM_RATIO: number = 32;
 
     export enum Category {
+        None = 0,
         Tile = 1,
         Character = 2,
+        CharacterSensor = 4
     }
 
     export class CollisionObject {
@@ -23,6 +25,7 @@ module ebi.rpg.map.collision {
         private touchedObjects_: Object[] = [];
         private static currentId: number = 0;
         private static collisionObjects = {};
+        public data: any = null;
 
         constructor(body: Box2D.Dynamics.b2Body, fixtures: Box2D.Dynamics.b2Fixture[], life?: number = 0) {
             this.b2Body_ = body;
@@ -38,9 +41,6 @@ module ebi.rpg.map.collision {
             });
             CollisionSystem.world.DestroyBody(this.b2Body_);
             delete CollisionObject.collisionObjects[this.id_];
-            delete this.b2Fixtures_;
-            delete this.b2Body_;  
-            delete this.id_;
         }
 
         public setPos(x: number, y: number): void {
@@ -90,8 +90,8 @@ module ebi.rpg.map.collision {
             return this.categoryBits_;
         }
 
-        public setCategory(category: number): void {
-            this.categoryBits_ = category;
+        public set category(value: number) {
+            this.categoryBits_ = value;
         }
 
         public get isTile(): bool {
@@ -100,6 +100,10 @@ module ebi.rpg.map.collision {
 
         public get isCharacter(): bool {
             return (this.categoryBits_ & Category.Character) == this.categoryBits_;
+        }
+
+        public get isCharacterSensor(): bool {
+            return (this.categoryBits_ & Category.CharacterSensor) == this.categoryBits_;
         }
 
         public setIgnoreCategory(category: number, value: bool): void {
@@ -126,10 +130,16 @@ module ebi.rpg.map.collision {
             }
         }
 
-        public static update(): void {
+        public static beforeStep(): void {
             for (var id in CollisionObject.collisionObjects) {
                 var co = CollisionObject.collisionObjects[id];
                 co.reset();
+            }
+        }
+
+        public static afterStep(): void {
+            for (var id in CollisionObject.collisionObjects) {
+                var co = CollisionObject.collisionObjects[id];
                 co.tickLife();
             }
         }

@@ -26,10 +26,10 @@ module ebi.rpg.map {
                 var ex = Math.max(0, this.map_.width - halfScreenWidth);
                 var ey = Math.max(0, this.map_.height - halfScreenHeight); 
 
-                var tx = this.focusTarget.screenX + this.focusTarget.width / 2;
+                var tx = this.focusTarget.screenX;
                 this.focusX_ = Math.min(Math.max(sx, tx), ex);
 
-                var ty = this.focusTarget.screenY + this.focusTarget.height / 2;
+                var ty = this.focusTarget.screenY;
                 this.focusY_ = Math.min(Math.max(sy, ty), ey);
 
                 this.map_.scrollX = (halfScreenWidth - this.focusX_); 
