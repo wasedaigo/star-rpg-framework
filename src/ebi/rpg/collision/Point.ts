@@ -1,4 +1,4 @@
-module ebi.collision {
+module ebi.rpg.collision {
 
     export class Point {
 

@@ -21,7 +21,7 @@ module ebi.rpg.map {
         private vx_: number = 0;
         private vy_: number = 0;
         private map_: Map;
-        private collisionObject_: ebi.collision.CollisionObject;
+        private collisionObject_: ebi.rpg.collision.CollisionObject;
         private controlable_: bool;
         private speed_: number;
 
@@ -53,13 +53,13 @@ module ebi.rpg.map {
             // Setup collision object
             // Even for non-colliding character, 
             //we need this to manipulte its position
-            this.collisionObject_ = ebi.collision.CollisionSystem.createCollisionRect(
+            this.collisionObject_ = ebi.rpg.collision.CollisionSystem.createCollisionRect(
                 this.charaChipset_.hitRect[0],
                 this.charaChipset_.hitRect[1],
                 this.charaChipset_.hitRect[2] - 1,
                 this.charaChipset_.hitRect[3] - 1
             );
-            this.collisionObject_.setCategory(ebi.collision.Category.Character);
+            this.collisionObject_.setCategory(ebi.rpg.collision.Category.Character);
 
             this.updateVisual(); 
         }
@@ -73,11 +73,11 @@ module ebi.rpg.map {
         }
 
         public set ignoreTile(ignore: bool) {
-            this.collisionObject_.setIgnoreCategory(ebi.collision.Category.Tile, ignore);
+            this.collisionObject_.setIgnoreCategory(ebi.rpg.collision.Category.Tile, ignore);
         }
 
         public set ignoreCharacter(ignore: bool) {
-            this.collisionObject_.setIgnoreCategory(ebi.collision.Category.Character, ignore);
+            this.collisionObject_.setIgnoreCategory(ebi.rpg.collision.Category.Character, ignore);
         }
        
         public set ignoreTrigger(ignore: bool) {

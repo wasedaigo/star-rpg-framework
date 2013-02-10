@@ -33,7 +33,7 @@ module ebi.rpg {
             }
 
             ui.AnalogInputController.update();
-            ebi.collision.CollisionSystem.update();
+            ebi.rpg.collision.CollisionSystem.update();
 
             if (scene_) {
                 scene_.update();
