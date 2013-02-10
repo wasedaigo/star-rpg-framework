@@ -1,4 +1,4 @@
-module ebi.rpg.collision {
+module ebi.rpg.map.collision {
 
     export class Edge {
 

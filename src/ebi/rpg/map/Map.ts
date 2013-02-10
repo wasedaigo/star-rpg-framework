@@ -1,5 +1,5 @@
-/// <reference path='../collision/CollisionSystem.ts' />
-/// <reference path='../collision/CollisionObject.ts' />
+/// <reference path='./collision/CollisionSystem.ts' />
+/// <reference path='./collision/CollisionObject.ts' />
 /// <reference path='../game/TmxTiledMap.ts' />
 
 module ebi.rpg.map {
@@ -10,7 +10,7 @@ module ebi.rpg.map {
         private scrollY_: number = 0;
 
         private tmxTiledMap_: ebi.game.TmxTiledMap;
-        private collision_: ebi.rpg.collision.CollisionObject;
+        private collision_: ebi.rpg.map.collision.CollisionObject;
         constructor() {
             this.tmxTiledMap_ = new ebi.game.TmxTiledMap('sample');
 
@@ -21,7 +21,7 @@ module ebi.rpg.map {
             this.tmxTiledMap_.setLayerZ('collision',    1);
 
             var edges = this.extractEdges();
-            this.collision_ = ebi.rpg.collision.CollisionSystem.createCollisionEdges(0, 0, edges);
+            this.collision_ = ebi.rpg.map.collision.CollisionSystem.createCollisionEdges(0, 0, edges);
             this.collision_.setCategory(0);
         }
 
@@ -32,16 +32,16 @@ module ebi.rpg.map {
             delete this.collision_;
         }
 
-        private extractEdges(): ebi.rpg.collision.Edge[] {
-            var edges: ebi.rpg.collision.Edge[] = [];
+        private extractEdges(): ebi.rpg.map.collision.Edge[] {
+            var edges: ebi.rpg.map.collision.Edge[] = [];
             edges = edges.concat(this.extractHorizontalEdges());
             edges = edges.concat(this.extractVerticalEdges());
             edges = edges.concat(this.extractBorderEdges());
             return edges;
         }
 
-        private extractBorderEdges(): ebi.rpg.collision.Edge[] {
-            var edges: ebi.rpg.collision.Edge[] = [];
+        private extractBorderEdges(): ebi.rpg.map.collision.Edge[] {
+            var edges: ebi.rpg.map.collision.Edge[] = [];
 
             // Down
             edges.push(this.createHorizontalEdge(0, this.xCount, this.yCount));
@@ -55,10 +55,10 @@ module ebi.rpg.map {
             return edges;
         }
 
-        private extractHorizontalEdges(): ebi.rpg.collision.Edge[] {
+        private extractHorizontalEdges(): ebi.rpg.map.collision.Edge[] {
             var xCount = this.tmxTiledMap_.xCount;
             var yCount = this.tmxTiledMap_.yCount;
-            var edges: ebi.rpg.collision.Edge[] = [];
+            var edges: ebi.rpg.map.collision.Edge[] = [];
 
             var edgeStartPos = -1; // A variable to keep track of edge continuity
 
@@ -89,10 +89,10 @@ module ebi.rpg.map {
             return edges;
         }
 
-        private extractVerticalEdges(): ebi.rpg.collision.Edge[] {
+        private extractVerticalEdges(): ebi.rpg.map.collision.Edge[] {
             var xCount = this.tmxTiledMap_.xCount;
             var yCount = this.tmxTiledMap_.yCount;
-            var edges: ebi.rpg.collision.Edge[] = [];
+            var edges: ebi.rpg.map.collision.Edge[] = [];
 
             var edgeStartPos = -1; // A variable to keep track of edge continuity
 
@@ -123,22 +123,22 @@ module ebi.rpg.map {
             return edges;
         }
 
-        private createHorizontalEdge(startX: number, endX: number, y: number): ebi.rpg.collision.Edge {
+        private createHorizontalEdge(startX: number, endX: number, y: number): ebi.rpg.map.collision.Edge {
             var ty = y * this.gridSizeY;
             // Note: adding/subtracting 1 to avoid stacking characters crossing the edge
-            var edge = new ebi.rpg.collision.Edge(
-                new ebi.rpg.collision.Point(startX * this.gridSizeX + 1, ty), 
-                new ebi.rpg.collision.Point(endX * this.gridSizeX - 1, ty)
+            var edge = new ebi.rpg.map.collision.Edge(
+                new ebi.rpg.map.collision.Point(startX * this.gridSizeX + 1, ty), 
+                new ebi.rpg.map.collision.Point(endX * this.gridSizeX - 1, ty)
             );    
             return edge;        
         }
 
-        private createVerticalEdge(x :number, startY: number, endY: number): ebi.rpg.collision.Edge {
+        private createVerticalEdge(x :number, startY: number, endY: number): ebi.rpg.map.collision.Edge {
             var tx = x * this.gridSizeX;
             // Note: adding/subtracting 1 to avoid stacking characters crossing the edge
-            var edge = new ebi.rpg.collision.Edge(
-                new ebi.rpg.collision.Point(tx, startY * this.gridSizeY + 1), 
-                new ebi.rpg.collision.Point(tx, endY * this.gridSizeY - 1)
+            var edge = new ebi.rpg.map.collision.Edge(
+                new ebi.rpg.map.collision.Point(tx, startY * this.gridSizeY + 1), 
+                new ebi.rpg.map.collision.Point(tx, endY * this.gridSizeY - 1)
             );    
             return edge;        
         }

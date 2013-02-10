@@ -1,4 +1,4 @@
-/// <reference path='../collision/CollisionSystem.ts' />
+/// <reference path='./collision/CollisionSystem.ts' />
 /// <reference path='../game/Game.ts' />
 /// <reference path='../game/ResourcePreloader.ts' />
 /// <reference path='./core/DatabaseManager.ts' />
@@ -33,7 +33,7 @@ module ebi.rpg {
             }
 
             ui.AnalogInputController.update();
-            ebi.rpg.collision.CollisionSystem.update();
+            ebi.rpg.map.collision.CollisionSystem.update();
 
             if (scene_) {
                 scene_.update();

@@ -1,4 +1,4 @@
-/// <reference path='../../../b2/Box2D.d.ts' />
+/// <reference path='../../../../b2/Box2D.d.ts' />
 /// <reference path='./CollisionObject.ts' />
 /// <reference path='./Edge.ts' />
 /// <reference path='./Point.ts' />
@@ -8,7 +8,7 @@ module Box2D {
 }
 
 // We should not use Box2D(or chipmunk) directly outside of CollisionSystem!
-module ebi.rpg.collision {
+module ebi.rpg.map.collision {
 
     // Constant to convert between physics-world position and screen position
     var PTM_RATIO: number = 32;
