@@ -5,11 +5,13 @@
 
 module ebi.rpg.event {
     export class EventObject {
-        private mapCharacter_: map.MapCharacter;
+        private mapCharacter_: map.MapCharacter = null;
         private pageIndex_: number = -1;
-        private eventData_: EventData;
+        private eventData_: EventData = null;
         private checkedEventId_: number = -1;
         private touchedEventId_: number = -1;
+        private commandExecuting_: bool = false;
+        private commandIndex_: number = 0;
 
         constructor(eventData: EventData) {
             this.eventData_ = eventData;
@@ -38,10 +40,14 @@ module ebi.rpg.event {
             return this.touchedEventId_;
         }
 
+        private get currentPage(): event.EventPageData {
+            return this.eventData_.pages[this.pageIndex_];
+        }
+
         public update(): void {
-            var index = this.getActiveTopPageIndex();
-            this.setPageIndex(index);
+            this.updatePage();
             this.checkTrigger();
+            this.updateCommand();
             this.mapCharacter_.update();
         }
 
@@ -60,6 +66,35 @@ module ebi.rpg.event {
             this.touchedEventId_ = eventId;
         }
 
+        private updatePage(): void {
+            var index = this.getActiveTopPageIndex();
+            this.setPageIndex(index);
+        }
+
+        private updateCommand(): void {
+            if (this.commandExecuting_) {
+                var commands = this.currentPage.commands;
+                var len = commands.length;
+                while (true) {
+                    var command = commands[this.commandIndex_];
+                    var commandType: string = command[0];
+                    switch(commandType) {
+                        case "switch": 
+                            var switchNo = command[1];
+                            var boolValue = command[2];
+                            core.GameState.switches[switchNo] = (boolValue === 1);
+                        break;
+                    }
+
+                    this.commandIndex_++;
+                    if (this.commandIndex_ >= len) {
+                        this.commandExecuting_ = false;
+                        break;
+                    }
+                }
+            }
+        }
+
         private getActiveTopPageIndex(): number {
             var pageIndex = -1;
             var pages = this.eventData_.pages;
@@ -76,12 +111,16 @@ module ebi.rpg.event {
         }
 
         private checkTrigger(): void {
-            if (this.pageIndex_ < 0) {
+            if (!this.currentPage) {
                 return;
             }
-            var page = this.eventData_.pages[this.pageIndex_];
-            if (page.triggers.length > 0 && core.GameState.checkCondition(this, page.triggers)) {
-                console.log("Triggered!");
+
+            var triggers = this.currentPage.triggers;
+            if (triggers.length > 0 && core.GameState.checkCondition(this, triggers)) {
+                if (this.currentPage.commands.length > 0) {
+                    this.commandExecuting_ = true;
+                    this.commandIndex_ = 0;
+                }
             } 
         }
 
