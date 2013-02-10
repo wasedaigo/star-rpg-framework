@@ -28,9 +28,9 @@ module ebi.rpg.event {
             var status: ebi.rpg.event.EventStatusData = loadEventStatusData(rawPage[0]);
 
             var conditions = rawPage[1];
-            var route = rawPage[2];
+            var triggers = rawPage[2];
             var commands = rawPage[3];
-            var triggers = rawPage[4];
+            var route = rawPage[4];
 
             return {
                 status: status,

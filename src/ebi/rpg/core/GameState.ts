@@ -6,25 +6,25 @@
 
 module ebi.rpg.core {
     export class GameState {
-        public static switches: {} = {};
+        public static switches: bool[] = [];
         public static map: map.Map;
         public static mapSensor: map.MapSensor;
         public static camera: map.MapCamera;
-        public static eventObjects: {[key : string]: ebi.rpg.event.EventObject;};
+        public static eventObjects: ebi.rpg.event.EventObject[];
 
-        private static checkCondition(condition: Object[]): bool {
+        private static checkCondition(eo: ebi.rpg.event.EventObject, condition: any[]): bool {
         	var result = false;
             switch(condition[0]) {
             	// When "checked" by other event
                 case "checked":
-                    var eventId = condition[1];
-                    result = false;
+                    var eventId: number = condition[1];
+                    result = (eo.checkedEventId === eventId);
                 break;
                 // Check switch condition
                 case "switch":
                     var switchNo = condition[1];
-                    var value = condition[2];
-                    result = (value === 1);
+                    var boolValue = condition[2];
+                    result = switches[switchNo] == (boolValue === 1);
                 break;
                 // Check switch condition
                 case "variable":
@@ -33,10 +33,10 @@ module ebi.rpg.core {
             return result;
         }
 
-        public static checkConditions(conditions: Object[][]): bool {
+        public static checkConditions(eo: ebi.rpg.event.EventObject, conditions: any[][]): bool {
             var len = conditions.length;
             for (var i = 0; i < len; i++) {
-                if (!checkCondition(conditions[i])) {
+                if (!checkCondition(eo, conditions[i])) {
                 	return false;
                 }
             }

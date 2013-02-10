@@ -41,6 +41,7 @@ module ebi.rpg.event {
         public update(): void {
             var index = this.getActiveTopPageIndex();
             this.setPageIndex(index);
+            this.checkTrigger();
             this.mapCharacter_.update();
         }
 
@@ -65,13 +66,23 @@ module ebi.rpg.event {
             var len = pages.length;
             for (var i = len - 1; i >= 0; i--) {
                 var page = pages[i];
-                if (core.GameState.checkConditions(page.conditions)) {
+                if (core.GameState.checkConditions(this, page.conditions)) {
                     pageIndex = i;
                     break;
                 }
             }
 
             return pageIndex;
+        }
+
+        private checkTrigger(): void {
+            if (this.pageIndex_ < 0) {
+                return;
+            }
+            var page = this.eventData_.pages[this.pageIndex_];
+            if (page.triggers.length > 0 && core.GameState.checkCondition(this, page.triggers)) {
+                console.log("Triggered!");
+            } 
         }
 
         private setPageIndex(index: number): void {

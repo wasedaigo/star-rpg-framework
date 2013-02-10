@@ -19,15 +19,15 @@ module ebi.rpg.map {
             core.GameState.map = new Map();
             core.GameState.camera = new MapCamera(core.GameState.map);
             core.GameState.mapSensor = new MapSensor();
-            var eventObjects = {};
+            var eventObjects = [];
             var eventDataDictionary = rpg.event.EventDataLoader.loadEventDataDictionary(0);
             for (var key in eventDataDictionary) {
                 var eventData = eventDataDictionary[key];
                 var eo = new event.EventObject(eventData);
                 eventObjects[eventData.id] = eo;
             }
-            core.GameState.eventObjects = eventObjects;
 
+            core.GameState.eventObjects = eventObjects;
             core.GameState.camera.focusTarget = this.playerEvent.mapCharacter;
 
             // Initialize UI
@@ -52,9 +52,11 @@ module ebi.rpg.map {
                 core.GameState.eventObjects[key].reset();
             }
 
+            // Check MapEvents
             if (ui.AnalogInputController.isChecked) {
                 core.GameState.mapSensor.check(this.playerEvent);
             }
+
             this.analogInputIndicator_.update();
         }
 

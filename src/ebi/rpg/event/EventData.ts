@@ -20,10 +20,10 @@ module ebi.rpg.event {
 
     export interface EventPageData {
         status: EventStatusData;
-        conditions: Object[][];
-        triggers: Object[];
-        commands: Object[];
-        route: Object[];
+        conditions: any[][];
+        triggers: any[];
+        commands: any[];
+        route: any[];
     }
 
     export interface EventData {
