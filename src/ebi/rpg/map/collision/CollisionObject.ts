@@ -6,8 +6,8 @@ module ebi.rpg.map.collision {
     var PTM_RATIO: number = 32;
 
     export enum Category {
-        Tile = 0,
-        Character,
+        Tile = 1,
+        Character = 2,
     }
 
     export class CollisionObject {
@@ -90,16 +90,23 @@ module ebi.rpg.map.collision {
             return this.categoryBits_;
         }
 
-        public setCategory(index: number): void {
-            this.categoryBits_ = (1 << index);
+        public setCategory(category: number): void {
+            this.categoryBits_ = category;
         }
 
-        public setIgnoreCategory(index: number, value: bool): void {
-            var mask = (1 << index);
+        public get isTile(): bool {
+            return (this.categoryBits_ & Category.Tile) == this.categoryBits_;
+        }
+
+        public get isCharacter(): bool {
+            return (this.categoryBits_ & Category.Character) == this.categoryBits_;
+        }
+
+        public setIgnoreCategory(category: number, value: bool): void {
             if (value) {
-                this.ignoreBits_ = this.ignoreBits_ | mask;
+                this.ignoreBits_ = this.ignoreBits_ | category;
             } else {
-                this.ignoreBits_ = (this.ignoreBits_ & (~mask));
+                this.ignoreBits_ = (this.ignoreBits_ & (~category));
             }
             
         }
