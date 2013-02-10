@@ -45,6 +45,10 @@ module ebi.rpg.event {
             console.log("Event(" + this.eventId + ") is checked by Event(" + eventId + ")");
         }
 
+        public touch(eventId: number): void {
+            console.log("Event(" + this.eventId + ") is touched by Event(" + eventId + ")");
+        }
+
         private getActiveTopPageIndex(): number {
             var pageIndex = -1;
             var pages = this.eventData_.pages;

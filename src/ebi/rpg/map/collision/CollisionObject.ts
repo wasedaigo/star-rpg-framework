@@ -21,8 +21,6 @@ module ebi.rpg.map.collision {
         private ignoreBits_: number = 0;
         private life_: number = 0;
         private categoryBits_: number = 0;
-        private touchingObjects_: Object[] = [];
-        private touchedObjects_: Object[] = [];
         private static currentId: number = 0;
         private static collisionObjects = {};
         public data: any = null;
@@ -66,14 +64,6 @@ module ebi.rpg.map.collision {
             return this.id_;
         }
 
-        public addTouchingObject(obj: Object): void {
-            this.touchingObjects_.push(obj);
-        }
-
-        public addTouchedObject(obj: Object): void {
-            this.touchedObjects_.push(obj);
-        }
-
         public get ignoreTrigger(): bool {
             return this.ignoreTrigger_;
         }
@@ -115,11 +105,6 @@ module ebi.rpg.map.collision {
             
         }
 
-        public reset(): void {
-            this.touchingObjects_ = [];
-            this.touchedObjects_ = [];
-        }
-
         public tickLife(): void {
             // if life is set as 0 in the beginning, we do not dispose it automatically
             if (this.life_ > 0) {
@@ -131,10 +116,6 @@ module ebi.rpg.map.collision {
         }
 
         public static beforeStep(): void {
-            for (var id in CollisionObject.collisionObjects) {
-                var co = CollisionObject.collisionObjects[id];
-                co.reset();
-            }
         }
 
         public static afterStep(): void {

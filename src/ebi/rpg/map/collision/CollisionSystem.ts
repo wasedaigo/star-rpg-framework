@@ -51,17 +51,17 @@ module ebi.rpg.map.collision {
         // Check "check" event
         if (objectA.isCharacterSensor && objectB.isCharacter) {
             var targetEventId: number = objectA.data;
-            var event: event.EventObject = objectB.data;
-            if (targetEventId != event.eventId) {
-                event.check(targetEventId);
+            var eo: event.EventObject = objectB.data;
+            if (targetEventId != eo.eventId) {
+                eo.check(targetEventId);
             }
         }
 
         if (objectB.isCharacterSensor && objectA.isCharacter) {
             var targetEventId: number = objectB.data;
-            var event: event.EventObject = objectA.data;
-            if (targetEventId != event.eventId) {
-                event.check(targetEventId);
+            var eo: event.EventObject = objectA.data;
+            if (targetEventId != eo.eventId) {
+                eo.check(targetEventId);
             }
         }
     }
@@ -100,9 +100,12 @@ module ebi.rpg.map.collision {
 
             // Process Object A
             if (Box2D.Common.Math.b2Math.Dot(bodyA.GetLinearVelocity(), contactNormal) > 0) {
-                if (ignoreTrigger) {
-                    objectA.addTouchingObject(objectB);
-                    objectB.addTouchedObject(objectA);
+                if (!ignoreTrigger) {
+                    if (objectA.isCharacter && objectB.isCharacter) {
+                        var touchingEO: event.EventObject = objectA.data;
+                        var touchedEO: event.EventObject = objectB.data;
+                        touchedEO.touch(touchingEO.eventId);
+                    }
                 }
                 if (ignoreCollision) {
                     contact.SetSensor(true);
@@ -116,9 +119,12 @@ module ebi.rpg.map.collision {
 
             // Process Object B
             if (Box2D.Common.Math.b2Math.Dot(bodyB.GetLinearVelocity(), contactNormal) < 0) {
-                if (ignoreTrigger) {
-                    objectB.addTouchingObject(objectA);
-                    objectA.addTouchedObject(objectB);
+                if (!ignoreTrigger) {
+                    if (objectA.isCharacter && objectB.isCharacter) {
+                        var touchingEO: event.EventObject = objectB.data;
+                        var touchedEO: event.EventObject = objectA.data;
+                        touchedEO.touch(touchingEO.eventId);
+                    }
                 }
                 if (ignoreCollision) {
                     contact.SetSensor(true);
