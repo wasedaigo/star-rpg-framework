@@ -52,6 +52,7 @@ module cc {
         setVisible(isVisible: bool): void;
         reorderChild(child: Node, zOrder: number);
         setAnchorPoint(point: Point): void;
+        setPosition(point: Point): void;
         setPositionX(x: number): void;
         setPositionY(y: number): void;
         setScaleX(x: number): void;

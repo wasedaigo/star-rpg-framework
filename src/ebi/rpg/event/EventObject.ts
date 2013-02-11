@@ -79,6 +79,11 @@ module ebi.rpg.event {
                     var command = commands[this.commandIndex_];
                     var commandType: string = command[0];
                     switch(commandType) {
+                        case "message": 
+                            var text = command[1];
+                            core.GameState.messageWindowController.showMessage(this.mapCharacter, text);
+                            console.log(text);
+                        break;
                         case "switch": 
                             var switchNo = command[1];
                             var boolValue = command[2];

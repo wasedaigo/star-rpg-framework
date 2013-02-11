@@ -22,7 +22,7 @@
                 ],
                 [], 
                 [], 
-                [["message", "My name is Daigo?"]], 
+                [], 
                 [] 
             ], 
             [
@@ -75,7 +75,7 @@
                 ],
                 [], 
                 ["checked", 0], 
-                [["switch", 10, 1]], 
+                [["message", "Switch 10 on"], ["switch", 10, 1]], 
                 []
             ]
         ],
@@ -104,10 +104,10 @@
                 ],
                 [], 
                 ["checked", 0], 
-                [["switch", 10, 0]], 
+                [["message", "Switch 10 off"], ["switch", 10, 0]], 
                 []
             ]
         ],
-        [364, 104]
+        [164, 104]
     ]
 }

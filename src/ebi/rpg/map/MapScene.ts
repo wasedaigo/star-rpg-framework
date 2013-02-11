@@ -3,7 +3,7 @@
 /// <reference path='../event/EventObject.ts' />
 /// <reference path='../ui/AnalogInputController.ts' />
 /// <reference path='../ui/AnalogInputIndicator.ts' />
-/// <reference path='../ui/MessageWindow.ts' />
+/// <reference path='../ui/MessageWindowController.ts' />
 /// <reference path='./Map.ts' />
 /// <reference path='./MapCamera.ts' />
 /// <reference path='./MapCharacter.ts' />
@@ -19,6 +19,7 @@ module ebi.rpg.map {
             core.GameState.map = new Map();
             core.GameState.camera = new MapCamera(core.GameState.map);
             core.GameState.mapSensor = new MapSensor();
+            core.GameState.messageWindowController = new ui.MessageWindowController();
             var eventObjects = [];
             var eventDataDictionary = rpg.event.EventDataLoader.loadEventDataDictionary(0);
             for (var key in eventDataDictionary) {
@@ -32,11 +33,6 @@ module ebi.rpg.map {
 
             // Initialize UI
             this.analogInputIndicator_ = new ui.AnalogInputIndicator();
-            
-            var messageWindow = new ui.MessageWindow([100, 50]);
-            messageWindow.x = 100;
-            messageWindow.y = 300;
-            messageWindow.showText("私は\nだいごです");
         }
 
         public update(): void {

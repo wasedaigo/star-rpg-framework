@@ -3,6 +3,7 @@
 /// <reference path='../map/MapCamera.ts' />
 /// <reference path='../map/MapCharacter.ts' />
 /// <reference path='../map/MapSensor.ts' />
+/// <reference path='../ui/MessageWindowController.ts' />
 
 module ebi.rpg.core {
     export class GameState {
@@ -11,6 +12,7 @@ module ebi.rpg.core {
         public static mapSensor: map.MapSensor;
         public static camera: map.MapCamera;
         public static eventObjects: ebi.rpg.event.EventObject[];
+        public static messageWindowController: ui.MessageWindowController;
 
         private static checkCondition(eo: ebi.rpg.event.EventObject, condition: any[]): bool {
         	var result = false;
