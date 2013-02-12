@@ -50,6 +50,11 @@ module ebi.rpg.ui {
             return isChecked_;
         }
 
+        // Call this if you want to cancel its "checking state"
+        public static cancelCheck(): bool {
+            return isChecked_ = false;;
+        }
+
         public static get isAnalogControlMode(): bool {
             return isAnalogControlMode_;
         }

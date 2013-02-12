@@ -22,9 +22,13 @@ module ebi.rpg.ui {
             this.messageWindow_.showText(text);  
         }
 
-        public hideMessage(mapCharacter: rpg.map.MapCharacter, text: string): void {
+        public hideMessage(): void {
             this.messageWindow_.dispose();
             this.messageWindow_ = null;
-        }            
+        }
+
+        public isShowingMessage(): bool {
+            return !!this.messageWindow_;
+        }         
     }
 }

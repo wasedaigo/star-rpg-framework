@@ -13,6 +13,7 @@ module ebi.rpg.core {
         public static camera: map.MapCamera;
         public static eventObjects: ebi.rpg.event.EventObject[];
         public static messageWindowController: ui.MessageWindowController;
+        public static pauseMovement: bool = false;
 
         private static checkCondition(eo: ebi.rpg.event.EventObject, condition: any[]): bool {
         	var result = false;

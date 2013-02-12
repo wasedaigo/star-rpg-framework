@@ -6,6 +6,7 @@
 /// <reference path='./ui/AnalogInputController.ts' />
 /// <reference path='./ui/AnalogInputIndicator.ts' />
 /// <reference path='./map/MapScene.ts' />
+/// <reference path='./game/GameState.ts' />
 
 module ebi.rpg {
 
@@ -33,7 +34,9 @@ module ebi.rpg {
             }
 
             ui.AnalogInputController.update();
-            ebi.rpg.map.collision.CollisionSystem.update();
+            if (!core.GameState.pauseMovement) {
+                ebi.rpg.map.collision.CollisionSystem.update();
+            }
 
             if (scene_) {
                 scene_.update();

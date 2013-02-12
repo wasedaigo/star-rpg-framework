@@ -2,6 +2,7 @@
 /// <reference path='../map/Map.ts' />
 /// <reference path='../map/MapCharacter.ts' />
 /// <reference path='./EventData.ts' />
+/// <reference path='./ui/AnalogInputController.ts' />
 
 module ebi.rpg.event {
     export class EventObject {
@@ -48,7 +49,12 @@ module ebi.rpg.event {
             this.updatePage();
             this.checkTrigger();
             this.updateCommand();
-            this.mapCharacter_.update();
+
+
+            if (!core.GameState.pauseMovement) { 
+                this.mapCharacter_.update();
+            }
+            
         }
 
         public reset(): void {
@@ -78,11 +84,23 @@ module ebi.rpg.event {
                 while (true) {
                     var command = commands[this.commandIndex_];
                     var commandType: string = command[0];
+                    var breakPoint = false;
                     switch(commandType) {
-                        case "message": 
-                            var text = command[1];
-                            core.GameState.messageWindowController.showMessage(this.mapCharacter, text);
-                            console.log(text);
+                        case "message":
+                            if (core.GameState.messageWindowController.isShowingMessage()) {
+                                if (ui.AnalogInputController.isChecked) {
+                                    ui.AnalogInputController.cancelCheck();
+                                    core.GameState.messageWindowController.hideMessage();
+                                    core.GameState.pauseMovement = false;
+                                } else {
+                                    breakPoint = true;
+                                }
+                            } else {
+                                var text = command[1];
+                                core.GameState.messageWindowController.showMessage(this.mapCharacter, text);
+                                core.GameState.pauseMovement = true;
+                                breakPoint = true;
+                            }
                         break;
                         case "switch": 
                             var switchNo = command[1];
@@ -91,7 +109,15 @@ module ebi.rpg.event {
                         break;
                     }
 
+                    // Break and not progress command index
+                    if (breakPoint) {
+                        break;
+                    }
+
+                    // Move to next line
                     this.commandIndex_++;
+
+                    // Line reached to the end, event command is finished
                     if (this.commandIndex_ >= len) {
                         this.commandExecuting_ = false;
                         break;
