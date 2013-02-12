@@ -16,10 +16,11 @@ module ebi.rpg.map {
         private analogInputIndicator_: ui.AnalogInputIndicator = null;
 
         public init(): void {
-            core.GameState.map = new Map();
-            core.GameState.camera = new MapCamera(core.GameState.map);
-            core.GameState.mapSensor = new MapSensor();
-            core.GameState.messageWindowController = new ui.MessageWindowController();
+            var map = new rpg.map.Map();
+            core.GameState.map = map;
+            core.GameState.camera = new rpg.map.MapCamera(map);
+            core.GameState.mapSensor = new rpg.map.MapSensor();
+            core.GameState.messageWindowController = new ui.MessageWindowController(map);
             var eventObjects = [];
             var eventDataDictionary = rpg.event.EventDataLoader.loadEventDataDictionary(0);
             for (var key in eventDataDictionary) {

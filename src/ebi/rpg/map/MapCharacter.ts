@@ -232,6 +232,7 @@ module ebi.rpg.map {
 
                 this.mapSprite_.x = this.collisionObject_.x;
                 this.mapSprite_.y = this.collisionObject_.y;
+                this.mapSprite_.update();
             }
         }
     }

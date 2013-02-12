@@ -1,14 +1,12 @@
-/// <reference path='../../game/Text.ts' />
-/// <reference path='../map/MapSprite.ts' />
-/// <reference path='../core/GameState.ts' />
+/// <reference path='../../game/Text.ts' />GameState
 
 module ebi.rpg.ui {
     export class MessageWindow
      {
         private static Z: number = 1000;
         private static NormalBaloonImage: string = "system/normal_baloon_frame";
-        private frameSprites_: ebi.rpg.map.MapSprite[];
-        private arrowSprite_: ebi.rpg.map.MapSprite;
+        private frameSprites_: ebi.game.Sprite[];
+        private arrowSprite_: ebi.game.Sprite;
         private text_: ebi.game.Text;
 
         private x_: number = 0;
@@ -17,9 +15,9 @@ module ebi.rpg.ui {
         constructor(size: number[]) {
             this.frameSprites_ = [];
             for (var i = 0; i < 9; i++) {
-                this.frameSprites_[i] = new ebi.rpg.map.MapSprite(ebi.game.ResourcePreloader.getImage(MessageWindow.NormalBaloonImage), core.GameState.map);
+                this.frameSprites_[i] = new ebi.game.Sprite(ebi.game.ResourcePreloader.getImage(MessageWindow.NormalBaloonImage));
             }
-            this.arrowSprite_ = new ebi.rpg.map.MapSprite(ebi.game.ResourcePreloader.getImage(MessageWindow.NormalBaloonImage), core.GameState.map);
+            this.arrowSprite_ = new ebi.game.Sprite(ebi.game.ResourcePreloader.getImage(MessageWindow.NormalBaloonImage));
             this.arrowSprite_.srcX = 12;
             this.arrowSprite_.srcY = 6;
             this.arrowSprite_.srcWidth = 6;  

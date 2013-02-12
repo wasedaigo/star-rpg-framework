@@ -22,7 +22,6 @@ module ebi.rpg.map {
         }
         public set x(newX: number) {
             this.x_ = newX;
-            super.setX(this.x_ + this.map_.scrollX * this.relativeMultiplierX)
         }
 
         public get y(): number {
@@ -30,7 +29,11 @@ module ebi.rpg.map {
         }
         public set y(newY: number) {
             this.y_ = newY;
-            super.setY(this.y_ + this.map_.scrollY * this.relativeMultiplierY)
+        }
+
+        public update(): void {
+            this.setX(this.x_ + this.map_.scrollX * this.relativeMultiplierX);
+            this.setY(this.y_ + this.map_.scrollY * this.relativeMultiplierY);
         }
     }
 }
