@@ -16,17 +16,17 @@
  </layer>
  <layer name="middle" width="20" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGAWjYBSMAuKBOCMDgwTjQLuCdECsu6nlP3RzaB1uQylehpJbhxIAACtfnBjQBwAA
+   H4sIAAAAAAAAA2NgGAWjYBSMAuKBOCMDgwTjQLuCdEDI3TB5avkP3Rxah9tQipeh5NahBAAPlp8z0AcAAA==
   </data>
  </layer>
  <layer name="top" width="20" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGAWjYBQMZ8DOyMDAwTjQriAdEOtuavkP3Rxah9tQipeh5NaRDACmlP550AcAAA==
+   H4sIAAAAAAAAA2NgGAWjYBQMZ8DOyMDAwTjQriAdEHI3TJ5a/kM3h9bhNpTiZSi5dSQDAFoE1DjQBwAA
   </data>
  </layer>
  <layer name="collision" width="20" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGAW0AgcZsWNy9Q4VcAzo1uNUdO8poFlnqOx/aps3ksBgSI/Y8gWhvEKsu7GZS4q78JlDathhU4vLfcSYjU0NIT6p7oMBUDlwlsS4QPYLOgCVA+dITHfo5pxnhGByATHpi9TwoyYGAO83UljQBwAA
+   H4sIAAAAAAAAA2NgGAW0AgcZsWNy9Q4VcAzo1uNUdO8poFlnqOx/aps3ksBgSI/Y8gWhvEKsu7GZS4q78JlDathhU4vLfcSYjU0NIT6p7oMBUDlwlsS4QPYLOgCVA+dITHfUTqfEpC9Sw4+aGADvW50R0AcAAA==
   </data>
  </layer>
 </map>

@@ -66,7 +66,7 @@ module ebi.rpg.event {
         }
 
         public setRoute(commands: any[], skipWhenCollide: bool, repeat: bool): void {
-            this.eventRouteController_ = new event.EventRouteController(commands, skipWhenCollide, repeat);
+            this.eventRouteController_ = new event.EventRouteController(this, commands, skipWhenCollide, repeat);
         }
 
         public check(eventId: number): void {

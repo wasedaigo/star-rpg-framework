@@ -174,6 +174,10 @@ module ebi.rpg.map {
             this.updateVisual();
         }
 
+        public move(dx: number, dy: number, callback: ()=>void): void {
+            callback();
+        }
+
         private onMoveStop(): void {
             this.frameNo_ = this.charaChipset_.defaultFrameNo;
         }
