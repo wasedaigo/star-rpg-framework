@@ -18,12 +18,18 @@ module ebi.rpg.event {
         passTile: bool;
     }
 
+    export interface EventRouteData {
+        commands: any[];
+        skipWhenCollide: bool;
+        repeat: bool;
+    }
+
     export interface EventPageData {
         status: EventStatusData;
         conditions: any[][];
         triggers: any[];
         commands: any[];
-        route: any[];
+        route: EventRouteData;
     }
 
     export interface EventData {

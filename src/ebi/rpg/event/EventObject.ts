@@ -2,6 +2,7 @@
 /// <reference path='../map/Map.ts' />
 /// <reference path='../map/MapCharacter.ts' />
 /// <reference path='./EventData.ts' />
+/// <reference path='./EventRouteController.ts' />
 /// <reference path='./ui/AnalogInputController.ts' />
 
 module ebi.rpg.event {
@@ -13,6 +14,7 @@ module ebi.rpg.event {
         private touchedEventId_: number = -1;
         private commandExecuting_: bool = false;
         private commandIndex_: number = 0;
+        private eventRouteController_: EventRouteController = null;
 
         constructor(eventData: EventData) {
             this.eventData_ = eventData;
@@ -50,16 +52,21 @@ module ebi.rpg.event {
             this.checkTrigger();
             this.updateCommand();
 
-
-            if (!core.GameState.pauseMovement) { 
+            if (!core.GameState.pauseMovement) {
+                if (this.eventRouteController_) {
+                    this.eventRouteController_.update();
+                }
                 this.mapCharacter_.update();
             }
-            
         }
 
         public reset(): void {
             this.touchedEventId_ = -1;
             this.checkedEventId_ = -1;
+        }
+
+        public setRoute(commands: any[], skipWhenCollide: bool, repeat: bool): void {
+            this.eventRouteController_ = new event.EventRouteController(commands, skipWhenCollide, repeat);
         }
 
         public check(eventId: number): void {
@@ -106,6 +113,12 @@ module ebi.rpg.event {
                             var switchNo = command[1];
                             var boolValue = command[2];
                             core.GameState.switches[switchNo] = (boolValue === 1);
+                        break;
+                        case "set_route":
+                            var route: any[] = command[1];
+                            var skipWhenCollide: bool = (command[2] === 1);
+                            var repeat: bool = (command[3] === 1);
+                            this.setRoute(route, skipWhenCollide, repeat);
                         break;
                     }
 
@@ -158,6 +171,8 @@ module ebi.rpg.event {
         private setPageIndex(index: number): void {
             if (this.pageIndex_ != index) {
                 this.pageIndex_ = index;
+                var route = this.eventData_.pages[index].route;
+                this.setRoute(route.commands, route.skipWhenCollide, route.repeat);
                 this.mapCharacter_.chipsetId = this.eventData_.pages[index].status.chipsetId;
                 this.mapCharacter_.ignoreTile = false;
                 this.mapCharacter_.ignoreCharacter = false;

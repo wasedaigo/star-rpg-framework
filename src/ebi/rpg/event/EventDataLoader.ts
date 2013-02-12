@@ -30,7 +30,12 @@ module ebi.rpg.event {
             var conditions = rawPage[1];
             var triggers = rawPage[2];
             var commands = rawPage[3];
-            var route = rawPage[4];
+            var routeRawData = rawPage[4];
+            var route = {
+                commands: routeRawData[0] ? routeRawData[0] : [],
+                skipWhenCollide: (routeRawData[1] === 1),
+                repeat: (routeRawData[2] === 1)
+             };
 
             return {
                 status: status,
