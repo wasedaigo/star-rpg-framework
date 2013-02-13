@@ -14,8 +14,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    
+
 private:
+    void loadStyleSheet();
+    void loadPalette();
+    QPixmap *mpSrcPixmap;
+    QPixmap *mpPalettePixmap;
     Ui::MainWindow *ui;
 };
 
